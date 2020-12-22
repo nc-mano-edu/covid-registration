@@ -1,1 +1,3 @@
-# covid-registration
+# COVID-Registration project
+
+TBD
