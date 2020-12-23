@@ -3,6 +3,8 @@ package com.edu.mano.covidregistration.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 public class User {
@@ -11,7 +13,7 @@ public class User {
     private String firstName;
     private String middleName;
     private String lastName;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String insuranceNumber;
     private String phoneNumber;
 
