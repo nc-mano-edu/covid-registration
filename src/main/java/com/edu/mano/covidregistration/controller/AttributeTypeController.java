@@ -2,13 +2,13 @@ package com.edu.mano.covidregistration.controller;
 
 import com.edu.mano.covidregistration.domain.AttributeType;
 import com.edu.mano.covidregistration.service.AttributeTypeService;
+import com.edu.mano.covidregistration.tools.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,18 +20,13 @@ public class AttributeTypeController {
 
     private static final Logger log = LoggerFactory.getLogger(AttributeTypeController.class);
 
-    AttributeTypeService attributeTypeService;
+    private final Tools tools = new Tools();
+
+    private final AttributeTypeService attributeTypeService;
 
     @Autowired
     public AttributeTypeController(AttributeTypeService attributeTypeService) {
         this.attributeTypeService = attributeTypeService;
-    }
-
-    private String getErrorMessage(BindingResult bindingResult) {
-        FieldError err = bindingResult.getFieldError();
-        String message = err.getField() + ": " + err.getDefaultMessage();
-        log.info("AttributeType not valid (" + message + ")");
-        return message;
     }
 
     @GetMapping("/all")
@@ -48,9 +43,11 @@ public class AttributeTypeController {
 
     @PostMapping
     public ResponseEntity<String> add(@RequestBody @Valid AttributeType attributeType, BindingResult bindingResult) {
-        log.info("POST request for creation " + attributeType);
+        log.info("Creating new " + attributeType);
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(getErrorMessage(bindingResult), HttpStatus.BAD_REQUEST);
+            String message = tools.getErrorMessage(bindingResult);
+            log.info("AttributeType not valid (" + message + ")");
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
 
         return ResponseEntity.ok(String.valueOf(attributeTypeService.add(attributeType)));
@@ -69,9 +66,11 @@ public class AttributeTypeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid AttributeType attributeType, BindingResult bindingResult) {
-        log.info("PUT request for update " + attributeType);
+        log.info("Updating with " + attributeType);
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(getErrorMessage(bindingResult), HttpStatus.BAD_REQUEST);
+            String message = tools.getErrorMessage(bindingResult);
+            log.info("AttributeType not valid (" + message + ")");
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
 
         if (attributeTypeService.update(id, attributeType)) {

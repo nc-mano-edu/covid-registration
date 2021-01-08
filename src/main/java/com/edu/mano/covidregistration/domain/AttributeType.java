@@ -12,12 +12,12 @@ import javax.validation.constraints.Size;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "attribute_type")
+@Entity(name = "attribute_types")
 public class AttributeType {
     @Id
     @ToString.Exclude
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "attr_type_id")
+    @Column(name = "attribute_type_id")
     private long id;
 
     @NotNull

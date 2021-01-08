@@ -25,12 +25,12 @@ public class AttributeTypeService {
 
 
     public List<AttributeType> findAll() {
-        log.info("GET request for a list of attributeTypes");
+        log.info("Retrieving a list of attributeTypes");
         return attributeTypeRepository.findAll();
     }
 
     public AttributeType find(Long id) {
-        log.info("GET request for an attributeType with id " + id);
+        log.info("Retrieving an attributeType with id " + id);
         try {
             return attributeTypeRepository.findById(id).get();
         } catch (NoSuchElementException e) {
@@ -46,7 +46,7 @@ public class AttributeTypeService {
     }
 
     public boolean delete(Long id) {
-        log.info("DELETE request for an attributeType with id " + id);
+        log.info("Deleting an attributeType with id " + id);
         try {
             attributeTypeRepository.deleteById(id);
             return true;
@@ -57,8 +57,7 @@ public class AttributeTypeService {
 
     public boolean update(Long id, AttributeType attributeType) {
         try {
-            Long attributeTypeOldId = attributeTypeRepository.findById(id).get().getId();
-            attributeType.setId(attributeTypeOldId);
+            attributeType.setId(attributeTypeRepository.findById(id).get().getId());
             Long attributeTypeId = attributeTypeRepository.save(attributeType).getId();
             log.info("AttributeType updated successfully");
             return true;
