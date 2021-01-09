@@ -8,9 +8,14 @@ import javax.persistence.Id;
 @Entity
 public class Roles {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String rolesId;
+    private long rolesId;
+
+    public long getRolesId() {
+        return rolesId;
+    }
 
     public String getRoleName() {
         return roleName;

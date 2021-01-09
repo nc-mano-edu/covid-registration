@@ -31,4 +31,8 @@ public class User {
     private String insuranceNumber;
     private String phoneNumber;
 
+    public long getId() {
+        return id;
+    }
+
 }

@@ -1,23 +1,22 @@
 package com.edu.mano.covidregistration.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class UserRoles {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int userRoleId;
+    private long userRoleId;
 
+    @OneToOne
     private User userId;
 
+    @OneToMany
     private Roles roleId;
 
-    public User getUserId() {
-        return userId;
+    public long getUserId() {
+        return userId.getId();
     }
 
     public void setUserId(User userId) {
