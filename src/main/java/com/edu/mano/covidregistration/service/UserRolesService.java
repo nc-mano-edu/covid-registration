@@ -23,15 +23,15 @@ public class UserRolesService {
         userRolesRepository.save(userRole);
     }
 
-    public void update(UserRoles userRole){
-
-        UserRoles requiredUser = userRolesRepository.findById(userRole.getUserId());
-
-        if(requiredUser.getUserId() == userRole.getUserId()){
-
-            userRolesRepository.save(userRole);
-        }
-    }
+//    public void update(UserRoles userRole){
+//
+//        UserRoles requiredUser = userRolesRepository.findById(userRole.getUserId());
+//
+//        if(requiredUser.getUserId() == userRole.getUserId()){
+//
+//            userRolesRepository.save(userRole);
+//        }
+//    }
 
     public void delete(long id){
 

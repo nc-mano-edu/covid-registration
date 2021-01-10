@@ -1,20 +1,27 @@
 package com.edu.mano.covidregistration.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "ROLES")
 public class Roles {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long rolesId;
+    @Column(name = "role_id")
+    private long roleId;
 
-    public long getRolesId() {
-        return rolesId;
+    private String roleName;
+
+    private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "user_role")
+    private UserRoles userRoleId;
+
+    public long getRoleId() {
+        return roleId;
     }
 
     public String getRoleName() {
@@ -33,7 +40,7 @@ public class Roles {
         this.description = description;
     }
 
-    private String roleName;
+    public Roles(){
 
-    private String description;
+    }
 }
