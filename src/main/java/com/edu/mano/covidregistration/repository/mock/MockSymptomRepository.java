@@ -1,14 +1,14 @@
 package com.edu.mano.covidregistration.repository.mock;
 
-import com.edu.mano.covidregistration.domain.Attribute;
-import com.edu.mano.covidregistration.domain.AttributeType;
 import com.edu.mano.covidregistration.domain.Symptom;
-import com.edu.mano.covidregistration.domain.UserRequest;
 import com.edu.mano.covidregistration.repository.SymptomRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Profile("test")
@@ -44,12 +44,6 @@ public class MockSymptomRepository implements SymptomRepository {
 
     @Override
     public Symptom save(Symptom symptom) {
-
-        symptom.setSymptomId(1l);
-        symptom.setName("cough");
-        symptom.setDescription("red throat");
-        symptom.setUserRequests(null);
-
         return symptom;
     }
     /*
