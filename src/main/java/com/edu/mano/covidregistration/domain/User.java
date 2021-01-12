@@ -1,21 +1,15 @@
 package com.edu.mano.covidregistration.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -25,6 +19,10 @@ public class User {
     private String firstName;
     private String middleName;
     private String lastName;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
+    @Getter(AccessLevel.NONE)
+    private UserRoles userRole;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfBirth;

@@ -33,7 +33,7 @@ public class RolesService {
 
             rolesRepository.save(role);
 
-            return ResponseEntity.ok("Successfully created an item");
+            return ResponseEntity.ok("Successfully created a role");
 
         }else {
 
@@ -44,15 +44,13 @@ public class RolesService {
 
     public ResponseEntity<String> updateRole(Roles role){
 
-        System.out.println(role.getRoleId());
-
         Roles desiredRole = rolesRepository.findById(role.getRoleId());
 
         if(!desiredRole.equals(role)){
 
             rolesRepository.save(role);
 
-            return ResponseEntity.ok("Successfully edited an item");
+            return ResponseEntity.ok("Successfully edited a role");
 
         }else {
 

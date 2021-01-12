@@ -1,8 +1,12 @@
 package com.edu.mano.covidregistration.domain;
 
+import lombok.Data;
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "USER_ROLES")
 public class UserRoles {
@@ -12,20 +16,18 @@ public class UserRoles {
     @Column(name = "user_role_id")
     private long userRoleId;
 
-//    @OneToOne
-//    private User userId;
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id")
+    @Getter
+    private User user;
 
-    @OneToMany (mappedBy = "userRoleId")
-    @Column(name = "role_id")
-    private List<Roles> roleId;
+    @OneToOne (cascade = CascadeType.MERGE)
+    @JoinColumn(name = "roleId")
+    private Roles roleId;
 
-//    public long getUserId() {
-//        return userId.getId();
-//    }
-//
-//    public void setUserId(User userId) {
-//        this.userId = userId;
-//    }
+    public long obtainUserId() {
+        return user.getId();
+    }
 
     public UserRoles(){
 

@@ -1,7 +1,13 @@
 package com.edu.mano.covidregistration.domain;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "ROLES")
 public class Roles {
@@ -16,8 +22,8 @@ public class Roles {
 
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "user_role")
+    @OneToOne
+    @Getter(AccessLevel.NONE)
     private UserRoles userRoleId;
 
     public long getRoleId() {

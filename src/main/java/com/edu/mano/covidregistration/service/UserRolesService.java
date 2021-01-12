@@ -3,6 +3,8 @@ package com.edu.mano.covidregistration.service;
 import com.edu.mano.covidregistration.domain.UserRoles;
 import com.edu.mano.covidregistration.repository.UserRolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,23 +20,59 @@ public class UserRolesService {
        return userRolesRepository.findAll();
     }
 
-    public void createUserRole(UserRoles userRole){
+    public UserRoles findUserRoleById(long id){
 
-        userRolesRepository.save(userRole);
+        return userRolesRepository.findById(id);
     }
 
-//    public void update(UserRoles userRole){
-//
-//        UserRoles requiredUser = userRolesRepository.findById(userRole.getUserId());
-//
-//        if(requiredUser.getUserId() == userRole.getUserId()){
-//
-//            userRolesRepository.save(userRole);
-//        }
-//    }
 
-    public void delete(long id){
+    public ResponseEntity<String> createUserRole(UserRoles userRole){
 
-        userRolesRepository.deleteById(id);
+
+        List<UserRoles> existingRoles = findAllUserRoles();
+
+        if(!existingRoles.contains(userRole)){
+
+            userRolesRepository.save(userRole);
+
+            return ResponseEntity.ok("Successfully created an item");
+
+        }else {
+
+            return ResponseEntity.badRequest().build();
+        }
+
+    }
+
+    public ResponseEntity<String> updateUserRole(UserRoles userRole){
+
+        UserRoles requiredUser = userRolesRepository.findById(userRole.obtainUserId());
+
+        if(!requiredUser.equals(userRole)){
+
+            userRolesRepository.save(userRole);
+
+            return ResponseEntity.ok("Successfully edited an item");
+
+        }else {
+
+            return ResponseEntity.badRequest().build();
+        }
+
+    }
+
+    public ResponseEntity<String> deleteUserRole(long id){
+
+        try {
+
+            userRolesRepository.deleteById(id);
+
+            return ResponseEntity.ok("Successfully deleted role");
+
+        }catch (EmptyResultDataAccessException e){
+
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 }
