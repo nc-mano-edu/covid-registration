@@ -3,9 +3,10 @@ package com.edu.mano.covidregistration.domain;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
+import org.hibernate.annotations.ManyToAny;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -22,31 +23,36 @@ public class Roles {
 
     private String description;
 
-    @OneToOne
+    @ManyToMany
     @Getter(AccessLevel.NONE)
-    private UserRoles userRoleId;
+    @JoinTable(
+            name = "roles_and_users",
+            joinColumns = @JoinColumn(name = "user_role"),
+            inverseJoinColumns = @JoinColumn(name = "roles")
+    )
+    private List<UserRoles> userRoleId;
 
     public long getRoleId() {
         return roleId;
     }
 
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Roles(){
-
-    }
+//    public String getRoleName() {
+//        return roleName;
+//    }
+//
+//    public void setRoleName(String roleName) {
+//        this.roleName = roleName;
+//    }
+//
+//    public String getDescription() {
+//        return description;
+//    }
+//
+//    public void setDescription(String description) {
+//        this.description = description;
+//    }
+//
+//    public Roles(){
+//
+//    }
 }

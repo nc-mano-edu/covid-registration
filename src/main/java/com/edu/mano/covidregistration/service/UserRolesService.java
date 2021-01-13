@@ -28,19 +28,19 @@ public class UserRolesService {
 
     public ResponseEntity<String> createUserRole(UserRoles userRole){
 
-
         List<UserRoles> existingRoles = findAllUserRoles();
 
-        if(!existingRoles.contains(userRole)){
+        for (UserRoles userRoles : existingRoles){
 
-            userRolesRepository.save(userRole);
+            if (userRoles.obtainUserId() == userRole.obtainUserId()){
 
-            return ResponseEntity.ok("Successfully created an item");
-
-        }else {
-
-            return ResponseEntity.badRequest().build();
+                return ResponseEntity.badRequest().build();
+            }
         }
+
+        userRolesRepository.save(userRole);
+
+        return ResponseEntity.ok("Successfully created an item");
 
     }
 

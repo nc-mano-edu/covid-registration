@@ -17,13 +17,15 @@ public class UserRoles {
     private long userRoleId;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id")
-    @Getter
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne (cascade = CascadeType.MERGE)
-    @JoinColumn(name = "roleId")
-    private Roles roleId;
+    @ManyToMany (cascade = CascadeType.MERGE)
+    private List<Roles> roleId;
+
+    public User getUser() {
+        return user;
+    }
 
     public long obtainUserId() {
         return user.getId();
