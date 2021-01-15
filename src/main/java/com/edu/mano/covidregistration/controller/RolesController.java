@@ -7,6 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,13 +24,13 @@ public class RolesController {
     }
 
     @PostMapping("/makeRole")
-    public ResponseEntity<String> createRole(@RequestBody Roles role){
+    public ResponseEntity<String> createRole(@RequestBody @Valid Roles role){
 
         return rolesService.createRole(role);
     }
 
     @PutMapping("/editRole")
-    public ResponseEntity<String> updateRole(@RequestBody Roles role){
+    public ResponseEntity<String> updateRole(@RequestBody @Valid Roles role){
 
        return rolesService.updateRole(role);
     }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,13 +24,13 @@ public class UserRolesController {
     }
 
     @PostMapping("/makeUserRole")
-    public ResponseEntity<String> createUserRole(@RequestBody UserRoles userRole){
+    public ResponseEntity<String> createUserRole(@RequestBody @Valid UserRoles userRole){
 
         return userRolesService.createUserRole(userRole);
     }
 
     @PutMapping("/editUserRole")
-    public ResponseEntity<String> updateUserRole(@RequestBody UserRoles userRole){
+    public ResponseEntity<String> updateUserRole(@RequestBody @Valid UserRoles userRole){
 
         return userRolesService.updateUserRole(userRole);
     }
