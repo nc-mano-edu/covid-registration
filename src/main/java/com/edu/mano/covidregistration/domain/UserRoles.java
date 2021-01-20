@@ -45,8 +45,10 @@ public class UserRoles {
         return user.getId();
     }
 
-    public List<Roles> getRoleId() {
+    public List<Roles> getListOfRolesIds() {
         return roleId;
     }
+
+    public long getRolesId(){return roleId.get(0).getRoleId();}
 
 }

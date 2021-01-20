@@ -3,7 +3,6 @@ package com.edu.mano.covidregistration.service;
 import com.edu.mano.covidregistration.domain.Roles;
 import com.edu.mano.covidregistration.domain.User;
 import com.edu.mano.covidregistration.domain.UserRoles;
-import com.edu.mano.covidregistration.repository.RolesRepository;
 import com.edu.mano.covidregistration.repository.UserRolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -71,7 +70,7 @@ public class UserRolesService {
 
             User requiredUser = userService.find(userRole.obtainUserId());
 
-            for (Roles roles : userRole.getRoleId()){
+            for (Roles roles : userRole.getListOfRolesIds()){
 
                 requiredRoles.add(rolesService.findRoleById(roles.getRoleId()));
             }
