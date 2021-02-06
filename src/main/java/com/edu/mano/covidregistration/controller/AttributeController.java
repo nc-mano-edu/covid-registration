@@ -1,7 +1,7 @@
 package com.edu.mano.covidregistration.controller;
 
 import com.edu.mano.covidregistration.domain.Attribute;
-import com.edu.mano.covidregistration.service.AttributeService;
+import com.edu.mano.covidregistration.service.attributeService.AttributeService;
 import com.edu.mano.covidregistration.tools.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

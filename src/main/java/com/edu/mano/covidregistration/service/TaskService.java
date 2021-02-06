@@ -3,6 +3,7 @@ package com.edu.mano.covidregistration.service;
 import com.edu.mano.covidregistration.domain.Attribute;
 import com.edu.mano.covidregistration.domain.Task;
 import com.edu.mano.covidregistration.repository.TaskRepository;
+import com.edu.mano.covidregistration.service.attributeService.AttributeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
