@@ -3,7 +3,9 @@ package com.edu.mano.covidregistration.rest;
 import com.edu.mano.covidregistration.SpringBootTests;
 import com.edu.mano.covidregistration.domain.Attribute;
 import com.edu.mano.covidregistration.domain.AttributeType;
+import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -16,8 +18,10 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -41,10 +45,13 @@ public class AttributeRestApiTests extends SpringBootTests {
     @Test
     @Order(2)
     public void checkFind() throws Exception {
-        mockMvc.perform(get("/attribute/1"))
+        MvcResult result = mockMvc.perform(get("/attribute/1"))
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"id\":1,\"name\":\"User age\",\"attributeType\":{\"id\":1," +
-                        "\"name\":\"Numeric value\",\"checkMask\":\"\\\\d+(\\\\.\\\\d+)?\"}}"));
+                .andReturn();
+        String actualResult = result.getResponse().getContentAsString();
+        String expectedResult = AppUtility.getContentFromResourceFile("json/AttributeRestApiTest_checkFind_response.json");
+
+        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
 
     @Test

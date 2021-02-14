@@ -2,6 +2,7 @@ package com.edu.mano.covidregistration.service.attributeService;
 
 import com.edu.mano.covidregistration.domain.Attribute;
 import com.edu.mano.covidregistration.domain.AttributeType;
+import com.edu.mano.covidregistration.exception.baseExceptions.CovidClinicException;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,9 @@ public class MockAttributeServiceImpl implements AttributeService {
     }
 
     public List<Attribute> findAll() {
-        return attributes;
+
+        throw new CovidClinicException("abc");
+      //  return attributes;
     }
 
     public Attribute find(Long id) {
