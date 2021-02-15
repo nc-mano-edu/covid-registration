@@ -1,7 +1,6 @@
 package com.edu.mano.covidregistration.rest;
 
 import com.edu.mano.covidregistration.SpringBootTests;
-import com.edu.mano.covidregistration.domain.Attribute;
 import com.edu.mano.covidregistration.domain.AttributeType;
 import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +17,7 @@ import java.util.regex.Pattern;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class AttributeRestApiTests extends SpringBootTests {
+public class AttributeTypeRestApiTests extends SpringBootTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -28,17 +27,17 @@ public class AttributeRestApiTests extends SpringBootTests {
 
     @Test
     public void checkFindAll() throws Exception {
-        mockMvc.perform(get("/attribute/all"))
+        mockMvc.perform(get("/attributeType/all"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void checkFind() throws Exception {
-        MvcResult result = mockMvc.perform(get("/attribute/1"))
+        MvcResult result = mockMvc.perform(get("/attributeType/1"))
                 .andExpect(status().isOk())
                 .andReturn();
         String actualResult = result.getResponse().getContentAsString();
-        String expectedResult = AppUtility.getContentFromResourceFile("json/AttributeRestApiTest_checkFind_response.json");
+        String expectedResult = AppUtility.getContentFromResourceFile("json/AttributeTypeRestApiTest_checkFind_response.json");
 
         Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
@@ -53,13 +52,11 @@ public class AttributeRestApiTests extends SpringBootTests {
     }
 
     private Long checkAdd() throws Exception {
-        Attribute attr = new Attribute();
-        attr.setName("Name");
-        attr.setAttributeType(new AttributeType(1L, "Numeric value", "\\d+(\\.\\d+)?"));
+        AttributeType attributeType = new AttributeType(1L, "Numeric value", "\\d+(\\.\\d+)?");
 
-        MvcResult result = mockMvc.perform(post("/attribute")
+        MvcResult result = mockMvc.perform(post("/attributeType")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(attr)))
+                .content(objectMapper.writeValueAsString(attributeType)))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -72,19 +69,16 @@ public class AttributeRestApiTests extends SpringBootTests {
     }
 
     public void checkUpdate(Long attributeId) throws Exception {
-        Attribute attr = new Attribute();
-        attr.setId(attributeId);
-        attr.setName("Surname");
-        attr.setAttributeType(new AttributeType(1L, "Numeric value", "\\d+(\\.\\d+)?"));
+        AttributeType attributeType = new AttributeType(1L, "Image value", "file:\\\\*");
 
-        mockMvc.perform(put("/attribute/" + attributeId)
+        mockMvc.perform(put("/attributeType/" + attributeId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(attr)))
+                .content(objectMapper.writeValueAsString(attributeType)))
                 .andExpect(status().isOk());
     }
 
     public void checkDelete(Long attributeId) throws Exception {
-        mockMvc.perform(delete("/attribute/" + attributeId))
+        mockMvc.perform(delete("/attributeType/" + attributeId))
                 .andExpect(status().isOk());
     }
 }

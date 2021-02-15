@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,15 +41,9 @@ public class AttributeTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<String> add(@RequestBody @Valid AttributeType attributeType, BindingResult bindingResult) {
+    public ResponseEntity<String> add(@RequestBody @Valid AttributeType attributeType) {
         log.info("Creating new " + attributeType);
-        if (bindingResult.hasErrors()) {
-            String message = tools.getErrorMessage(bindingResult);
-            log.info("AttributeType not valid (" + message + ")");
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
-
-        return ResponseEntity.ok(String.valueOf(attributeTypeService.add(attributeType)));
+        return ResponseEntity.ok(String.valueOf("AttributeType created with id " + attributeTypeService.add(attributeType)));
     }
 
     @DeleteMapping("/{id}")
@@ -65,14 +58,8 @@ public class AttributeTypeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid AttributeType attributeType, BindingResult bindingResult) {
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid AttributeType attributeType) {
         log.info("Updating with " + attributeType);
-        if (bindingResult.hasErrors()) {
-            String message = tools.getErrorMessage(bindingResult);
-            log.info("AttributeType not valid (" + message + ")");
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
-
         if (attributeTypeService.update(id, attributeType)) {
             return ResponseEntity.ok("AttributeType updated successfully");
         } else {

@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,14 +41,8 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<String> add(@RequestBody @Valid Task task, BindingResult bindingResult) {
+    public ResponseEntity<String> add(@RequestBody @Valid Task task) {
         log.info("Creating new " + task);
-        if (bindingResult.hasErrors()) {
-            String message = tools.getErrorMessage(bindingResult);
-            log.info("Task not valid (" + message + ")");
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
-
         return taskService.add(task);
     }
 
@@ -65,13 +58,8 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid Task task, BindingResult bindingResult) {
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid Task task) {
         log.info("Updating with " + task);
-        if (bindingResult.hasErrors()) {
-            String message = tools.getErrorMessage(bindingResult);
-            log.info("Task not valid (" + message + ")");
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
         return taskService.update(id, task);
     }
 

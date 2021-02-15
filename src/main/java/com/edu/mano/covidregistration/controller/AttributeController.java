@@ -1,14 +1,13 @@
 package com.edu.mano.covidregistration.controller;
 
 import com.edu.mano.covidregistration.domain.Attribute;
-import com.edu.mano.covidregistration.service.attributeService.AttributeService;
+import com.edu.mano.covidregistration.service.AttributeService;
 import com.edu.mano.covidregistration.tools.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -42,14 +41,8 @@ public class AttributeController {
     }
 
     @PostMapping
-    public ResponseEntity<String> add(@RequestBody @Valid Attribute attribute, BindingResult bindingResult) {
+    public ResponseEntity<String> add(@RequestBody @Valid Attribute attribute) {
         log.info("Creating new " + attribute);
-        if (bindingResult.hasErrors()) {
-            String message = tools.getErrorMessage(bindingResult);
-            log.info("Attribute not valid (" + message + ")");
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
-
         return attributeService.add(attribute);
     }
 
@@ -65,13 +58,8 @@ public class AttributeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid Attribute attribute, BindingResult bindingResult) {
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid Attribute attribute) {
         log.info("Updating with " + attribute);
-        if (bindingResult.hasErrors()) {
-            String message = tools.getErrorMessage(bindingResult);
-            log.info("Attribute not valid (" + message + ")");
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
         return attributeService.update(id, attribute);
     }
 

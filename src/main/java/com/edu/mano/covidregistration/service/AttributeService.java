@@ -1,12 +1,10 @@
-package com.edu.mano.covidregistration.service.attributeService;
+package com.edu.mano.covidregistration.service;
 
 import com.edu.mano.covidregistration.domain.Attribute;
 import com.edu.mano.covidregistration.repository.AttributeRepository;
-import com.edu.mano.covidregistration.service.AttributeTypeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,17 +14,16 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-@Profile("!test")
-public class AttributeServiceImpl implements AttributeService {
+public class AttributeService {
 
-    private static final Logger log = LoggerFactory.getLogger(AttributeServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(AttributeService.class);
 
-    private final AttributeRepository attributeRepository;
+    private AttributeRepository attributeRepository;
 
-    private final AttributeTypeService attributeTypeService;
+    private AttributeTypeService attributeTypeService;
 
     @Autowired
-    public AttributeServiceImpl(AttributeRepository attributeRepository, AttributeTypeService attributeTypeService) {
+    public void AttributeServiceImpl(AttributeRepository attributeRepository, AttributeTypeService attributeTypeService) {
         this.attributeRepository = attributeRepository;
         this.attributeTypeService = attributeTypeService;
     }
