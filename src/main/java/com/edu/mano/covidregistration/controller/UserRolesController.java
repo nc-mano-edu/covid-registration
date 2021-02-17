@@ -1,6 +1,5 @@
 package com.edu.mano.covidregistration.controller;
 
-import com.edu.mano.covidregistration.domain.Roles;
 import com.edu.mano.covidregistration.domain.UserRoles;
 import com.edu.mano.covidregistration.service.UserRolesService;
 import org.slf4j.Logger;
@@ -30,7 +29,7 @@ public class UserRolesController {
     @PostMapping("/makeUserRole")
     public ResponseEntity<String> createUserRole(@RequestBody @Valid UserRoles userRole){
 
-        log.info("user with id" + userRole.obtainUserId() + "was assigned to role with id" + userRole.getRolesId());
+        log.info("user with id" + userRole.obtainUserId() + "was assigned to role with id" + userRole.obtainRolesId());
 
         return userRolesService.createUserRole(userRole);
     }
@@ -38,7 +37,7 @@ public class UserRolesController {
     @PutMapping("/editUserRole")
     public ResponseEntity<String> updateUserRole(@RequestBody @Valid UserRoles userRole){
 
-        log.info("user with id" + userRole.obtainUserId() + "was reassigned to role with id" + userRole.getRolesId());
+        log.info("user with id" + userRole.obtainUserId() + "was reassigned to role with id" + userRole.obtainRolesId());
 
         return userRolesService.updateUserRole(userRole);
     }

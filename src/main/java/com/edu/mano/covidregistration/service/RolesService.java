@@ -48,7 +48,23 @@ public class RolesService {
 
         if(!desiredRole.equals(role)){
 
-            rolesRepository.save(role);
+
+            if (role.getDescription() != null){
+
+                desiredRole.setDescription(role.getDescription());
+            }
+
+            if (role.getRoleName() != null){
+
+                desiredRole.setRoleName(role.getRoleName());
+            }
+
+            if(role.obtainListOfUserRoles() != null){
+
+                desiredRole.setUserRoleId(role.obtainListOfUserRoles());
+            }
+
+            rolesRepository.save(desiredRole);
 
             return ResponseEntity.ok("Successfully edited a role");
 

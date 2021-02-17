@@ -32,4 +32,8 @@ public class Roles {
         return roleId;
     }
 
+    public List<UserRoles> obtainListOfUserRoles(){
+
+        return userRoleId;
+    }
 }

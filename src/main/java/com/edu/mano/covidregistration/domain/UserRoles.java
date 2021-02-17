@@ -1,9 +1,12 @@
 package com.edu.mano.covidregistration.domain;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,39 +19,27 @@ public class UserRoles {
     @Column(name = "user_role_id")
     private long userRoleId;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user_id")
+    @OneToMany(cascade = CascadeType.MERGE,mappedBy = "userRole")
+//    @JsonManagedReference
     @NotNull
-    private User user;
+    private List<User> user;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @NotNull
     private List<Roles> roleId;
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setRoleId(List<Roles> roleId) {
-        this.roleId = roleId;
-    }
-
-    public long getUserRoleId() {
-        return userRoleId;
-    }
-
     public long obtainUserId() {
-        return user.getId();
+
+        if(!user.isEmpty()){
+            return user.get(0).getId();
+        }
+        return -1;
     }
 
-    public List<Roles> getListOfRolesIds() {
+    public List<Roles> obtainListOfRolesIds() {
         return roleId;
     }
 
-    public long getRolesId(){return roleId.get(0).getRoleId();}
+    public long obtainRolesId(){return roleId.get(0).getRoleId();}
 
 }
