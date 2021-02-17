@@ -21,7 +21,6 @@ public class UserRoles {
 
     @ManyToOne()
     @JoinColumn(name = "user_id")
-//    @JsonManagedReference
     @NotNull
     private User user;
 
@@ -31,10 +30,7 @@ public class UserRoles {
 
     public long obtainUserId() {
 
-//        if(!user.isEmpty()){
         return user.getId();
-//        }
-//        return -1;
     }
 
     public List<Roles> obtainListOfRolesIds() {

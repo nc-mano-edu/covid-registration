@@ -23,7 +23,6 @@ public class User {
     private String lastName;
 
     @OneToMany(mappedBy = "user")
-//    @JsonBackReference
     @Getter(AccessLevel.NONE)
     private List<UserRoles> userRole;
 
