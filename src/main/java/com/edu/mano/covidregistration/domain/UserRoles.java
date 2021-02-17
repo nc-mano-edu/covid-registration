@@ -19,10 +19,11 @@ public class UserRoles {
     @Column(name = "user_role_id")
     private long userRoleId;
 
-    @OneToMany(cascade = CascadeType.MERGE,mappedBy = "userRole")
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
 //    @JsonManagedReference
     @NotNull
-    private List<User> user;
+    private User user;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @NotNull
@@ -30,10 +31,10 @@ public class UserRoles {
 
     public long obtainUserId() {
 
-        if(!user.isEmpty()){
-            return user.get(0).getId();
-        }
-        return -1;
+//        if(!user.isEmpty()){
+        return user.getId();
+//        }
+//        return -1;
     }
 
     public List<Roles> obtainListOfRolesIds() {

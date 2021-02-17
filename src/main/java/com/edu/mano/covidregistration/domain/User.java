@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,11 +22,10 @@ public class User {
     private String middleName;
     private String lastName;
 
-    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "user")
 //    @JsonBackReference
-//    @Getter(AccessLevel.NONE)
-    private UserRoles userRole;
+    @Getter(AccessLevel.NONE)
+    private List<UserRoles> userRole;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfBirth;

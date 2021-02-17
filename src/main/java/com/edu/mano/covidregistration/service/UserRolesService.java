@@ -68,11 +68,7 @@ public class UserRolesService {
 
             List<Roles> requiredRoles = new ArrayList<>();
 
-            List<User> savedUsers = new ArrayList<>();
-
             User requiredUser = userService.find(userRole.obtainUserId());
-
-            savedUsers.add(requiredUser);
 
             for (Roles roles : userRole.obtainListOfRolesIds()){
 
@@ -81,7 +77,7 @@ public class UserRolesService {
 
             userRole.setRoleId(requiredRoles);
 
-            userRole.setUser(savedUsers);
+            userRole.setUser(requiredUser);
 
             userRolesRepository.save(userRole);
 
