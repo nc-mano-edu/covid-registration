@@ -1,24 +1,17 @@
 package com.edu.mano.covidregistration.service;
 
 import com.edu.mano.covidregistration.domain.Symptom;
-import com.edu.mano.covidregistration.domain.User;
 import com.edu.mano.covidregistration.exception.baseExceptions.SymptomNotFoundByIdException;
 import com.edu.mano.covidregistration.repository.SymptomRepository;
-import com.edu.mano.covidregistration.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-//@Slf4j
-@Profile("!test")
 public class SymptomServiceImpl implements SymptomService {
 
     private static final Logger log = LoggerFactory.getLogger(AttributeService.class);
