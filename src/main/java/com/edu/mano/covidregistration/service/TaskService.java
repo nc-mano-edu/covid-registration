@@ -2,13 +2,12 @@ package com.edu.mano.covidregistration.service;
 
 import com.edu.mano.covidregistration.domain.Attribute;
 import com.edu.mano.covidregistration.domain.Task;
+import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
 import com.edu.mano.covidregistration.repository.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,54 +38,42 @@ public class TaskService {
         try {
             return taskRepository.findById(id).get();
         } catch (NoSuchElementException e) {
-            log.info("Task with id " + id + " not found");
-            return null;
+            throw new NotFoundException(Task.class, id);
         }
     }
 
-    public ResponseEntity<String> add(Task task) {
+    public Long add(Task task) {
         for (Attribute attr : task.getAttributes()) {
-            Long attrId = attr.getId();
-            if (attributeService.find(attrId) == null) {
-                return new ResponseEntity<>("Attribute with id " + attrId + " does not exist", HttpStatus.NOT_FOUND);
-            }
+            attributeService.find(attr.getId());
         }
-
         Long taskId = taskRepository.save(task).getId();
         log.info("Task created with id " + taskId);
-        return ResponseEntity.ok("Task created with id " + taskId);
+        return taskId;
     }
 
-    public boolean delete(Long id) {
+    public void delete(Long id) {
         log.info("Deleting an tasks with id " + id);
         try {
             taskRepository.deleteById(id);
-            return true;
         } catch (EmptyResultDataAccessException e) {
-            return false;
+            throw new NotFoundException(Task.class, id);
         }
     }
 
-    public ResponseEntity<String> update(Long id, Task task) {
+    public void update(Long id, Task task) {
         List<Attribute> attributes = task.getAttributes();
         for (int i = 0; i < attributes.size(); i++) {
-            Long attrId = attributes.get(i).getId();
-            Attribute attribute = attributeService.find(attrId);
-            if (attribute == null) {
-                return new ResponseEntity<>("Attribute with id " + attrId + " does not exist", HttpStatus.NOT_FOUND);
-            }
+            Attribute attribute = attributeService.find(attributes.get(i).getId());
             attributes.set(i, attribute);
         }
         task.setAttributes(attributes);
 
         try {
             task.setId(taskRepository.findById(id).get().getId());
-            Long taskId = taskRepository.save(task).getId();
+            taskRepository.save(task).getId();
             log.info("Task updated successfully");
-            return ResponseEntity.ok("Task updated successfully");
         } catch (NoSuchElementException e) {
-            log.info("Task with id " + id + " not found");
-            return new ResponseEntity<>("Task with id " + id + " not found", HttpStatus.NOT_FOUND);
+            throw new NotFoundException(Task.class, id);
         }
     }
 

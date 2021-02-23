@@ -2,6 +2,7 @@ package com.edu.mano.covidregistration.exception;
 
 import com.edu.mano.covidregistration.exception.baseExceptions.CovidClinicException;
 import com.edu.mano.covidregistration.exception.baseExceptions.SymptomNotFoundByIdException;
+import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
 import com.edu.mano.covidregistration.tools.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,5 +56,16 @@ public class GlobalExceptionHandler {
             LOGGER.error(name + ": " + message);
         }
         return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body(name + ": " + message);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity handleNotFoundException(NotFoundException exception) {
+        if (LOGGER.isErrorEnabled()) {
+            LOGGER.error(exception.getMessage());
+        }
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.TEXT_PLAIN)
+                .body(exception.getMessage());
     }
 }

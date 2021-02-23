@@ -13,6 +13,8 @@ spring:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB_NAME:covid-registration}
     username: ${POSTGRES_USERNAME:postgres}
     password: ${POSTGRES_PASSWORD:postgres}
+    initialization-mode: always
+    data: classpath:data.sql
   jpa:
     generate-ddl: true
     hibernate:

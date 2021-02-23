@@ -43,24 +43,21 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<String> add(@RequestBody @Valid Task task) {
         log.info("Creating new " + task);
-        return taskService.add(task);
+        return ResponseEntity.ok("Task created with id " + taskService.add(task));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-        if (taskService.delete(id)) {
-            log.info("Task removed successfully");
-            return ResponseEntity.ok("Task removed successfully");
-        } else {
-            log.info("Task with id " + id + " not found");
-            return new ResponseEntity<>("Task not found", HttpStatus.NOT_FOUND);
-        }
+        taskService.delete(id);
+        log.info("Task removed successfully");
+        return ResponseEntity.ok("Task removed successfully");
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid Task task) {
         log.info("Updating with " + task);
-        return taskService.update(id, task);
+        taskService.update(id, task);
+        return ResponseEntity.ok("Task updated successfully");
     }
 
 }

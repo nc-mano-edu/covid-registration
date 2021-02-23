@@ -43,24 +43,24 @@ public class AttributeController {
     @PostMapping
     public ResponseEntity<String> add(@RequestBody @Valid Attribute attribute) {
         log.info("Creating new " + attribute);
-        return attributeService.add(attribute);
+        Long attributeId = attributeService.add(attribute);
+        log.info("Attribute created with id " + attributeId);
+        return ResponseEntity.ok("Attribute created with id " + attributeId);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-        if (attributeService.delete(id)) {
-            log.info("Attribute removed successfully");
-            return ResponseEntity.ok("Attribute removed successfully");
-        } else {
-            log.info("Attribute with id " + id + " not found");
-            return new ResponseEntity<>("Attribute not found", HttpStatus.NOT_FOUND);
-        }
+        attributeService.delete(id);
+        log.info("Attribute removed successfully");
+        return ResponseEntity.ok("Attribute removed successfully");
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid Attribute attribute) {
         log.info("Updating with " + attribute);
-        return attributeService.update(id, attribute);
+        attributeService.update(id, attribute);
+        log.info("Attribute updated successfully");
+        return ResponseEntity.ok("Attribute updated successfully");
     }
 
 }
