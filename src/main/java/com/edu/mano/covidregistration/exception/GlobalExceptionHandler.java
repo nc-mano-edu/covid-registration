@@ -1,14 +1,15 @@
 package com.edu.mano.covidregistration.exception;
 
 import com.edu.mano.covidregistration.exception.baseExceptions.CovidClinicException;
+import com.edu.mano.covidregistration.exception.baseExceptions.InvalidDateException;
 import com.edu.mano.covidregistration.exception.baseExceptions.SymptomNotFoundByIdException;
 import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
-import com.edu.mano.covidregistration.tools.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,8 +22,6 @@ import java.util.Set;
 @ControllerAdvice
 public class GlobalExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-
-    private final Tools tools = new Tools();
 
     @ExceptionHandler(CovidClinicException.class)
     public ResponseEntity handleException(CovidClinicException exception) {
@@ -65,6 +64,25 @@ public class GlobalExceptionHandler {
         }
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.TEXT_PLAIN)
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
+        if (LOGGER.isErrorEnabled()) {
+            LOGGER.error(exception.getMessage());
+        }
+        return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidDateException.class)
+    public ResponseEntity handleInvalidDateException(InvalidDateException exception) {
+        if (LOGGER.isErrorEnabled()) {
+            LOGGER.error(exception.getMessage());
+        }
+        return ResponseEntity
+                .badRequest()
                 .contentType(MediaType.TEXT_PLAIN)
                 .body(exception.getMessage());
     }
