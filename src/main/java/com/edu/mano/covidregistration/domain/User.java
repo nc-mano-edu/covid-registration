@@ -1,6 +1,5 @@
 package com.edu.mano.covidregistration.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;

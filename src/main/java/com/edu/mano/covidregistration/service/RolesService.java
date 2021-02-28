@@ -29,16 +29,26 @@ public class RolesService {
 
         List<Roles> existingRoles = findAllRoles();
 
-        if(!existingRoles.contains(role)){
+        for (Roles selectedRole : existingRoles){
 
-            rolesRepository.save(role);
-
-            return ResponseEntity.ok("Successfully created a role");
-
-        }else {
-
-            return ResponseEntity.badRequest().build();
+            if (selectedRole.getRoleName().equals(role.getRoleName()) && selectedRole.getDescription().equals(role.getDescription())){
+                return ResponseEntity.badRequest().build();
+            }
         }
+
+        rolesRepository.save(role);
+
+        return ResponseEntity.ok("Successfully created a role");
+//        if(!existingRoles.contains(role)){
+//
+//            rolesRepository.save(role);
+//
+//            return ResponseEntity.ok("Successfully created a role");
+//
+//        }else {
+//
+//            return ResponseEntity.badRequest().build();
+//        }
 
     }
 
