@@ -14,6 +14,6 @@ public interface PaymentRepository extends CrudRepository<Payment, Long> {
 
     List<Payment> findAll();
 
-    Optional<Payment> findById(long id);
+    Optional<Payment> findById(Long id);
 
 }
