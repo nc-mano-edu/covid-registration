@@ -1,7 +1,6 @@
 package com.edu.mano.covidregistration.exception;
 
 import com.edu.mano.covidregistration.exception.baseExceptions.CovidClinicException;
-import com.edu.mano.covidregistration.exception.baseExceptions.SymptomNotFoundByIdException;
 import com.edu.mano.covidregistration.tools.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,11 +38,6 @@ public class GlobalExceptionHandler {
             LOGGER.error(message, exception);
         }
         return ResponseEntity.badRequest().contentType(MediaType.TEXT_PLAIN).body(message);
-    }
-
-    @ExceptionHandler(SymptomNotFoundByIdException.class)
-    protected ResponseEntity handleSymptomNotFoundByIdException(SymptomNotFoundByIdException exception) {
-        return handleException(exception);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
