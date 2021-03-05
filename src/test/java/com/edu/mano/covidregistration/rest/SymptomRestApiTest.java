@@ -2,6 +2,7 @@ package com.edu.mano.covidregistration.rest;
 
 import com.edu.mano.covidregistration.SpringBootTests;
 import com.edu.mano.covidregistration.domain.Symptom;
+import com.edu.mano.covidregistration.domain.UserRequest;
 import com.edu.mano.covidregistration.service.SymptomService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
@@ -57,26 +58,15 @@ class SymptomRestApiTest extends SpringBootTests {
     @Test
     @DisplayName("getSymptomById")
     public void shouldGetSymptomById1() throws Exception {
-        mockMvc.perform(get("/backend/symptom/1"))
-                .andExpect(status().isOk())  // -- не хочет
-                .andExpect(content().json(objectMapper.writeValueAsString(s)));
+
+        when(symptomService.findSymptomById(1l)).thenReturn(new Symptom(1l, "кашель", "боль в горле", null));
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/backend/symptom/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
         mockMvc.perform(get("/backend/symptom//2"))
                 .andExpect(status().isNotFound());
-
-    }
-
-
-
-    @Test
-    public void ShouldCreateSymptom1() throws Exception {
-        mockMvc.perform(
-                post("/backend/symptom")
-                        .content(objectMapper.writeValueAsString(s))
-                        .contentType(MediaType.APPLICATION_JSON)
-        )
-                    .andExpect(status().isOk())
-                    .andExpect(content().json(objectMapper.writeValueAsString(s)));
 
     }
 

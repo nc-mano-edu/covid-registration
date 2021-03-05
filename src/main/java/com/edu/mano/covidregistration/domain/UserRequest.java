@@ -23,15 +23,15 @@ public class UserRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long requestId;
 
-    @NotNull
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 
-    @NotNull
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
-    @NotNull
+
     @Size(min = 3)
     private String treatmentState;
 

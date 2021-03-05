@@ -21,7 +21,6 @@ public class Symptom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long symptomId;
 
-     @NotNull
     @Size(min = 2, max = 200)
     private String name;
     private String description;
