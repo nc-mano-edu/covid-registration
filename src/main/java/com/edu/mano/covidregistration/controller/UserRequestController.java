@@ -29,17 +29,17 @@ public class UserRequestController {
     private UserRequestService userRequestService;
 
     @PostMapping
-    public UserRequest addRequest(@RequestBody UserRequest userRequest) {
-      //  log.info("into: {}", userRequest);
+    public ResponseEntity<UserRequest> addRequest(@RequestBody UserRequest userRequest) {
+        log.info("into: {}", userRequest);
         UserRequest savedUserRequest = userRequestService.saveUserRequest(userRequest);
-     //   log.info(savedUserRequest.toString());
-      //  log.info("the user_request was created");
-        return savedUserRequest;
+        log.info(savedUserRequest.toString());
+        log.info("the user_request was created");
+        return new ResponseEntity<>(savedUserRequest, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserRequest> findRequest(@PathVariable Long id) {
-      //  log.info("GET  user_request, id =  " + id);
+        log.info("GET  user_request, id =  " + id);
         UserRequest userRequest = userRequestService.findRequestByRequestId(id);
         if (userRequest == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

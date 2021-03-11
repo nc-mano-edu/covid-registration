@@ -8,57 +8,34 @@ import org.hibernate.mapping.Collection;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Profile("test")
 public class MockUserRequestRepository implements UserRequestRepository {
 
     private List<UserRequest> userRequests;
-    private List<Symptom> symptoms;
 
 
-    @Override
+
+    public MockUserRequestRepository () {
+        this.userRequests = new ArrayList<>(Collections.singletonList(new UserRequest(1l,null,null,"in progress",null,null)));
+    }
+
+
+      @Override
     public List<UserRequest> findAll() {
-        this.symptoms = new ArrayList<>(Collections.singletonList(
-                new Symptom(1L, "cough", "red throat",null )));
-
-        this.userRequests = new ArrayList<>(Collections.singletonList(
-                new UserRequest(1l, null,null, "in hospital",
-                        new User(1l,"name","middleName","lastName",null,"A111","7777"),
-                        symptoms )
-        ));
-        return userRequests;
+        return this.userRequests;
     }
 
     @Override
-    public Optional<UserRequest> findById(Long userRequestId) {
-        return userRequests.stream()
-                .filter(attr -> userRequestId.equals(attr.getRequestId()))
-                .findAny();
+    public UserRequest findUserRequestByRequestId(Long id) {
+        String str = String.valueOf(id);
+        int newId = Integer.parseInt(str);
+
+        UserRequest neededUserRequest = this.userRequests.get(newId-1);
+        return neededUserRequest;
     }
-
-        @Override
-    public <S extends UserRequest> S save(S s) {
-        Long symptomId = userRequests.get(userRequests.size()-1).getRequestId() + 1;
-        s.setRequestId(1l);
-        return s;
-    }
-
-    @Override
-    public <S extends UserRequest> Iterable<S> saveAll(Iterable<S> iterable) {
-        return null;
-    }
-
-
-    @Override
-    public boolean existsById(Long aLong) {
-        return false;
-    }
-
 
 
     @Override
@@ -72,13 +49,13 @@ public class MockUserRequestRepository implements UserRequestRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
-        this.userRequests.remove(id);
+    public void deleteById(Long aLong) {
+
     }
 
     @Override
     public void delete(UserRequest userRequest) {
-        this.userRequests.remove(userRequest.getRequestId());
+
     }
 
     @Override
@@ -92,7 +69,24 @@ public class MockUserRequestRepository implements UserRequestRepository {
     }
 
     @Override
-    public UserRequest findUserRequestByRequestId(Long id) {
+    public <S extends UserRequest> S save(S s) {
         return null;
     }
+
+    @Override
+    public <S extends UserRequest> Iterable<S> saveAll(Iterable<S> iterable) {
+        return null;
+    }
+
+    @Override
+    public Optional<UserRequest> findById(Long aLong) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean existsById(Long aLong) {
+        return false;
+    }
+
+
 }

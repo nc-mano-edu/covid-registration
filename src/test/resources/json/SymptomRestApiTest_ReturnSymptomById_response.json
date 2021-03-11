@@ -1,6 +1,6 @@
 {
   "symptomId" : 1,
-  "name": "our illness",
-  "description": "description",
+  "name": "cough",
+  "description": "red throat",
   "userRequests": null
 }

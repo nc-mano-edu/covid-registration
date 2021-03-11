@@ -2,35 +2,25 @@ package com.edu.mano.covidregistration.rest;
 
 import com.edu.mano.covidregistration.SpringBootTests;
 import com.edu.mano.covidregistration.domain.Symptom;
-import com.edu.mano.covidregistration.domain.Task;
 import com.edu.mano.covidregistration.domain.UserRequest;
-import com.edu.mano.covidregistration.service.SymptomService;
 import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class SymptomRestApiTest extends SpringBootTests {
+class UserRequestRestApiTest extends SpringBootTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -40,7 +30,7 @@ class SymptomRestApiTest extends SpringBootTests {
 
 
 
-    final Symptom symptom = new Symptom(1L, "cough", "red throat",null );
+    final UserRequest userRequest = new UserRequest(1l,null,null,"in progress",null,null);
 
     @Test
     void MockMvcTest() {
@@ -49,24 +39,24 @@ class SymptomRestApiTest extends SpringBootTests {
 
     @Test
     public void findAllTest() throws Exception {
-        List <Symptom> symptoms = new ArrayList<>();
-        symptoms.add(symptom);
+        List <UserRequest> userRequests = new ArrayList<>();
+        userRequests.add(userRequest);
 
-       mockMvc.perform(get("/backend/symptom/all"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(symptoms)));
+        mockMvc.perform(get("/backend/userRequest/all"))
+                .andExpect(content().json(objectMapper.writeValueAsString(userRequests)));
 
     }
 
     @Test
     public void getSymptomBySymptomIdTest () throws Exception {
-        MvcResult result = mockMvc.perform(get("/backend/symptom/1"))
+        MvcResult result = mockMvc.perform(get("/backend/userRequest/1"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(symptom)))
+                .andExpect(content().json(objectMapper.writeValueAsString(userRequest)))
                 .andReturn();
 
         String actualResult = result.getResponse().getContentAsString();
-        String expectedResult = AppUtility.getContentFromResourceFile("json/SymptomRestApiTest_ReturnSymptomById_response.json");
+        System.out.println("result:" + result.getResponse().getContentAsString()  );
+        String expectedResult = AppUtility.getContentFromResourceFile("json/UserRequestRestApiTest_ReturnUserRequestById_response.json");
 
         Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
@@ -77,11 +67,11 @@ class SymptomRestApiTest extends SpringBootTests {
 
         mockMvc.perform(
                 post("/backend/symptom")
-                        .content(objectMapper.writeValueAsString(symptom))
+                        .content(objectMapper.writeValueAsString(userRequest))
                         .contentType(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(symptom)));
+                .andExpect(content().json(objectMapper.writeValueAsString(userRequest)));
 
     }
 
