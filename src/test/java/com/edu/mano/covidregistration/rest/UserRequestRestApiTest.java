@@ -1,11 +1,11 @@
 package com.edu.mano.covidregistration.rest;
 
 import com.edu.mano.covidregistration.SpringBootTests;
-import com.edu.mano.covidregistration.domain.Symptom;
 import com.edu.mano.covidregistration.domain.UserRequest;
 import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,6 +40,7 @@ class UserRequestRestApiTest extends SpringBootTests {
     }
 
     @Test
+    @Disabled
     public void findAllTest() throws Exception {
         List <UserRequest> userRequests = new ArrayList<>();
         userRequests.add(userRequest);
@@ -63,6 +66,7 @@ class UserRequestRestApiTest extends SpringBootTests {
 
 
     @Test
+    @Disabled
     public void createSymptomTest() throws Exception {
 
         mockMvc.perform(
