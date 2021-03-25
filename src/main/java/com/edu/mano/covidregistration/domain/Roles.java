@@ -1,18 +1,17 @@
 package com.edu.mano.covidregistration.domain;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "ROLES")
 public class Roles {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +26,15 @@ public class Roles {
     @ManyToMany
     @Getter(AccessLevel.NONE)
     private List<UserRoles> userRoleId;
+
+    public Roles(long id, String roleName, String description){
+
+        this.roleId = id;
+
+        this. roleName = roleName;
+
+        this.description = description;
+    }
 
     public long getRoleId() {
         return roleId;

@@ -68,7 +68,7 @@ public class UserRolesService {
 
             List<Roles> requiredRoles = new ArrayList<>();
 
-            User requiredUser = userService.find(userRole.obtainUserId());
+            User requiredUser = userService.findSpecificUser(userRole.obtainUserId());
 
             for (Roles roles : userRole.obtainListOfRolesIds()){
 

@@ -17,8 +17,13 @@ public class RolesController {
 
     private static Logger log = LoggerFactory.getLogger(RolesController.class);
 
+    private final RolesService rolesService;
+
     @Autowired
-    public RolesService rolesService;
+    RolesController(RolesService rolesService){
+
+        this.rolesService = rolesService;
+    }
 
     @GetMapping("/getRoles")
     public List<Roles> getAllRoles(){
@@ -26,26 +31,32 @@ public class RolesController {
         return rolesService.findAllRoles();
     }
 
+    @GetMapping("/getRole/{id}")
+    public Roles getSpecificRole(@PathVariable Long id){
+
+        return rolesService.findRoleById(id);
+    }
+
     @PostMapping("/makeRole")
     public ResponseEntity<String> createRole(@RequestBody @Valid Roles role){
 
-        log.info(role + "role was created");
+        log.info(role + " role was created");
 
         return rolesService.createRole(role);
     }
 
-    @PutMapping("/editRole")
-    public ResponseEntity<String> updateRole(@RequestBody @Valid Roles role){
+    @PutMapping("/editRole/{id}")
+    public ResponseEntity<String> updateRole(@RequestBody @Valid Roles role, @PathVariable Long id){
 
-        log.info(role + "role was edited");
+        log.info(role + " role was edited");
 
-       return rolesService.updateRole(role);
+       return rolesService.updateRole(role, id);
     }
 
     @DeleteMapping("/deleteRole/{id}")
     public ResponseEntity<String> deleteRole(@PathVariable long id){
 
-        log.info("role with id" + id + "was deleted");
+        log.info("role with id " + id + " was deleted");
 
        return rolesService.deleteRole(id);
     }

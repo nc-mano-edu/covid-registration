@@ -3,26 +3,32 @@ package com.edu.mano.covidregistration.service;
 import com.edu.mano.covidregistration.domain.Roles;
 import com.edu.mano.covidregistration.repository.RolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Profile("!test")
 @Service
 public class RolesService {
 
+
+    public final RolesRepository rolesRepository;
+
     @Autowired
-    public RolesRepository rolesRepository;
+    public RolesService(RolesRepository rolesRepository) {
+        this.rolesRepository = rolesRepository;
+    }
 
     public List<Roles> findAllRoles(){
 
         return rolesRepository.findAll();
     }
 
-    public Roles findRoleById(long id){
+    public Roles findRoleById(Long id){
 
-        return rolesRepository.findById(id);
+        return rolesRepository.findById(id).get();
     }
 
     public ResponseEntity<String> createRole(Roles role){
@@ -39,22 +45,12 @@ public class RolesService {
         rolesRepository.save(role);
 
         return ResponseEntity.ok("Successfully created a role");
-//        if(!existingRoles.contains(role)){
-//
-//            rolesRepository.save(role);
-//
-//            return ResponseEntity.ok("Successfully created a role");
-//
-//        }else {
-//
-//            return ResponseEntity.badRequest().build();
-//        }
 
     }
 
-    public ResponseEntity<String> updateRole(Roles role){
+    public ResponseEntity<String> updateRole(Roles role, Long id){
 
-        Roles desiredRole = rolesRepository.findById(role.getRoleId());
+        Roles desiredRole = findRoleById(id);
 
         if(!desiredRole.equals(role)){
 
