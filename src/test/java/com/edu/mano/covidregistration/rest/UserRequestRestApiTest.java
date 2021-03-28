@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -19,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,9 +31,7 @@ class UserRequestRestApiTest extends SpringBootTests {
     @Autowired
     private ObjectMapper objectMapper;
 
-
-
-    final UserRequest userRequest = new UserRequest(1l,null,null,"in progress",null,null);
+    final UserRequest userRequest = new UserRequest(1l, null, null, "in progress", null, null);
 
     @Test
     void MockMvcTest() {
@@ -42,49 +41,31 @@ class UserRequestRestApiTest extends SpringBootTests {
     @Test
     @Disabled
     public void findAllTest() throws Exception {
-        List <UserRequest> userRequests = new ArrayList<>();
+        List<UserRequest> userRequests = new ArrayList<>();
         userRequests.add(userRequest);
 
-        mockMvc.perform(get("/backend/userRequest/all"))
-                .andExpect(content().json(objectMapper.writeValueAsString(userRequests)));
-
+        MvcResult result = mockMvc.perform(get("/backend/userRequest?userId=1"))
+                .andExpect(status().isOk())
+                .andReturn();
+        Assertions.assertEquals(objectMapper.readTree(objectMapper.writeValueAsString(userRequests)), objectMapper.readTree(result.getResponse().getContentAsString()));
     }
 
     @Test
-    public void getSymptomBySymptomIdTest () throws Exception {
+    public void getSymptomBySymptomIdTest() throws Exception {
         MvcResult result = mockMvc.perform(get("/backend/userRequest/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(userRequest)))
                 .andReturn();
 
         String actualResult = result.getResponse().getContentAsString();
-        System.out.println("result:" + result.getResponse().getContentAsString()  );
+        System.out.println("result:" + result.getResponse().getContentAsString());
         String expectedResult = AppUtility.getContentFromResourceFile("json/UserRequestRestApiTest_ReturnUserRequestById_response.json");
 
         Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
 
-
     @Test
-    @Disabled
-    public void createSymptomTest() throws Exception {
-
-        mockMvc.perform(
-                post("/backend/symptom")
-                        .content(objectMapper.writeValueAsString(userRequest))
-                        .contentType(MediaType.APPLICATION_JSON)
-        )
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(userRequest)));
-
+    public void deleteSymptomByIdTest() throws Exception {
+        mockMvc.perform(delete("/backend/symptom/1")).andExpect(status().isOk());
     }
-
-    @Test
-    public void  deleteSymptomByIdTest () throws Exception {
-        mockMvc.perform(delete("/backend/symptom/1" )).andExpect(status().isOk());
-    }
-
-
-
-
 }

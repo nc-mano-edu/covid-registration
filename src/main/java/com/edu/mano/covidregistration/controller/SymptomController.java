@@ -1,16 +1,20 @@
 package com.edu.mano.covidregistration.controller;
 
 import com.edu.mano.covidregistration.domain.Symptom;
-import com.edu.mano.covidregistration.service.SymptomService;
 import com.edu.mano.covidregistration.service.SymptomServiceImpl;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -19,12 +23,12 @@ import java.util.List;
 @RequestMapping(value = "/backend/symptom")
 public class SymptomController {
 
-    private final SymptomService symptomService;
+    private final SymptomServiceImpl symptomService;
 
     private static final Logger log = LoggerFactory.getLogger(SymptomController.class);
 
     @Autowired
-    public SymptomController(SymptomService symptomService) {
+    public SymptomController(SymptomServiceImpl symptomService) {
         this.symptomService = symptomService;
     }
 
@@ -32,7 +36,7 @@ public class SymptomController {
     public ResponseEntity<List<Symptom>> findAll() {
         log.info("GET request for a list of symptom");
         List<Symptom> symptoms = symptomService.findAll();
-        return new ResponseEntity<>(symptoms, symptoms.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+        return new ResponseEntity<>(symptoms, HttpStatus.OK);
     }
 
     @GetMapping("/{symptomId}")
@@ -53,14 +57,10 @@ public class SymptomController {
 
 
     @PostMapping
-    public ResponseEntity<Symptom> addSymptom(@RequestBody Symptom symptom, Errors errors) {
+    public ResponseEntity<Symptom> addSymptom(@RequestBody Symptom symptom) {
         log.info("POST request for creation " + symptom);
-        if (errors.hasErrors()) {
-            log.info("Symptom not valid");
-        }
-        Long symptomId= symptomService.saveSymptom(symptom).getSymptomId();
-        log.info("Symptom created with id " + symptomId );
-        return new ResponseEntity<>(symptom,HttpStatus.OK);
+        Symptom savedSymptom = symptomService.saveSymptom(symptom);
+        return new ResponseEntity<>(savedSymptom, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -75,10 +75,10 @@ public class SymptomController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Symptom> updateSymptom (@RequestBody Symptom symptomDetails, @PathVariable Long id) {
+    public ResponseEntity<Symptom> updateSymptom(@RequestBody Symptom symptomDetails, @PathVariable Long id) {
         Symptom symptom = symptomService.findSymptomById(id);
         if (symptom == null) {
-            return  new ResponseEntity<Symptom>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Symptom>(HttpStatus.NOT_FOUND);
         }
 
         symptom.setName(symptomDetails.getName());

@@ -6,7 +6,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
-public class SpringBootTests {
+@ActiveProfiles("integrationTest")
+public class SpringBootIntegrationTests {
 
 }

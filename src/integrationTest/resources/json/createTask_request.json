@@ -1,0 +1,16 @@
+{
+  "name": "#name_pattern#",
+  "schedule": "#schedule_pattern#",
+  "description": "#description#",
+  "attributes": [
+    {
+      "id": "1"
+    },
+    {
+      "id": "2"
+    },
+    {
+      "id": "3"
+    }
+  ]
+}

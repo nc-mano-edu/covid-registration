@@ -1,0 +1,12 @@
+[
+  {
+    "symptomId": 1,
+    "name": "cough",
+    "description": "cough_description"
+  },
+  {
+    "symptomId": 2,
+    "name": "temperature",
+    "description": "temperature_description"
+  }
+]

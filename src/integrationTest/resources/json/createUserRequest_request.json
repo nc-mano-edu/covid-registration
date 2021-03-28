@@ -1,0 +1,13 @@
+{
+  "startDate": "#startDate#",
+  "treatmentState": "started",
+  "user": null,
+  "symptoms": [
+    {
+      "symptomId": "1"
+    },
+    {
+      "symptomId": "2"
+    }
+  ]
+}
