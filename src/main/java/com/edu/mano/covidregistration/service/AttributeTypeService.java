@@ -1,6 +1,7 @@
 package com.edu.mano.covidregistration.service;
 
 import com.edu.mano.covidregistration.domain.AttributeType;
+import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
 import com.edu.mano.covidregistration.repository.AttributeTypeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +35,7 @@ public class AttributeTypeService {
         try {
             return attributeTypeRepository.findById(id).get();
         } catch (NoSuchElementException e) {
-            log.info("AttributeType with id " + id + " not found");
-            return null;
+            throw new NotFoundException(AttributeType.class, id);
         }
     }
 
@@ -45,25 +45,22 @@ public class AttributeTypeService {
         return attributeTypeId;
     }
 
-    public boolean delete(Long id) {
+    public void delete(Long id) {
         log.info("Deleting an attributeType with id " + id);
         try {
             attributeTypeRepository.deleteById(id);
-            return true;
         } catch (EmptyResultDataAccessException e) {
-            return false;
+            throw new NotFoundException(AttributeType.class, id);
         }
     }
 
-    public boolean update(Long id, AttributeType attributeType) {
+    public void update(Long id, AttributeType attributeType) {
         try {
             attributeType.setId(attributeTypeRepository.findById(id).get().getId());
             Long attributeTypeId = attributeTypeRepository.save(attributeType).getId();
             log.info("AttributeType updated successfully");
-            return true;
         } catch (NoSuchElementException e) {
-            log.info("AttributeType with id " + id + " not found");
-            return false;
+            throw new NotFoundException(AttributeType.class, id);
         }
     }
 

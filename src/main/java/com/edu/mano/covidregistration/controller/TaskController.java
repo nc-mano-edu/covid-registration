@@ -2,7 +2,6 @@ package com.edu.mano.covidregistration.controller;
 
 import com.edu.mano.covidregistration.domain.Task;
 import com.edu.mano.covidregistration.service.TaskService;
-import com.edu.mano.covidregistration.tools.Tools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,7 @@ import java.util.List;
 public class TaskController {
 
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
-
-    private final Tools tools = new Tools();
-
+    
     private final TaskService taskService;
 
     @Autowired
@@ -43,24 +40,21 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<String> add(@RequestBody @Valid Task task) {
         log.info("Creating new " + task);
-        return taskService.add(task);
+        return ResponseEntity.ok("Task created with id " + taskService.add(task));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-        if (taskService.delete(id)) {
-            log.info("Task removed successfully");
-            return ResponseEntity.ok("Task removed successfully");
-        } else {
-            log.info("Task with id " + id + " not found");
-            return new ResponseEntity<>("Task not found", HttpStatus.NOT_FOUND);
-        }
+        taskService.delete(id);
+        log.info("Task removed successfully");
+        return ResponseEntity.ok("Task removed successfully");
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid Task task) {
         log.info("Updating with " + task);
-        return taskService.update(id, task);
+        taskService.update(id, task);
+        return ResponseEntity.ok("Task updated successfully");
     }
 
 }
