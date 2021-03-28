@@ -1,12 +1,16 @@
 package com.edu.mano.covidregistration.domain;
 
-import com.edu.mano.covidregistration.domain.UserRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -25,18 +29,7 @@ public class Symptom {
     private String name;
     private String description;
 
-    /*
-    public Symptom (Long symptomId , String name, String description) {
-        this.symptomId = symptomId ;
-        this.name = name;
-        this.description = description;
-    }*/
-
-    @ManyToMany (fetch = FetchType.LAZY)
-    @JoinTable (name = "Request_symptoms"
-            ,joinColumns = @JoinColumn(name = "symptom_id")
-            ,inverseJoinColumns = @JoinColumn (name="request_id")
-    )
-    private List<UserRequest> userRequests;
-
+    @JsonIgnore
+    @ManyToMany(mappedBy = "symptoms"/*, fetch = FetchType.EAGER*/)
+    List<UserRequest> userRequests;
 }

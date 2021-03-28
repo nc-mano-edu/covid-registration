@@ -2,33 +2,24 @@ package com.edu.mano.covidregistration.rest;
 
 import com.edu.mano.covidregistration.SpringBootTests;
 import com.edu.mano.covidregistration.domain.Symptom;
-import com.edu.mano.covidregistration.domain.Task;
-import com.edu.mano.covidregistration.domain.UserRequest;
-import com.edu.mano.covidregistration.service.SymptomService;
 import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class SymptomRestApiTest extends SpringBootTests {
 
@@ -37,8 +28,6 @@ class SymptomRestApiTest extends SpringBootTests {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-
 
     final Symptom symptom = new Symptom(1L, "cough", "red throat",null );
 
@@ -75,14 +64,16 @@ class SymptomRestApiTest extends SpringBootTests {
     @Test
     public void createSymptomTest() throws Exception {
 
-        mockMvc.perform(
-                post("/backend/symptom")
-                        .content(objectMapper.writeValueAsString(symptom))
-                        .contentType(MediaType.APPLICATION_JSON)
-        )
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(symptom)));
+        String request = objectMapper.writeValueAsString(symptom);
 
+        MvcResult result = mockMvc.perform(
+                post("/backend/symptom")
+                        .content(request)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Assertions.assertEquals(objectMapper.readTree(request), objectMapper.readTree(result.getResponse().getContentAsString()));
     }
 
     @Test

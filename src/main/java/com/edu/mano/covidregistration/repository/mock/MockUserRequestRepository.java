@@ -1,14 +1,14 @@
 package com.edu.mano.covidregistration.repository.mock;
 
-import com.edu.mano.covidregistration.domain.Symptom;
-import com.edu.mano.covidregistration.domain.User;
 import com.edu.mano.covidregistration.domain.UserRequest;
 import com.edu.mano.covidregistration.repository.UserRequestRepository;
-import org.hibernate.mapping.Collection;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Profile("test")
@@ -16,14 +16,11 @@ public class MockUserRequestRepository implements UserRequestRepository {
 
     private List<UserRequest> userRequests;
 
-
-
-    public MockUserRequestRepository () {
-        this.userRequests = new ArrayList<>(Collections.singletonList(new UserRequest(1l,null,null,"in progress",null,null)));
+    public MockUserRequestRepository() {
+        this.userRequests = new ArrayList<>(Collections.singletonList(new UserRequest(1l, null, null, "in progress", null, null)));
     }
 
-
-      @Override
+    @Override
     public List<UserRequest> findAll() {
         return this.userRequests;
     }
@@ -33,10 +30,14 @@ public class MockUserRequestRepository implements UserRequestRepository {
         String str = String.valueOf(id);
         int newId = Integer.parseInt(str);
 
-        UserRequest neededUserRequest = this.userRequests.get(newId-1);
+        UserRequest neededUserRequest = this.userRequests.get(newId - 1);
         return neededUserRequest;
     }
 
+    @Override
+    public List<UserRequest> findUserRequestsByUserId(Long userId) {
+        return userRequests;
+    }
 
     @Override
     public Iterable<UserRequest> findAllById(Iterable<Long> iterable) {

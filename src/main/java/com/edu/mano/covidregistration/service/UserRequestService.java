@@ -25,13 +25,16 @@ public class UserRequestService {
         return userRequestRepository.findUserRequestByRequestId(id);
     }
 
-    public UserRequest saveUserRequest(UserRequest symptom) {
-        return userRequestRepository.save(symptom);
+    public List<UserRequest> findRequestByUserId(Long userId) {
+        return userRequestRepository.findUserRequestsByUserId(userId);
     }
 
-    public void  deleteUserRequest(Long id) {
+    public UserRequest saveUserRequest(UserRequest request) {
+        userRequestRepository.save(request);
+        return findRequestByRequestId(request.getRequestId());
+    }
+
+    public void deleteUserRequest(Long id) {
         userRequestRepository.deleteById(id);
     }
-
-
 }

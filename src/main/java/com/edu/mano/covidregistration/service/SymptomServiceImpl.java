@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-public class SymptomServiceImpl implements SymptomService {
+public class SymptomServiceImpl {
 
     private static final Logger log = LoggerFactory.getLogger(AttributeService.class);
 
