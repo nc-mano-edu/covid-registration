@@ -26,6 +26,12 @@ public class UserRolesController {
         return userRolesService.findAllUserRoles();
     }
 
+    @GetMapping("/getUserRoleById/{id}")
+    public UserRoles getUserRoleById(@PathVariable Long id){
+
+        return userRolesService.findUserRoleById(id);
+    }
+
     @PostMapping("/makeUserRole")
     public ResponseEntity<String> createUserRole(@RequestBody @Valid UserRoles userRole){
 

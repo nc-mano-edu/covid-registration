@@ -1,6 +1,8 @@
 package com.edu.mano.covidregistration.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,6 +10,8 @@ import java.util.List;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "USER_ROLES")
 public class UserRoles {
 
@@ -34,6 +38,6 @@ public class UserRoles {
         return roleId;
     }
 
-    public long obtainRolesId(){return roleId.get(0).getRoleId();}
+    public Long obtainRolesId(){return roleId.isEmpty() ? roleId.get(0).getRoleId() : null;}
 
 }

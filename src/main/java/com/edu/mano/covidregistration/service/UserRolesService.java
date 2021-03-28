@@ -46,18 +46,24 @@ public class UserRolesService {
 
         List<UserRoles> existingRoles = findAllUserRoles();
 
-        for (UserRoles userRoles : existingRoles){
+        if (existingRoles != null){
 
-            if (userRoles.obtainUserId() == userRole.obtainUserId()){
+            for (UserRoles userRoles : existingRoles){
 
-                return ResponseEntity.badRequest().build();
+                if (userRoles.obtainUserId() == userRole.obtainUserId()){
+
+                    return ResponseEntity.badRequest().build();
+                }
             }
+
+            userRolesRepository.save(userRole);
+
+            return ResponseEntity.ok("Successfully created an item");
+
+        }else {
+
+            return ResponseEntity.notFound().build();
         }
-
-        userRolesRepository.save(userRole);
-
-        return ResponseEntity.ok("Successfully created an item");
-
     }
 
     public ResponseEntity<String> updateUserRole(UserRoles userRole){
