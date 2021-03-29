@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PutMapping("/editUser")
-    public ResponseEntity<String> updateRole(@RequestBody @Valid User user){
+    public ResponseEntity<String> updateUser(@RequestBody @Valid User user){
 
             userService.updateUser(user);
 
@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteUser/{id}")
-    public ResponseEntity<String> deleteRole(@PathVariable long id){
+    public ResponseEntity<String> deleteUser(@PathVariable long id){
 
         log.info("user with id" + id + "was deleted");
 
