@@ -12,10 +12,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name="\"user\"")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private long id;
 
     private String firstName;
@@ -27,7 +29,7 @@ public class User {
     private String insuranceNumber;
     private String phoneNumber;
 
-    @ManyToMany
-    private List<Specialisation> specialisations;
+//    @ManyToMany
+//    private List<Specialisation> specialisations;
 
 }

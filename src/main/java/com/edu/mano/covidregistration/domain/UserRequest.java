@@ -4,18 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
@@ -24,8 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "User_request")
+@Entity(name = "user_request")
 public class UserRequest {
 
     @Id
@@ -41,14 +29,23 @@ public class UserRequest {
     @Size(min = 3)
     private String treatmentState;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = true)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private User user;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "Request_symptoms"
-            , joinColumns = @JoinColumn(name = "request_id")
-            , inverseJoinColumns = @JoinColumn(name = "symptom_id")
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(
+            joinColumns = @JoinColumn(
+                    name = "request_id",
+                    foreignKey = @ForeignKey(
+                            name = "fk_request_id",
+                            foreignKeyDefinition = "FOREIGN KEY (request_id) REFERENCES user_request(request_id) ON DELETE CASCADE")
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "symptom_id",
+                    foreignKey = @ForeignKey(
+                            name = "fk_symptom_id",
+                            foreignKeyDefinition = "FOREIGN KEY (symptom_id) REFERENCES symptoms(symptom_id) ON DELETE CASCADE")
+            )
     )
     private List<Symptom> symptoms;
 

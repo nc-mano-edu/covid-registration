@@ -17,8 +17,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "Symptoms")
+@Entity(name = "symptoms")
 public class Symptom {
 
     @Id
