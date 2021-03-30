@@ -1,3 +1,7 @@
+insert into roles (name, description)
+values ('Doctor', 'Doctor descr'),
+        ('Patient', 'Patient descr');
+
 insert into attribute_types (name, check_mask)
 values ('String value', '[A-Za-zА-Яа-яЁё\s]+'),
        ('Numeric value', '\d+(\.\d+)?'),
@@ -49,4 +53,6 @@ values (1, 2, null, null, 20, null),
        (4, 5, TIMESTAMP '2021-02-26 15:39', null, null, null),
        (5, 6, null, null, 2000, null),
        (6, 8, TIMESTAMP '2021-03-08 08:00', null, null, null);
+
+
 

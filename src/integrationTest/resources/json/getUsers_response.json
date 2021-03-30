@@ -1,0 +1,35 @@
+[
+  {
+    "id": 3,
+    "firstName": "firstName",
+    "middleName": "middleName",
+    "lastName": "lastName",
+    "dateOfBirth": "12.12.1912",
+    "insuranceNumber": "123321123",
+    "phoneNumber": "8 888 8888 888888888",
+    "specialisations": [
+      {
+        "name": "therapist",
+        "description": "therapist_description",
+        "id": 1
+      },
+      {
+        "name": "immunologist",
+        "description": "immunologist_description",
+        "id": 2
+      }
+    ],
+    "roles": [
+      {
+        "roleId": 1,
+        "name": "Doctor",
+        "description": "Doctor descr"
+      },
+      {
+        "roleId": 2,
+        "name": "Patient",
+        "description": "Patient descr"
+      }
+    ]
+  }
+]

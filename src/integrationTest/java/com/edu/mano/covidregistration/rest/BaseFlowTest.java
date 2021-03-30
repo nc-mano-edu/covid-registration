@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.SPECIALIZATION_BASE_PREFIX;
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.SYMPTOMS_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_BASE_PREFIX;
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_REQUEST_BASE_PREFIX;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,8 +35,40 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
     @Order(1)
     public void integrationFlow() throws Exception {
         createSpecializations();
+        createRoles();
         createSymptoms();
+
+        createUser();
+
         createUserRequest();
+    }
+
+    private void createRoles() {
+        //todo make creation via test, and not in data.sql
+    }
+
+    private void createUser() throws Exception {
+        String inputJsonRequest = testDataPreparation.getJson("json/createUser_request.json");
+
+        mockMvc.perform(
+                post(USER_BASE_PREFIX)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(inputJsonRequest)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        MvcResult result = mockMvc.perform(
+                get(USER_BASE_PREFIX + "/all")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String actualResult = result.getResponse().getContentAsString();
+
+        String expectedResult = AppUtility.getContentFromResourceFile("json/getUsers_response.json");
+
+        Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
     }
 
     private void createUserRequest() throws Exception {

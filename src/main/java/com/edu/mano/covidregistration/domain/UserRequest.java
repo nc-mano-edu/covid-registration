@@ -45,7 +45,7 @@ public class UserRequest {
     @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany/*(fetch = FetchType.EAGER)*/
     @JoinTable(name = "Request_symptoms"
             , joinColumns = @JoinColumn(name = "request_id")
             , inverseJoinColumns = @JoinColumn(name = "symptom_id")

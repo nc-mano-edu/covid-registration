@@ -1,0 +1,24 @@
+{
+  "firstName": "firstName",
+  "middleName": "middleName",
+  "lastName": "lastName",
+  "dateOfBirth": "12.12.1912",
+  "insuranceNumber": "123321123",
+  "phoneNumber": "8 888 8888 888888888",
+  "roles": [
+    {
+      "roleId": "1"
+    },
+    {
+      "roleId": "2"
+    }
+  ],
+  "specialisations": [
+    {
+      "id": "1"
+    },
+    {
+      "id": "2"
+    }
+  ]
+}
