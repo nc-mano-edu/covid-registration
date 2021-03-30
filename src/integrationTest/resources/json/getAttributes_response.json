@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Account photo",
+    "attributeType": {
+      "id": 3,
+      "name": "Image value",
+      "checkMask": ".{1,1024}"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Age",
+    "attributeType": {
+      "id": 2,
+      "name": "Numeric value",
+      "checkMask": "\\d+(\\.\\d+)?"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Contact phone number",
+    "attributeType": {
+      "id": 5,
+      "name": "Phone number value",
+      "checkMask": "[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Blood test results",
+    "attributeType": {
+      "id": 1,
+      "name": "String value",
+      "checkMask": "[A-Za-zÐ-Ð¯Ð°-ÑÐÑ\\s]+"
+    }
+  },
+  {
+    "id": 5,
+    "name": "Date of the application",
+    "attributeType": {
+      "id": 4,
+      "name": "Date value",
+      "checkMask": "\\d{4}-[01]\\d-[0-3]\\d(\\s[0-2]\\d:[0-5]\\d:[0-5]\\d)?(?:\\.\\d+)?Z?"
+    }
+  },
+  {
+    "id": 6,
+    "name": "Service payment amount",
+    "attributeType": {
+      "id": 2,
+      "name": "Numeric value",
+      "checkMask": "\\d+(\\.\\d+)?"
+    }
+  },
+  {
+    "id": 7,
+    "name": "Photo of inflammation on the skin",
+    "attributeType": {
+      "id": 3,
+      "name": "Image value",
+      "checkMask": ".{1,1024}"
+    }
+  },
+  {
+    "id": 8,
+    "name": "End date of treatment",
+    "attributeType": {
+      "id": 4,
+      "name": "Date value",
+      "checkMask": "\\d{4}-[01]\\d-[0-3]\\d(\\s[0-2]\\d:[0-5]\\d:[0-5]\\d)?(?:\\.\\d+)?Z?"
+    }
+  },
+  {
+    "id": 9,
+    "name": "Clinic link",
+    "attributeType": {
+      "id": 3,
+      "name": "Image value",
+      "checkMask": ".{1,1024}"
+    }
+  },
+  {
+    "id": 10,
+    "name": "Description of patient complaints",
+    "attributeType": {
+      "id": 1,
+      "name": "String value",
+      "checkMask": "[A-Za-zÐ-Ð¯Ð°-ÑÐÑ\\s]+"
+    }
+  }
+]

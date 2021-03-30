@@ -1,6 +1,5 @@
 package com.edu.mano.covidregistration.controller;
 
-import com.edu.mano.covidregistration.domain.Symptom;
 import com.edu.mano.covidregistration.domain.UserRequest;
 import com.edu.mano.covidregistration.service.UserRequestService;
 import org.slf4j.Logger;
@@ -8,22 +7,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/backend/userRequest")
 public class UserRequestController {
 
-
     private static Logger log = LoggerFactory.getLogger(UserRequestController.class);
-
-    /*
-    private class Body {
-        private User user;
-        private Symptom symptom;
-        private UserRequest userRequest;
-    }
-     */
 
     @Autowired
     private UserRequestService userRequestService;
@@ -47,6 +47,12 @@ public class UserRequestController {
         return new ResponseEntity<>(userRequest, HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<UserRequest> findRequestsByUserId(@RequestParam Long userId) {
+        List<UserRequest> userRequests = userRequestService.findRequestByUserId(userId);
+
+        return new ResponseEntity(userRequests, HttpStatus.OK);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<UserRequest> deleteUserRequest(@PathVariable Long id) {
