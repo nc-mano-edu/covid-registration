@@ -15,6 +15,8 @@ import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_B
 
 @RestController
 @RequestMapping(value = USER_BASE_PREFIX)
+@CrossOrigin //todo: this is WA. Need to fix on the frontend part
+@RequestMapping(value = "/users")
 public class UserController {
     private final UserService userService;
 
