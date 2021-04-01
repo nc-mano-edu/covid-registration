@@ -4,8 +4,6 @@ import com.edu.mano.covidregistration.domain.Attribute;
 import com.edu.mano.covidregistration.domain.Task;
 import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
 import com.edu.mano.covidregistration.repository.TaskRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -15,8 +13,6 @@ import java.util.NoSuchElementException;
 
 @Service
 public class TaskService {
-
-    private static final Logger log = LoggerFactory.getLogger(TaskService.class);
 
     private final TaskRepository taskRepository;
 
@@ -29,12 +25,10 @@ public class TaskService {
     }
 
     public List<Task> findAll() {
-        log.info("Retrieving a list of tasks");
         return taskRepository.findAll();
     }
 
     public Task find(Long id) {
-        log.info("Retrieving an tasks with id " + id);
         try {
             return taskRepository.findById(id).get();
         } catch (NoSuchElementException e) {
@@ -46,13 +40,10 @@ public class TaskService {
         for (Attribute attr : task.getAttributes()) {
             attributeService.find(attr.getId());
         }
-        Long taskId = taskRepository.save(task).getId();
-        log.info("Task created with id " + taskId);
-        return taskId;
+        return taskRepository.save(task).getId();
     }
 
     public void delete(Long id) {
-        log.info("Deleting an tasks with id " + id);
         try {
             taskRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
@@ -70,8 +61,7 @@ public class TaskService {
 
         try {
             task.setId(taskRepository.findById(id).get().getId());
-            taskRepository.save(task).getId();
-            log.info("Task updated successfully");
+            taskRepository.save(task);
         } catch (NoSuchElementException e) {
             throw new NotFoundException(Task.class, id);
         }

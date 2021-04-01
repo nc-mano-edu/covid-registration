@@ -15,6 +15,8 @@ public class MockTaskInstanceDataRepository implements TaskInstanceDataRepositor
 
     private List<TaskInstanceData> taskInstanceData;
 
+    private final UserRequest userRequest = new UserRequest(1L, null, null, "in progress", null, null);
+
     MockTaskInstanceDataRepository() {
         Date createdDate, finishedDate;
         try {
@@ -31,7 +33,7 @@ public class MockTaskInstanceDataRepository implements TaskInstanceDataRepositor
                 new Task(1L, "Some task", "* * * * *", "Some description", Collections.singletonList(
                         new Attribute(1L, "User age",
                                 new AttributeType(1L, "Numeric value", "\\d+(\\.\\d+)?")))
-                ), 1L, createdDate, finishedDate, false);
+                ), userRequest, createdDate, finishedDate, false, null);
         Attribute attribute = new Attribute(1L, "User age",
                 new AttributeType(1L, "Numeric value", "\\d+(\\.\\d+)?"));
 

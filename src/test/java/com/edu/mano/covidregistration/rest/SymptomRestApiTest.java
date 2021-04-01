@@ -14,12 +14,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.SYMPTOMS_BASE_PREFIX;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 class SymptomRestApiTest extends SpringBootTests {
 
@@ -29,7 +29,7 @@ class SymptomRestApiTest extends SpringBootTests {
     @Autowired
     private ObjectMapper objectMapper;
 
-    final Symptom symptom = new Symptom(1L, "cough", "red throat",null );
+    final Symptom symptom = new Symptom(1L, "cough", "red throat", null);
 
     @Test
     void MockMvcTest() {
@@ -38,18 +38,18 @@ class SymptomRestApiTest extends SpringBootTests {
 
     @Test
     public void findAllTest() throws Exception {
-        List <Symptom> symptoms = new ArrayList<>();
+        List<Symptom> symptoms = new ArrayList<>();
         symptoms.add(symptom);
 
-       mockMvc.perform(get("/backend/symptom/all"))
+        mockMvc.perform(get(SYMPTOMS_BASE_PREFIX + "/all"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(symptoms)));
 
     }
 
     @Test
-    public void getSymptomBySymptomIdTest () throws Exception {
-        MvcResult result = mockMvc.perform(get("/backend/symptom/1"))
+    public void getSymptomBySymptomIdTest() throws Exception {
+        MvcResult result = mockMvc.perform(get(SYMPTOMS_BASE_PREFIX + "/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(symptom)))
                 .andReturn();
@@ -67,7 +67,7 @@ class SymptomRestApiTest extends SpringBootTests {
         String request = objectMapper.writeValueAsString(symptom);
 
         MvcResult result = mockMvc.perform(
-                post("/backend/symptom")
+                post(SYMPTOMS_BASE_PREFIX)
                         .content(request)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -77,11 +77,9 @@ class SymptomRestApiTest extends SpringBootTests {
     }
 
     @Test
-    public void  deleteSymptomByIdTest () throws Exception {
-        mockMvc.perform(delete("/backend/symptom/1" )).andExpect(status().isOk());
+    public void deleteSymptomByIdTest() throws Exception {
+        mockMvc.perform(delete(SYMPTOMS_BASE_PREFIX + "/1")).andExpect(status().isOk());
     }
-
-
 
 
 }

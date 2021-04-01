@@ -1,6 +1,7 @@
 package com.edu.mano.covidregistration.repository.mock;
 
 import com.edu.mano.covidregistration.domain.User;
+import com.edu.mano.covidregistration.domain.UserRequest;
 import com.edu.mano.covidregistration.repository.UserRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -64,5 +65,10 @@ public class MockUserRepository implements UserRepository {
     @Override
     public void deleteAll() {
 
+    }
+
+    @Override
+    public List<UserRequest> findRequests(Long id) {
+        return null;
     }
 }

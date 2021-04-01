@@ -5,9 +5,8 @@ import com.edu.mano.covidregistration.domain.TaskInstance;
 import com.edu.mano.covidregistration.domain.TaskInstanceData;
 import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
 import com.edu.mano.covidregistration.repository.TaskInstanceDataRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +16,6 @@ import java.util.NoSuchElementException;
 @Service
 public class TaskInstanceDataService {
 
-    private static final Logger log = LoggerFactory.getLogger(TaskInstanceDataService.class);
-
     private final TaskInstanceDataRepository taskInstanceDataRepository;
 
     private final TaskInstanceService taskInstanceService;
@@ -27,19 +24,18 @@ public class TaskInstanceDataService {
 
     @Autowired
     public TaskInstanceDataService(TaskInstanceDataRepository taskInstanceDataRepository,
-                                   TaskInstanceService taskInstanceService, AttributeService attributeService) {
+                                   @Lazy TaskInstanceService taskInstanceService,
+                                   AttributeService attributeService) {
         this.taskInstanceDataRepository = taskInstanceDataRepository;
         this.taskInstanceService = taskInstanceService;
         this.attributeService = attributeService;
     }
 
     public List<TaskInstanceData> findAll() {
-        log.info("Retrieving a list of taskInstanceData");
         return taskInstanceDataRepository.findAll();
     }
 
     public TaskInstanceData find(Long id) {
-        log.info("Retrieving an taskInstanceData with id " + id);
         try {
             return taskInstanceDataRepository.findById(id).get();
         } catch (NoSuchElementException e) {
@@ -50,14 +46,10 @@ public class TaskInstanceDataService {
     public Long add(TaskInstanceData taskInstanceData) {
         taskInstanceService.find(taskInstanceData.getTaskInstance().getId());
         attributeService.find(taskInstanceData.getAttribute().getId());
-
-        Long taskInstanceDataId = taskInstanceDataRepository.save(taskInstanceData).getId();
-        log.info("TaskInstanceData created with id " + taskInstanceDataId);
-        return taskInstanceDataId;
+        return taskInstanceDataRepository.save(taskInstanceData).getId();
     }
 
     public void delete(Long id) {
-        log.info("Deleting a taskInstanceData with id " + id);
         try {
             taskInstanceDataRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
@@ -74,8 +66,7 @@ public class TaskInstanceDataService {
 
         try {
             taskInstanceData.setId(taskInstanceDataRepository.findById(id).get().getId());
-            taskInstanceDataRepository.save(taskInstanceData).getId();
-            log.info("TaskInstanceData updated successfully");
+            taskInstanceDataRepository.save(taskInstanceData);
         } catch (NoSuchElementException e) {
             throw new NotFoundException(TaskInstanceData.class, id);
         }

@@ -1,22 +1,20 @@
 package com.edu.mano.covidregistration.controller;
 
+import com.edu.mano.covidregistration.domain.TaskInstance;
 import com.edu.mano.covidregistration.domain.User;
 import com.edu.mano.covidregistration.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_BASE_PREFIX;
+
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = USER_BASE_PREFIX)
 public class UserController {
     private final UserService userService;
 
@@ -40,5 +38,17 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody @Valid User user) {
         return ResponseEntity.ok(userService.createUser(user));
+    }
+
+    @GetMapping("/{id}/tasks")
+    public ResponseEntity<List<TaskInstance>> findAllTasks(@PathVariable Long id) {
+        List<TaskInstance> tasks = userService.findTasks(id);
+        return new ResponseEntity<>(tasks, tasks == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/active-tasks")
+    public ResponseEntity<List<TaskInstance>> findActiveTasks(@PathVariable Long id) {
+        List<TaskInstance> tasks = userService.findActiveTasks(id);
+        return new ResponseEntity<>(tasks, tasks == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
     }
 }

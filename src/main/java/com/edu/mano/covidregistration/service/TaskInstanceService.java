@@ -1,12 +1,12 @@
 package com.edu.mano.covidregistration.service;
 
+import com.edu.mano.covidregistration.domain.Attribute;
 import com.edu.mano.covidregistration.domain.Task;
 import com.edu.mano.covidregistration.domain.TaskInstance;
+import com.edu.mano.covidregistration.domain.TaskInstanceData;
 import com.edu.mano.covidregistration.exception.baseExceptions.InvalidDateException;
 import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
 import com.edu.mano.covidregistration.repository.TaskInstanceRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -18,16 +18,19 @@ import java.util.NoSuchElementException;
 @Service
 public class TaskInstanceService {
 
-    private static final Logger log = LoggerFactory.getLogger(TaskInstanceService.class);
-
     private final TaskInstanceRepository taskInstanceRepository;
 
     private final TaskService taskService;
 
+    private final TaskInstanceDataService taskInstanceDataService;
+
     @Autowired
-    public TaskInstanceService(TaskInstanceRepository taskInstanceRepository, TaskService taskService) {
+    public TaskInstanceService(TaskInstanceRepository taskInstanceRepository,
+                               TaskService taskService,
+                               TaskInstanceDataService taskInstanceDataService) {
         this.taskInstanceRepository = taskInstanceRepository;
         this.taskService = taskService;
+        this.taskInstanceDataService = taskInstanceDataService;
     }
 
     private void checkFinishedTime(TaskInstance taskInstance) {
@@ -38,12 +41,10 @@ public class TaskInstanceService {
     }
 
     public List<TaskInstance> findAll() {
-        log.info("Retrieving a list of TaskInstances");
         return taskInstanceRepository.findAll();
     }
 
     public TaskInstance find(Long id) {
-        log.info("Retrieving an taskInstance with id " + id);
         try {
             return taskInstanceRepository.findById(id).get();
         } catch (NoSuchElementException e) {
@@ -54,13 +55,31 @@ public class TaskInstanceService {
     public Long add(TaskInstance taskInstance) {
         taskService.find(taskInstance.getTask().getId());
         checkFinishedTime(taskInstance);
-        Long taskInstanceId = taskInstanceRepository.save(taskInstance).getId();
-        log.info("TaskInstance created with id " + taskInstanceId);
-        return taskInstanceId;
+
+        Task task = taskInstance.getTask();
+        List<Attribute> attributes = task.getAttributes();
+        Long id = taskInstanceRepository.save(taskInstance).getId();
+
+        attributes.forEach(attribute -> {
+            TaskInstanceData taskInstanceData = new TaskInstanceData();
+            taskInstanceData.setTaskInstance(taskInstance);
+            taskInstanceData.setAttribute(attribute);
+            taskInstanceDataService.add(taskInstanceData);
+        });
+
+        return id;
     }
 
     public void delete(Long id) {
-        log.info("Deleting a taskInstance with id " + id);
+
+        TaskInstance taskInstance = find(id);
+        List<TaskInstanceData> data = taskInstance.getData();
+        if (data != null) {
+            data.forEach(d -> {
+                taskInstanceDataService.delete(d.getId());
+            });
+        }
+
         try {
             taskInstanceRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
@@ -73,10 +92,16 @@ public class TaskInstanceService {
         taskInstance.setTask(task);
         checkFinishedTime(taskInstance);
 
+        List<TaskInstanceData> data = taskInstance.getData();
+        if (data != null) {
+            data.forEach(d -> {
+                taskInstanceDataService.update(d.getId(), d);
+            });
+        }
+
         try {
             taskInstance.setId(taskInstanceRepository.findById(id).get().getId());
-            taskInstanceRepository.save(taskInstance).getId();
-            log.info("TaskInstance updated successfully");
+            taskInstanceRepository.save(taskInstance);
         } catch (NoSuchElementException e) {
             throw new NotFoundException(TaskInstance.class, id);
         }

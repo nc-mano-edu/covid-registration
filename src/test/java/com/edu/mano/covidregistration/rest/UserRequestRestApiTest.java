@@ -14,14 +14,14 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.SYMPTOMS_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_REQUEST_BASE_PREFIX;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 class UserRequestRestApiTest extends SpringBootTests {
 
@@ -44,7 +44,7 @@ class UserRequestRestApiTest extends SpringBootTests {
         List<UserRequest> userRequests = new ArrayList<>();
         userRequests.add(userRequest);
 
-        MvcResult result = mockMvc.perform(get("/backend/userRequest?userId=1"))
+        MvcResult result = mockMvc.perform(get(USER_REQUEST_BASE_PREFIX + "?userId=1"))
                 .andExpect(status().isOk())
                 .andReturn();
         Assertions.assertEquals(objectMapper.readTree(objectMapper.writeValueAsString(userRequests)), objectMapper.readTree(result.getResponse().getContentAsString()));
@@ -52,7 +52,7 @@ class UserRequestRestApiTest extends SpringBootTests {
 
     @Test
     public void getSymptomBySymptomIdTest() throws Exception {
-        MvcResult result = mockMvc.perform(get("/backend/userRequest/1"))
+        MvcResult result = mockMvc.perform(get(USER_REQUEST_BASE_PREFIX + "/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(userRequest)))
                 .andReturn();
@@ -66,6 +66,6 @@ class UserRequestRestApiTest extends SpringBootTests {
 
     @Test
     public void deleteSymptomByIdTest() throws Exception {
-        mockMvc.perform(delete("/backend/symptom/1")).andExpect(status().isOk());
+        mockMvc.perform(delete(SYMPTOMS_BASE_PREFIX + "/1")).andExpect(status().isOk());
     }
 }

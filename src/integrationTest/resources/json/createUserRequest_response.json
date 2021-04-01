@@ -1,9 +1,19 @@
 {
-  "requestId": 1,
-  "startDate": "#startDate#T00:00:00.000+00:00",
+  "requestId": 2,
+  "startDate": "2021-04-01",
   "endDate": null,
   "treatmentState": "started",
-  "user": null,
+  "user": {
+    "id": 4,
+    "firstName": null,
+    "middleName": null,
+    "lastName": null,
+    "dateOfBirth": null,
+    "insuranceNumber": null,
+    "phoneNumber": null,
+    "specialisations": null,
+    "roles": []
+  },
   "symptoms": [
     {
       "symptomId": 1,

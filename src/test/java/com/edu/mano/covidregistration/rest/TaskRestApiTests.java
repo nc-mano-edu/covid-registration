@@ -11,11 +11,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.TASKS_BASE_PREFIX;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 public class TaskRestApiTests extends SpringBootTests {
 
@@ -27,13 +26,13 @@ public class TaskRestApiTests extends SpringBootTests {
 
     @Test
     public void checkFindAll() throws Exception {
-        mockMvc.perform(get("/task/all"))
+        mockMvc.perform(get(TASKS_BASE_PREFIX + "/all"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void checkFind() throws Exception {
-        MvcResult result = mockMvc.perform(get("/task/1"))
+        MvcResult result = mockMvc.perform(get(TASKS_BASE_PREFIX + "/1"))
                 .andExpect(status().isOk())
                 .andReturn();
         String actualResult = result.getResponse().getContentAsString();
@@ -56,18 +55,13 @@ public class TaskRestApiTests extends SpringBootTests {
         task.setName("Another task");
         task.setSchedule("* * * * * *");
 
-        MvcResult result = mockMvc.perform(post("/task")
+        MvcResult result = mockMvc.perform(post(TASKS_BASE_PREFIX)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(task)))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Pattern p = Pattern.compile("id ([0-9]+)");
-        Matcher m = p.matcher(result.getResponse().getContentAsString());
-        if (m.find()) {
-            return Long.parseLong(m.group(1));
-        }
-        return null;
+        return Long.parseLong(result.getResponse().getContentAsString());
     }
 
     public void checkUpdate(Long attributeId) throws Exception {
@@ -75,14 +69,14 @@ public class TaskRestApiTests extends SpringBootTests {
         task.setName("Another task update");
         task.setSchedule("* * * * *");
 
-        mockMvc.perform(put("/task/" + attributeId)
+        mockMvc.perform(put(TASKS_BASE_PREFIX + "/" + attributeId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(task)))
-                .andExpect(status().isOk());
+                .andExpect(status().isAccepted());
     }
 
     public void checkDelete(Long attributeId) throws Exception {
-        mockMvc.perform(delete("/task/" + attributeId))
-                .andExpect(status().isOk());
+        mockMvc.perform(delete(TASKS_BASE_PREFIX + "/" + attributeId))
+                .andExpect(status().isAccepted());
     }
 }

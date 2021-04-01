@@ -1,5 +1,6 @@
 package com.edu.mano.covidregistration.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class TaskInstanceData {
     @ToString.Exclude
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_instance_data_id")
-    private long id;
+    private Long id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -31,6 +32,7 @@ public class TaskInstanceData {
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"task", "request", "data"})
     private TaskInstance taskInstance;
 
     @NotNull

@@ -6,8 +6,16 @@
     "schedule": "* * * * *",
     "description": "Some description"
   },
-  "request": 1,
+  "request": {
+    "requestId": 1,
+    "startDate": null,
+    "endDate": null,
+    "treatmentState": "in progress",
+    "user": null,
+    "symptoms": null
+  },
   "createdTime": "2021-02-25 12:00:00",
   "finishedTime": "2021-02-25 13:00:00",
+  "data": null,
   "active": false
 }
