@@ -11,7 +11,6 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@CrossOrigin //todo: this is WA. Need to fix on the frontend part
 @RequestMapping(value = "/users")
 public class UserController {
     private final UserService userService;
