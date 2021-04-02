@@ -44,7 +44,10 @@ Frontend will be available on `http://localhost:4200`
 - Angular CLI should be installed
 
 **How to run:**
-1. Run `mvn clean iinstall`
+1. Run `mvn clean install`
 2. Start application with IDE or use `mvn spring-boot:run`
 
 Application will be available on `http://localhost:8080`
+
+----
+UI Design Example: http://zabota63.com/
