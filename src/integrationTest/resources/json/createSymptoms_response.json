@@ -8,5 +8,13 @@
     "symptomId": 2,
     "name": "temperature",
     "description": "temperature_description"
+  },
+
+  {
+    "symptomId": 3,
+    "name": "headache",
+    "description": "headache_description"
   }
+
+
 ]

@@ -39,13 +39,14 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
         createRoles();
         createSymptoms();
 
+        deleteSymptom(3);
+        updateSymptom(1);
+
         createUser();
 
         createUserRequest();
 
-        //updateSymptom();
-        updateSymptom2(1);
-        deleteSymptom(1);
+
     }
 
     private void createRoles() {
@@ -117,6 +118,8 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
 
         createSymptom("cough");
         createSymptom("temperature");
+        createSymptom("headache");
+
 
         MvcResult result = mockMvc.perform(
                 get(SYMPTOMS_BASE_PREFIX + "/all")
@@ -158,69 +161,35 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
         return result;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    /** 1 try update **/
-
-    private void updateSymptom () throws Exception {
+    private void updateSymptom(int id) throws Exception {
 
         String inputJsonRequest = testDataPreparation.getJson("json/updateSymptom_request.json");
 
-        mockMvc.perform(
-                put("/backend/symptom/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(inputJsonRequest)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        MvcResult result = mockMvc.perform(
-                get("/backend/symptom/1")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String actualResult = result.getResponse().getContentAsString();
-
-        String expectedResult = AppUtility.getContentFromResourceFile("json/updateSymptom_response.json");
-
-        Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
-
-    }
-
-    /**2 try update**/
-
-    private void updateSymptom2 (int id) throws Exception {
-
-        String inputJsonRequest = testDataPreparation.getJson("json/updateSymptom_request.json");
-
-        mockMvc.perform(
-                put(SYMPTOMS_BASE_PREFIX +"/{id}", id)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(inputJsonRequest)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        MvcResult result = mockMvc.perform(
+        MvcResult resultBeforeChange = mockMvc.perform(
                 get(SYMPTOMS_BASE_PREFIX + "/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        String actualResult = result.getResponse().getContentAsString();
+        mockMvc.perform(
+                put(SYMPTOMS_BASE_PREFIX + "/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(inputJsonRequest)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        MvcResult resultAfterChange = mockMvc.perform(
+                get(SYMPTOMS_BASE_PREFIX + "/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String actualResult = resultAfterChange.getResponse().getContentAsString();
 
         String expectedResult = AppUtility.getContentFromResourceFile("json/updateSymptom_response.json");
 
+        Assertions.assertNotEquals(objectMapper.readTree(resultAfterChange.getResponse().getContentAsString()), objectMapper.readTree(resultBeforeChange.getResponse().getContentAsString()));
         Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
 
     }
@@ -228,12 +197,7 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
     private void deleteSymptom(int id) throws Exception {
 
         mockMvc.perform(
-                get(SYMPTOMS_BASE_PREFIX + "/{id}", id)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
-        mockMvc.perform(
-                delete(SYMPTOMS_BASE_PREFIX+ "/{id}", id))
+                delete(SYMPTOMS_BASE_PREFIX + "/{id}", id))
                 .andExpect(status().isOk());
 
         mockMvc.perform(
@@ -242,11 +206,6 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
                 .andExpect(status().isNotFound());
 
     }
-
-
-
-
-
 
 
 }
