@@ -56,7 +56,7 @@ public class UserRequestService {
     }
 
     public List<TaskInstance> findTasks(Long id) {
-        return userRequestRepository.findTasks(id);
+        return taskInstanceService.findByRequestId(id);
     }
 
     public void deleteUserRequest(Long id) {

@@ -4,7 +4,6 @@ import com.edu.mano.covidregistration.domain.AttributeType;
 import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
 import com.edu.mano.covidregistration.repository.AttributeTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +18,6 @@ public class AttributeTypeService {
     public AttributeTypeService(AttributeTypeRepository attributeTypeRepository) {
         this.attributeTypeRepository = attributeTypeRepository;
     }
-
 
     public List<AttributeType> findAll() {
         return attributeTypeRepository.findAll();
@@ -38,20 +36,14 @@ public class AttributeTypeService {
     }
 
     public void delete(Long id) {
-        try {
-            attributeTypeRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(AttributeType.class, id);
-        }
+        find(id);
+        attributeTypeRepository.deleteById(id);
     }
 
     public void update(Long id, AttributeType attributeType) {
-        try {
-            attributeType.setId(attributeTypeRepository.findById(id).get().getId());
-            attributeTypeRepository.save(attributeType);
-        } catch (NoSuchElementException e) {
-            throw new NotFoundException(AttributeType.class, id);
-        }
+        find(id);
+        attributeType.setId(id);
+        attributeTypeRepository.save(attributeType);
     }
 
 }

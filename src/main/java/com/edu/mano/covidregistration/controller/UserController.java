@@ -43,12 +43,12 @@ public class UserController {
     @GetMapping("/{id}/tasks")
     public ResponseEntity<List<TaskInstance>> findAllTasks(@PathVariable Long id) {
         List<TaskInstance> tasks = userService.findTasks(id);
-        return new ResponseEntity<>(tasks, tasks == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+        return ResponseEntity.ok(tasks);
     }
 
     @GetMapping("/{id}/active-tasks")
     public ResponseEntity<List<TaskInstance>> findActiveTasks(@PathVariable Long id) {
         List<TaskInstance> tasks = userService.findActiveTasks(id);
-        return new ResponseEntity<>(tasks, tasks == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+        return ResponseEntity.ok(tasks);
     }
 }

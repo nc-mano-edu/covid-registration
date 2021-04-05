@@ -104,4 +104,9 @@ public class MockTaskInstanceRepository implements TaskInstanceRepository {
     public void deleteAll() {
 
     }
+
+    @Override
+    public List<TaskInstance> findByRequestRequestId(Long id) {
+        return null;
+    }
 }

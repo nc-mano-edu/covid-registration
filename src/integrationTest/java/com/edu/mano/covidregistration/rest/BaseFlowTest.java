@@ -35,7 +35,7 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     @BeforeEach
-    private void init() {
+    public void init() {
         sdf.setTimeZone(TimeZone.getTimeZone("Europe/Samara"));
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.setDateFormat(sdf);

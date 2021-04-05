@@ -5,8 +5,8 @@ import com.edu.mano.covidregistration.domain.Task;
 import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
 import com.edu.mano.covidregistration.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -44,14 +44,15 @@ public class TaskService {
     }
 
     public void delete(Long id) {
-        try {
-            taskRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(Task.class, id);
-        }
+        find(id);
+        taskRepository.deleteById(id);
     }
 
+    @Transactional
     public void update(Long id, Task task) {
+        find(id);
+        task.setId(id);
+
         List<Attribute> attributes = task.getAttributes();
         for (int i = 0; i < attributes.size(); i++) {
             Attribute attribute = attributeService.find(attributes.get(i).getId());
@@ -59,12 +60,7 @@ public class TaskService {
         }
         task.setAttributes(attributes);
 
-        try {
-            task.setId(taskRepository.findById(id).get().getId());
-            taskRepository.save(task);
-        } catch (NoSuchElementException e) {
-            throw new NotFoundException(Task.class, id);
-        }
+        taskRepository.save(task);
     }
 
 }

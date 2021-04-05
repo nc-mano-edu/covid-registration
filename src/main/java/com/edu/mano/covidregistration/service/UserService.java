@@ -48,7 +48,7 @@ public class UserService {
 
         List<TaskInstance> taskInstances = new ArrayList<>();
 
-        List<UserRequest> userRequests = userRepository.findRequests(id);
+        List<UserRequest> userRequests = userRequestService.findRequestByUserId(id);
         userRequests.forEach(request -> {
             taskInstances.addAll(userRequestService.findTasks(request.getRequestId()));
         });

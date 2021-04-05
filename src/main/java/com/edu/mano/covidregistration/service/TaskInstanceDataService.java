@@ -7,8 +7,8 @@ import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException
 import com.edu.mano.covidregistration.repository.TaskInstanceDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -50,26 +50,21 @@ public class TaskInstanceDataService {
     }
 
     public void delete(Long id) {
-        try {
-            taskInstanceDataRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(TaskInstanceData.class, id);
-        }
+        find(id);
+        taskInstanceDataRepository.deleteById(id);
     }
 
+    @Transactional
     public void update(Long id, TaskInstanceData taskInstanceData) {
+        find(id);
+        taskInstanceData.setId(id);
 
         TaskInstance taskInstance = taskInstanceService.find(taskInstanceData.getTaskInstance().getId());
         Attribute attribute = attributeService.find(taskInstanceData.getAttribute().getId());
         taskInstanceData.setTaskInstance(taskInstance);
         taskInstanceData.setAttribute(attribute);
 
-        try {
-            taskInstanceData.setId(taskInstanceDataRepository.findById(id).get().getId());
-            taskInstanceDataRepository.save(taskInstanceData);
-        } catch (NoSuchElementException e) {
-            throw new NotFoundException(TaskInstanceData.class, id);
-        }
+        taskInstanceDataRepository.save(taskInstanceData);
     }
 
 }

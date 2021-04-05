@@ -4,14 +4,13 @@ import com.edu.mano.covidregistration.domain.Attribute;
 import com.edu.mano.covidregistration.domain.Task;
 import com.edu.mano.covidregistration.domain.TaskInstance;
 import com.edu.mano.covidregistration.domain.TaskInstanceData;
-import com.edu.mano.covidregistration.exception.baseExceptions.InvalidDateException;
 import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
 import com.edu.mano.covidregistration.repository.TaskInstanceRepository;
+import com.edu.mano.covidregistration.tools.AppUtility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -33,10 +32,19 @@ public class TaskInstanceService {
         this.taskInstanceDataService = taskInstanceDataService;
     }
 
-    private void checkFinishedTime(TaskInstance taskInstance) {
-        Date finishedTime = taskInstance.getFinishedTime();
-        if (finishedTime != null && finishedTime.before(taskInstance.getCreatedTime())) {
-            throw new InvalidDateException("Finished time can`t be earlier than the creation time");
+    private void setFinished(TaskInstance taskInstance) {
+        List<TaskInstanceData> data = taskInstance.getData();
+        if (data != null && data.stream().allMatch(d -> {
+            if (d.getStringValue() != null)
+                return true;
+            if (d.getImageValue() != null)
+                return true;
+            if (d.getDateValue() != null)
+                return true;
+            return d.getNumericValue() != null;
+        })) {
+            taskInstance.setFinishedTime(AppUtility.getCurrentDate());
+            taskInstance.setActive(false);
         }
     }
 
@@ -52,11 +60,15 @@ public class TaskInstanceService {
         }
     }
 
-    public Long add(TaskInstance taskInstance) {
-        taskService.find(taskInstance.getTask().getId());
-        checkFinishedTime(taskInstance);
+    public List<TaskInstance> findByRequestId(Long id) {
+        return taskInstanceRepository.findByRequestRequestId(id);
+    }
 
+    @Transactional
+    public Long add(TaskInstance taskInstance) {
         Task task = taskInstance.getTask();
+        taskService.find(task.getId());
+
         List<Attribute> attributes = task.getAttributes();
         Long id = taskInstanceRepository.save(taskInstance).getId();
 
@@ -67,11 +79,13 @@ public class TaskInstanceService {
             taskInstanceDataService.add(taskInstanceData);
         });
 
+        taskInstance.setActive(true);
+        setFinished(taskInstance);
         return id;
     }
 
+    @Transactional
     public void delete(Long id) {
-
         TaskInstance taskInstance = find(id);
         List<TaskInstanceData> data = taskInstance.getData();
         if (data != null) {
@@ -80,17 +94,14 @@ public class TaskInstanceService {
             });
         }
 
-        try {
-            taskInstanceRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(TaskInstance.class, id);
-        }
+        taskInstanceRepository.deleteById(id);
     }
 
+    @Transactional
     public void update(Long id, TaskInstance taskInstance) {
-        Task task = taskService.find(taskInstance.getTask().getId());
-        taskInstance.setTask(task);
-        checkFinishedTime(taskInstance);
+        find(id);
+        taskInstance.setId(id);
+        taskService.find(taskInstance.getTask().getId());
 
         List<TaskInstanceData> data = taskInstance.getData();
         if (data != null) {
@@ -99,12 +110,7 @@ public class TaskInstanceService {
             });
         }
 
-        try {
-            taskInstance.setId(taskInstanceRepository.findById(id).get().getId());
-            taskInstanceRepository.save(taskInstance);
-        } catch (NoSuchElementException e) {
-            throw new NotFoundException(TaskInstance.class, id);
-        }
+        setFinished(taskInstance);
+        taskInstanceRepository.save(taskInstance);
     }
-
 }

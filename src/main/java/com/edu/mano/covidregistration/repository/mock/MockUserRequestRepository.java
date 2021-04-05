@@ -1,6 +1,5 @@
 package com.edu.mano.covidregistration.repository.mock;
 
-import com.edu.mano.covidregistration.domain.TaskInstance;
 import com.edu.mano.covidregistration.domain.UserRequest;
 import com.edu.mano.covidregistration.repository.UserRequestRepository;
 import org.springframework.context.annotation.Profile;
@@ -88,10 +87,5 @@ public class MockUserRequestRepository implements UserRequestRepository {
     @Override
     public boolean existsById(Long aLong) {
         return false;
-    }
-
-    @Override
-    public List<TaskInstance> findTasks(Long id) {
-        return null;
     }
 }

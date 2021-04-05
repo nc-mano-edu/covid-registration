@@ -4,8 +4,8 @@ import com.edu.mano.covidregistration.domain.Attribute;
 import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
 import com.edu.mano.covidregistration.repository.AttributeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -41,21 +41,16 @@ public class AttributeService {
     }
 
     public void delete(Long id) {
-        try {
-            attributeRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(Attribute.class, id);
-        }
+        find(id);
+        attributeRepository.deleteById(id);
     }
 
+    @Transactional
     public void update(Long id, Attribute attribute) {
+        find(id);
+        attribute.setId(id);
         attributeTypeService.find(attribute.getAttributeType().getId());
-        try {
-            attribute.setId(attributeRepository.findById(id).get().getId());
-            attributeRepository.save(attribute);
-        } catch (NoSuchElementException e) {
-            throw new NotFoundException(Attribute.class, id);
-        }
+        attributeRepository.save(attribute);
     }
-    
+
 }

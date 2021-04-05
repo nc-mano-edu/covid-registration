@@ -1,6 +1,6 @@
 {
   "requestId": 2,
-  "startDate": "2021-04-01",
+  "startDate": "#startDate#",
   "endDate": null,
   "treatmentState": "started",
   "user": {

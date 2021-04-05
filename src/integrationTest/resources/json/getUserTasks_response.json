@@ -34,7 +34,7 @@
           "id": 1,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 1,
@@ -56,7 +56,7 @@
           "id": 1,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 2,
@@ -78,7 +78,7 @@
           "id": 1,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 3,
@@ -95,7 +95,7 @@
         "numericValue": null
       }
     ],
-    "active": false
+    "active": true
   },
   {
     "id": 2,
@@ -132,7 +132,7 @@
           "id": 2,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 4,
@@ -154,7 +154,7 @@
           "id": 2,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 5,
@@ -176,7 +176,7 @@
           "id": 2,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 7,
@@ -198,7 +198,7 @@
           "id": 2,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 9,
@@ -220,7 +220,7 @@
           "id": 2,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 10,
@@ -237,7 +237,7 @@
         "numericValue": null
       }
     ],
-    "active": false
+    "active": true
   },
   {
     "id": 3,
@@ -274,7 +274,7 @@
           "id": 3,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 6,
@@ -296,7 +296,7 @@
           "id": 3,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 8,
@@ -313,7 +313,7 @@
         "numericValue": null
       }
     ],
-    "active": false
+    "active": true
   },
   {
     "id": 4,
@@ -350,7 +350,7 @@
           "id": 4,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 1,
@@ -372,7 +372,7 @@
           "id": 4,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 2,
@@ -394,7 +394,7 @@
           "id": 4,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 3,
@@ -411,7 +411,7 @@
         "numericValue": null
       }
     ],
-    "active": false
+    "active": true
   },
   {
     "id": 5,
@@ -448,7 +448,7 @@
           "id": 5,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 1,
@@ -470,7 +470,7 @@
           "id": 5,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 2,
@@ -492,7 +492,7 @@
           "id": 5,
           "createdTime": null,
           "finishedTime": null,
-          "active": false
+          "active": true
         },
         "attribute": {
           "id": 3,
@@ -509,6 +509,6 @@
         "numericValue": null
       }
     ],
-    "active": false
+    "active": true
   }
 ]

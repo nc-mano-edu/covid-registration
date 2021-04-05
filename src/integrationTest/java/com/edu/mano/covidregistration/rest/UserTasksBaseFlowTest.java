@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -37,16 +38,16 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
     @Autowired
     private TestDataPreparation testDataPreparation;
 
-    private List<TaskInstance> tasks;
-
     private User user = new User();
 
     private UserRequest userRequest = new UserRequest();
 
+    private List<TaskInstance> tasks = new ArrayList<>();
+
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @BeforeEach
-    private void init() {
+    public void init() {
         sdf.setTimeZone(TimeZone.getTimeZone("Europe/Samara"));
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.setDateFormat(sdf);
@@ -58,7 +59,9 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
         createUser();
         createUserRequest();
         getTasks();
+        checkTasksIsActive(true);
         updateTasks();
+        checkTasksIsActive(false);
     }
 
     private void createUser() throws Exception {
@@ -93,6 +96,10 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
         });
     }
 
+    private void checkTasksIsActive(boolean activeExpected) throws Exception {
+        Assertions.assertTrue(tasks.stream().allMatch(task -> task.isActive() == activeExpected));
+    }
+
     private void getTasks() throws Exception {
 
         String userID = String.valueOf(user.getId());
@@ -106,13 +113,11 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
         String actualResult = result.getResponse().getContentAsString();
         String expectedResult = testDataPreparation.getJson("json/getUserTasks_response.json");
 
-        String actualResultTest = actualResult
-                .replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
-
-        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResultTest));
-
         tasks = objectMapper.readValue(actualResult, new TypeReference<List<TaskInstance>>() {
         });
+
+        actualResult = actualResult.replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
+        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
 
     private void updateTasks() throws Exception {
@@ -133,7 +138,7 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
                     .andExpect(status().isAccepted());
         }
 
-        MvcResult result = mockMvc.perform(get(USER_BASE_PREFIX + "/" + userID + "/active-tasks")
+        MvcResult result = mockMvc.perform(get(USER_BASE_PREFIX + "/" + userID + "/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -142,10 +147,12 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
         String actualResult = result.getResponse().getContentAsString();
         String expectedResult = testDataPreparation.getJson("json/updateUserTasks_response.json");
 
-        String actualResultTest = actualResult
-                .replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
+        tasks = objectMapper.readValue(actualResult, new TypeReference<List<TaskInstance>>() {
+        });
 
-        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResultTest));
+        actualResult = actualResult.replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
+
+        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
 
 }
