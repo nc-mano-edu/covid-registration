@@ -1,33 +1,50 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
-import { AppComponent } from './app.component';
-import { UserComponent } from './user/user.component';
-import {UserService} from './user/user.service';
+import {AngularMaterialModule} from './angular-material.module';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {AuthGuard} from './auth/auth.guard';
+import {AuthService} from './auth/auth.service';
+import {HomeComponent} from './home/home.component';
+import {LoginComponent} from './login/login.component';
+
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+
+import {UserComponent} from './user/user.component';
 import {HttpClientModule} from "@angular/common/http";
 import {AddUserComponent} from './user/add-user.component';
-import {RouterModule, Routes} from "@angular/router";
-
-const routes: Routes = [
-  { path: 'users', component: UserComponent },
-  { path: 'add', component: AddUserComponent }
-];
+import {HeaderComponent} from "./header/header.component";
+import {UserService} from "./user/user.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
-    AddUserComponent
+    AddUserComponent,
+    LoginComponent,
+    HeaderComponent,
+    HomeComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot(routes, {useHash: true})
+    MatSlideToggleModule,
+    MatFormFieldModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    AngularMaterialModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    FormsModule
   ],
-  exports: [RouterModule],
-  providers: [UserService],
+  providers: [AuthService, AuthGuard, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
