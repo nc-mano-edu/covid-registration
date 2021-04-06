@@ -1,6 +1,6 @@
-insert into roles (name, description)
-values ('Doctor', 'Doctor descr'),
-       ('Patient', 'Patient descr');
+--insert into roles (name, description)
+--values ('Doctor', 'Doctor descr'),
+--        ('Patient', 'Patient descr');
 
 insert into attribute_types (name, check_mask)
 values ('String value', '[A-Za-zА-Яа-яЁё\s]+'),

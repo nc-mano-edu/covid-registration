@@ -40,6 +40,19 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(user));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateUser(@RequestBody @Valid User user, @PathVariable Long id){
+        userService.updateUser(user, id);
+
+        return ResponseEntity.ok("Edited a user with id" + user.getId());
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable long id){
+        return userService.deleteUser(id);
+    }
+
     @GetMapping("/{id}/tasks")
     public ResponseEntity<List<TaskInstance>> findAllTasks(@PathVariable Long id) {
         List<TaskInstance> tasks = userService.findTasks(id);

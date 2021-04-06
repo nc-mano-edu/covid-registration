@@ -6,6 +6,7 @@ import com.edu.mano.covidregistration.exception.baseExceptions.SymptomNotFoundBy
 import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,15 @@ public class GlobalExceptionHandler {
         }
         return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity handleException(EmptyResultDataAccessException exception) {
+        if (LOGGER.isErrorEnabled()) {
+            LOGGER.error(exception.getMessage(), exception);
+        }
+        return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity handleConstraintViolation(ConstraintViolationException exception) {

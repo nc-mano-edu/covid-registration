@@ -7,6 +7,7 @@ import com.edu.mano.covidregistration.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -63,4 +64,53 @@ public class UserService {
         }
         return tasks.stream().filter(t -> t.getFinishedTime() == null).collect(Collectors.toList());
     }
+
+    public ResponseEntity<String> updateUser(User user, Long id) {
+
+        User desiredUser = userRepository.findById(id).get();
+
+        if (user.getFirstName() != null) {
+            desiredUser.setFirstName(user.getFirstName());
+        }
+
+        if (user.getMiddleName() != null) {
+            desiredUser.setMiddleName(user.getMiddleName());
+        }
+
+        if (user.getLastName() != null) {
+            desiredUser.setLastName(user.getLastName());
+        }
+
+        if (user.getDateOfBirth() != null) {
+            desiredUser.setDateOfBirth(user.getDateOfBirth());
+        }
+
+        if (user.getInsuranceNumber() != null) {
+            desiredUser.setInsuranceNumber(user.getInsuranceNumber());
+        }
+
+        if (user.getPhoneNumber() != null) {
+            desiredUser.setPhoneNumber(user.getPhoneNumber());
+        }
+
+        if (user.getRoles() != null){
+            desiredUser.setRoles(user.getRoles());
+        }
+
+        if(user.getSpecialisations() != null){
+            desiredUser.setSpecialisations(user.getSpecialisations());
+        }
+
+        userRepository.save(desiredUser);
+
+        return ResponseEntity.ok("Successfully edited a role");
+
+    }
+
+    public ResponseEntity<String> deleteUser(long id) {
+        userRepository.deleteById(id);
+
+        return ResponseEntity.ok("Successfully deleted role");
+    }
+
 }
