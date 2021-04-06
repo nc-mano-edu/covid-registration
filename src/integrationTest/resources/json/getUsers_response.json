@@ -12,9 +12,9 @@
   },
   {
     "id": 4,
-    "firstName": "#firstName#",
-    "middleName": "#middleName#",
-    "lastName": "#lastName#",
+    "firstName": "Max",
+    "middleName": "Jo",
+    "lastName": "Petersen",
     "dateOfBirth": "12.12.1912",
     "insuranceNumber": "123321123",
     "phoneNumber": "8 888 8888 888888888",

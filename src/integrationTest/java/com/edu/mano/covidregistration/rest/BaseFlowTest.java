@@ -2,6 +2,7 @@ package com.edu.mano.covidregistration.rest;
 
 import com.edu.mano.covidregistration.SpringBootIntegrationTests;
 import com.edu.mano.covidregistration.TestDataPreparation;
+import com.edu.mano.covidregistration.domain.User;
 import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -17,11 +18,15 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.*;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.ROLE_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.SPECIALIZATION_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.SYMPTOMS_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_REQUEST_BASE_PREFIX;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class BaseFlowTest extends SpringBootIntegrationTests {
@@ -50,11 +55,9 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
         createRoles();
         createSymptoms();
 
-        createUser();
+        checkUser();
 
         createUserRequest();
-
-        deleteUser(3L);
     }
 
     private void createRoles() throws Exception {
@@ -79,10 +82,10 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
 
     }
 
-    private String inputJsonRequestModificationForRoles(String name, String desc){
+    private String inputJsonRequestModificationForRoles(String name, String desc) {
         String inputJsonRequest = testDataPreparation.getJson("json/createRole_request.json");
         inputJsonRequest = inputJsonRequest.replace("#name#", name);
-        inputJsonRequest = inputJsonRequest.replace("#desc#",desc);
+        inputJsonRequest = inputJsonRequest.replace("#desc#", desc);
 
         return inputJsonRequest;
     }
@@ -121,17 +124,13 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
 
     }
 
-    private void createUser() throws Exception {
-        String inputJsonRequest = testDataPreparation.getJson("json/createUser_request.json");
+    private void checkUser() throws Exception {
+        createUser("Max", "Jo", "Petersen");
+        User secondUser = createUser("Max2", "Jo2", "Petersen2");
 
-        mockMvc.perform(
-                post(USER_BASE_PREFIX)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(inputJsonRequest)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        updateUser(secondUser.getId());
 
-        updateUser(3L);
+        deleteUser(secondUser.getId());
 
         MvcResult result = mockMvc.perform(
                 get(USER_BASE_PREFIX + "/all")
@@ -140,20 +139,32 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
                 .andReturn();
 
         String actualResult = result.getResponse().getContentAsString();
-
         String expectedResult = AppUtility.getContentFromResourceFile("json/getUsers_response.json");
-        expectedResult = expectedResult.replace("#firstName#","Max");
-        expectedResult = expectedResult.replace("#middleName#","Jo");
-        expectedResult = expectedResult.replace("#lastName#","Peterson");
-
         Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
     }
 
+    private User createUser(String firstName, String secondName, String lastName) throws Exception {
+        String inputJsonRequest = testDataPreparation.getJson("json/createUser_request.json")
+                .replace("#firstName#", firstName)
+                .replace("#middleName#", secondName)
+                .replace("#lastName#", lastName);
+
+        MvcResult result = mockMvc.perform(
+                post(USER_BASE_PREFIX)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(inputJsonRequest)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        return objectMapper.readValue(result.getResponse().getContentAsString(), User.class);
+    }
+
     private void updateUser(Long id) throws Exception {
-        String inputJsonRequest = testDataPreparation.getJson("json/createUser_request.json");
-        inputJsonRequest = inputJsonRequest.replace("#firstName#","Max");
-        inputJsonRequest = inputJsonRequest.replace("#middleName#","Jo");
-        inputJsonRequest = inputJsonRequest.replace("#lastName#","Peterson");
+        String inputJsonRequest = testDataPreparation.getJson("json/createUser_request.json")
+                .replace("#firstName#", "MaxUpdated")
+                .replace("#middleName#", "JoUpdated")
+                .replace("#lastName#", "PetersonUpdated");
 
         mockMvc.perform(
                 put(USER_BASE_PREFIX + "/" + id)
@@ -177,7 +188,7 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
 
         String actualResult = result.getResponse().getContentAsString();
 
-        String expectedResult = "[]";
+        String expectedResult = testDataPreparation.getJson("json/getUsers_response.json");
 
         Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
