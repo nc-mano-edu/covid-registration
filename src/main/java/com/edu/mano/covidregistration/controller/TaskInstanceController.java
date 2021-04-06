@@ -2,8 +2,6 @@ package com.edu.mano.covidregistration.controller;
 
 import com.edu.mano.covidregistration.domain.TaskInstance;
 import com.edu.mano.covidregistration.service.TaskInstanceService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@RestController
-@RequestMapping(value = "/taskInstance")
-public class TaskInstanceController {
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.TASKS_INSTANCE_BASE_PREFIX;
 
-    private static final Logger log = LoggerFactory.getLogger(TaskInstanceController.class);
+@RestController
+@RequestMapping(value = TASKS_INSTANCE_BASE_PREFIX)
+public class TaskInstanceController {
 
     private final TaskInstanceService taskInstanceService;
 
@@ -28,33 +26,30 @@ public class TaskInstanceController {
     @GetMapping("/all")
     public ResponseEntity<List<TaskInstance>> findAll() {
         List<TaskInstance> taskInstances = taskInstanceService.findAll();
-        return new ResponseEntity<>(taskInstances, HttpStatus.OK);
+        return ResponseEntity.ok(taskInstances);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskInstance> find(@PathVariable Long id) {
         TaskInstance taskInstance = taskInstanceService.find(id);
-        return new ResponseEntity<>(taskInstance, HttpStatus.OK);
+        return new ResponseEntity<>(taskInstance, taskInstance == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<String> add(@RequestBody @Valid TaskInstance taskInstance) {
-        log.info("Creating new " + taskInstance);
-        return ResponseEntity.ok("TaskInstance created with id " + taskInstanceService.add(taskInstance));
+    public ResponseEntity<Long> add(@RequestBody @Valid TaskInstance taskInstance) {
+        return ResponseEntity.ok(taskInstanceService.add(taskInstance));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity delete(@PathVariable Long id) {
         taskInstanceService.delete(id);
-        log.info("TaskInstance removed successfully");
-        return ResponseEntity.ok("TaskInstance removed successfully");
+        return ResponseEntity.accepted().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid TaskInstance taskInstance) {
-        log.info("Updating with " + taskInstance);
+    public ResponseEntity update(@PathVariable Long id, @RequestBody @Valid TaskInstance taskInstance) {
         taskInstanceService.update(id, taskInstance);
-        return ResponseEntity.ok("TaskInstance updated successfully");
+        return ResponseEntity.accepted().build();
     }
 
 }

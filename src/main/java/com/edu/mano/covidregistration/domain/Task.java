@@ -21,7 +21,7 @@ public class Task {
     @ToString.Exclude
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
-    private long id;
+    private Long id;
 
     @NotNull
     @Size(min = 2)

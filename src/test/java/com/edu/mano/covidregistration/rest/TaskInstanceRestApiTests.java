@@ -1,14 +1,13 @@
 package com.edu.mano.covidregistration.rest;
 
 import com.edu.mano.covidregistration.SpringBootTests;
-import com.edu.mano.covidregistration.domain.Attribute;
-import com.edu.mano.covidregistration.domain.AttributeType;
-import com.edu.mano.covidregistration.domain.Task;
-import com.edu.mano.covidregistration.domain.TaskInstance;
+import com.edu.mano.covidregistration.domain.*;
 import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,11 +18,11 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.TimeZone;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.TASKS_INSTANCE_BASE_PREFIX;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 public class TaskInstanceRestApiTests extends SpringBootTests {
 
@@ -33,18 +32,26 @@ public class TaskInstanceRestApiTests extends SpringBootTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    Logger logger = LoggerFactory.getLogger(TaskInstanceRestApiTests.class);
+
+
+    private final UserRequest userRequest = new UserRequest(1L, null, null, "in progress", null, null);
+
     @Test
     public void checkFindAll() throws Exception {
-        mockMvc.perform(get("/taskInstance/all"))
+        mockMvc.perform(get(TASKS_INSTANCE_BASE_PREFIX + "/all"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void checkFind() throws Exception {
-        MvcResult result = mockMvc.perform(get("/taskInstance/1"))
+        MvcResult result = mockMvc.perform(get(TASKS_INSTANCE_BASE_PREFIX + "/1"))
                 .andExpect(status().isOk())
                 .andReturn();
         String actualResult = result.getResponse().getContentAsString();
+
+        logger.info(actualResult);
+
         String expectedResult = AppUtility.getContentFromResourceFile("json/TaskInstanceRestApiTest_checkFind_response.json");
 
         Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
@@ -64,7 +71,7 @@ public class TaskInstanceRestApiTests extends SpringBootTests {
         Date createdDate;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            sdf.setTimeZone(TimeZone.getTimeZone("RUS"));
+            sdf.setTimeZone(TimeZone.getTimeZone("Europe/Samara"));
             createdDate = sdf.parse("2021-02-25 22:00:00");
         } catch (ParseException e) {
             createdDate = null;
@@ -73,20 +80,16 @@ public class TaskInstanceRestApiTests extends SpringBootTests {
                 new Attribute(1L, "User age",
                         new AttributeType(1L, "Numeric value", "\\d+(\\.\\d+)?")))
         ));
+        taskInstance.setRequest(userRequest);
         taskInstance.setCreatedTime(createdDate);
 
-        MvcResult result = mockMvc.perform(post("/taskInstance")
+        MvcResult result = mockMvc.perform(post(TASKS_INSTANCE_BASE_PREFIX)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(taskInstance)))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Pattern p = Pattern.compile("id ([0-9]+)");
-        Matcher m = p.matcher(result.getResponse().getContentAsString());
-        if (m.find()) {
-            return Long.parseLong(m.group(1));
-        }
-        return null;
+        return Long.parseLong(result.getResponse().getContentAsString());
     }
 
     public void checkUpdate(Long attributeId) throws Exception {
@@ -94,7 +97,7 @@ public class TaskInstanceRestApiTests extends SpringBootTests {
         Date createdDate;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            sdf.setTimeZone(TimeZone.getTimeZone("RUS"));
+            sdf.setTimeZone(TimeZone.getTimeZone("Europe/Samara"));
             createdDate = sdf.parse("2021-02-25 20:00:00");
         } catch (ParseException e) {
             createdDate = null;
@@ -103,16 +106,17 @@ public class TaskInstanceRestApiTests extends SpringBootTests {
                 new Attribute(1L, "User age",
                         new AttributeType(1L, "Numeric value", "\\d+(\\.\\d+)?")))
         ));
+        taskInstance.setRequest(userRequest);
         taskInstance.setCreatedTime(createdDate);
 
-        mockMvc.perform(put("/taskInstance/" + attributeId)
+        mockMvc.perform(put(TASKS_INSTANCE_BASE_PREFIX + "/" + attributeId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(taskInstance)))
-                .andExpect(status().isOk());
+                .andExpect(status().isAccepted());
     }
 
     public void checkDelete(Long attributeId) throws Exception {
-        mockMvc.perform(delete("/taskInstance/" + attributeId))
-                .andExpect(status().isOk());
+        mockMvc.perform(delete(TASKS_INSTANCE_BASE_PREFIX + "/" + attributeId))
+                .andExpect(status().isAccepted());
     }
 }

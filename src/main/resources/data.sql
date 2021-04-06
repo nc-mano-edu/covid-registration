@@ -1,6 +1,6 @@
 insert into roles (name, description)
 values ('Doctor', 'Doctor descr'),
-        ('Patient', 'Patient descr');
+       ('Patient', 'Patient descr');
 
 insert into attribute_types (name, check_mask)
 values ('String value', '[A-Za-zА-Яа-яЁё\s]+'),
@@ -38,21 +38,21 @@ values (1, 1),
        (3, 6),
        (3, 8);
 
-insert into task_instances(task_id, request_id, created_time, finished_time, is_active)
-values (1, 1, TIMESTAMP '2021-01-16 15:36', TIMESTAMP '2021-01-16 23:15', false),
-       (1, 2, TIMESTAMP '2021-01-17 10:00', TIMESTAMP '2021-01-18 08:36', false),
-       (2, 1, TIMESTAMP '2021-02-22 15:30', TIMESTAMP '2021-02-25 18:00', false),
-       (2, 2, TIMESTAMP '2021-02-25 07:15', TIMESTAMP '2021-02-25 19:55', false),
-       (3, 1, TIMESTAMP '2021-02-25 07:15', null, true),
-       (3, 2, TIMESTAMP '2021-02-26 15:39', null, true);
-
-insert into task_instance_data(task_instance_id, attribute_id, date_value, image_value, numeric_value, string_value)
-values (1, 2, null, null, 20, null),
-       (2, 3, null, null, null, '+79011235629'),
-       (3, 4, null, null, null, 'normal'),
-       (4, 5, TIMESTAMP '2021-02-26 15:39', null, null, null),
-       (5, 6, null, null, 2000, null),
-       (6, 8, TIMESTAMP '2021-03-08 08:00', null, null, null);
+-- insert into task_instances(task_id, request_id, created_time, finished_time, is_active)
+-- values (1, 1, TIMESTAMP '2021-01-16 15:36', TIMESTAMP '2021-01-16 23:15', false),
+--        (1, 2, TIMESTAMP '2021-01-17 10:00', TIMESTAMP '2021-01-18 08:36', false),
+--        (2, 1, TIMESTAMP '2021-02-22 15:30', TIMESTAMP '2021-02-25 18:00', false),
+--        (2, 2, TIMESTAMP '2021-02-25 07:15', TIMESTAMP '2021-02-25 19:55', false),
+--        (3, 1, TIMESTAMP '2021-02-25 07:15', null, true),
+--        (3, 2, TIMESTAMP '2021-02-26 15:39', null, true);
+--
+-- insert into task_instance_data(task_instance_id, attribute_id, date_value, image_value, numeric_value, string_value)
+-- values (1, 2, null, null, 20, null),
+--        (2, 3, null, null, null, '+79011235629'),
+--        (3, 4, null, null, null, 'normal'),
+--        (4, 5, TIMESTAMP '2021-02-26 15:39', null, null, null),
+--        (5, 6, null, null, 2000, null),
+--        (6, 8, TIMESTAMP '2021-03-08 08:00', null, null, null);
 
 
 

@@ -13,10 +13,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.SPECIALIZATION_BASE_PREFIX;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,7 +32,7 @@ public class SpecialisationRestTest extends SpringBootTests {
     public void getAllSpecialisationTest() throws Exception {
         List<Specialisation> specialisations = new ArrayList<>();
         specialisations.add(s);
-        MvcResult result = mockMvc.perform(get("/specialisation/all"))
+        MvcResult result = mockMvc.perform(get(SPECIALIZATION_BASE_PREFIX + "/all"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -46,18 +44,18 @@ public class SpecialisationRestTest extends SpringBootTests {
 
     @Test
     public void getOneSpecialisationTest() throws Exception {
-        mockMvc.perform(get("/specialisation/1"))
+        mockMvc.perform(get(SPECIALIZATION_BASE_PREFIX + "/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(s)));
 
-        mockMvc.perform(get("/specialisation/2"))
+        mockMvc.perform(get(SPECIALIZATION_BASE_PREFIX + "/2"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void postSpecialisationTest() throws Exception {
         mockMvc.perform(
-                post("/specialisation")
+                post(SPECIALIZATION_BASE_PREFIX)
                         .content(objectMapper.writeValueAsString(s))
                         .contentType(MediaType.APPLICATION_JSON)
         )
@@ -67,17 +65,17 @@ public class SpecialisationRestTest extends SpringBootTests {
 
     @Test
     public void deleteSpecialisationTest() throws Exception {
-        mockMvc.perform(delete("/specialisation/1"))
+        mockMvc.perform(delete(SPECIALIZATION_BASE_PREFIX + "/1"))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(delete("/specialisation/2"))
+        mockMvc.perform(delete(SPECIALIZATION_BASE_PREFIX + "/2"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void putSpecialisationTest() throws Exception {
         mockMvc.perform(
-                put("/specialisation/1")
+                put(SPECIALIZATION_BASE_PREFIX + "/1")
                         .content(objectMapper.writeValueAsString(s))
                         .contentType(MediaType.APPLICATION_JSON)
         )
@@ -85,7 +83,7 @@ public class SpecialisationRestTest extends SpringBootTests {
                 .andExpect(content().json(objectMapper.writeValueAsString(s)));
 
         mockMvc.perform(
-                put("/specialisation/2")
+                put(SPECIALIZATION_BASE_PREFIX + "/2")
                         .content(objectMapper.writeValueAsString(s))
                         .contentType(MediaType.APPLICATION_JSON)
         )

@@ -15,7 +15,13 @@ spring:
     password: ${POSTGRES_PASSWORD:postgres}
     initialization-mode: always
     data: classpath:data.sql
+  jackson:
+    time-zone: GMT+4
   jpa:
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: GMT+4
     generate-ddl: true
     hibernate:
       ddl-auto: create

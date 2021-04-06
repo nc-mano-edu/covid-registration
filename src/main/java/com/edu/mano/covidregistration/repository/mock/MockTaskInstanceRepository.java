@@ -1,10 +1,9 @@
 package com.edu.mano.covidregistration.repository.mock;
 
-import com.edu.mano.covidregistration.domain.Attribute;
-import com.edu.mano.covidregistration.domain.AttributeType;
-import com.edu.mano.covidregistration.domain.Task;
-import com.edu.mano.covidregistration.domain.TaskInstance;
+import com.edu.mano.covidregistration.domain.*;
 import com.edu.mano.covidregistration.repository.TaskInstanceRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +17,8 @@ public class MockTaskInstanceRepository implements TaskInstanceRepository {
 
     private List<TaskInstance> taskInstances;
 
+    private final UserRequest userRequest = new UserRequest(1L, null, null, "in progress", null, null);
+
     MockTaskInstanceRepository() {
         Date createdDate, finishedDate;
         try {
@@ -28,14 +29,20 @@ public class MockTaskInstanceRepository implements TaskInstanceRepository {
         } catch (ParseException e) {
             createdDate = null;
             finishedDate = null;
-
         }
+
+        Logger logger = LoggerFactory.getLogger(MockTaskInstanceRepository.class);
+
+        logger.info(createdDate.toString());
+        logger.info(finishedDate.toString());
+
+
         this.taskInstances = new ArrayList<>(Collections.singletonList(
                 new TaskInstance(1L,
                         new Task(1L, "Some task", "* * * * *", "Some description", Collections.singletonList(
                                 new Attribute(1L, "User age",
                                         new AttributeType(1L, "Numeric value", "\\d+(\\.\\d+)?")))
-                        ), 1L, createdDate, finishedDate, false)));
+                        ), userRequest, createdDate, finishedDate, false, null)));
     }
 
     @Override
@@ -96,5 +103,10 @@ public class MockTaskInstanceRepository implements TaskInstanceRepository {
     @Override
     public void deleteAll() {
 
+    }
+
+    @Override
+    public List<TaskInstance> findByRequestRequestId(Long id) {
+        return null;
     }
 }

@@ -2,8 +2,6 @@ package com.edu.mano.covidregistration.controller;
 
 import com.edu.mano.covidregistration.domain.AttributeType;
 import com.edu.mano.covidregistration.service.AttributeTypeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.ATTR_TYPES_BASE_PREFIX;
+
 @RestController
-@RequestMapping(value = "/attributeType")
+@RequestMapping(value = ATTR_TYPES_BASE_PREFIX)
 public class AttributeTypeController {
 
-    private static final Logger log = LoggerFactory.getLogger(AttributeTypeController.class);
-    
     private final AttributeTypeService attributeTypeService;
 
     @Autowired
@@ -28,7 +26,7 @@ public class AttributeTypeController {
     @GetMapping("/all")
     public ResponseEntity<List<AttributeType>> findAll() {
         List<AttributeType> attributeTypeList = attributeTypeService.findAll();
-        return new ResponseEntity<>(attributeTypeList, attributeTypeList.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+        return ResponseEntity.ok(attributeTypeList);
     }
 
     @GetMapping("/{id}")
@@ -38,24 +36,20 @@ public class AttributeTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<String> add(@RequestBody @Valid AttributeType attributeType) {
-        log.info("Creating new " + attributeType);
-        return ResponseEntity.ok("AttributeType created with id " + attributeTypeService.add(attributeType));
+    public ResponseEntity<Long> add(@RequestBody @Valid AttributeType attributeType) {
+        return ResponseEntity.ok(attributeTypeService.add(attributeType));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity delete(@PathVariable Long id) {
         attributeTypeService.delete(id);
-        log.info("AttributeType removed successfully");
-        return ResponseEntity.ok("AttributeType removed successfully");
+        return ResponseEntity.accepted().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody @Valid AttributeType attributeType) {
-        log.info("Updating with " + attributeType);
+    public ResponseEntity update(@PathVariable Long id, @RequestBody @Valid AttributeType attributeType) {
         attributeTypeService.update(id, attributeType);
-        log.info("AttributeType updated successfully");
-        return ResponseEntity.ok("AttributeType updated successfully");
+        return ResponseEntity.accepted().build();
     }
 
 }

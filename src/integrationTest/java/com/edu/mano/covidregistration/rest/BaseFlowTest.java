@@ -4,7 +4,9 @@ import com.edu.mano.covidregistration.SpringBootIntegrationTests;
 import com.edu.mano.covidregistration.TestDataPreparation;
 import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +14,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.SPECIALIZATION_BASE_PREFIX;
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.SYMPTOMS_BASE_PREFIX;
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_BASE_PREFIX;
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_REQUEST_BASE_PREFIX;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 public class BaseFlowTest extends SpringBootIntegrationTests {
     @Autowired
@@ -30,6 +31,15 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
 
     @Autowired
     private TestDataPreparation testDataPreparation;
+
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    @BeforeEach
+    public void init() {
+        sdf.setTimeZone(TimeZone.getTimeZone("Europe/Samara"));
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.setDateFormat(sdf);
+    }
 
     @Test
     @Order(1)
@@ -68,12 +78,12 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
 
         String expectedResult = AppUtility.getContentFromResourceFile("json/getUsers_response.json");
 
-        Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
+        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
 
     private void createUserRequest() throws Exception {
         String inputJsonRequest = testDataPreparation.getJson("json/createUserRequest_request.json");
-        String currentDate = testDataPreparation.getCurrentDate();
+        String currentDate = TestDataPreparation.getCurrentDate();
         inputJsonRequest = inputJsonRequest.replace("#startDate#", currentDate);
 
         MvcResult result = mockMvc.perform(
@@ -88,7 +98,7 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
         String expectedResult = AppUtility.getContentFromResourceFile("json/createUserRequest_response.json");
         expectedResult = expectedResult.replace("#startDate#", currentDate);
 
-        Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
+        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
 
     private void createSpecializations() throws Exception {
@@ -105,7 +115,7 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
         String actualResult = result.getResponse().getContentAsString();
         String expectedResult = AppUtility.getContentFromResourceFile("json/createSpecializations_response.json");
 
-        Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
+        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
 
     private void createSymptoms() throws Exception {
@@ -122,7 +132,7 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
         String actualResult = result.getResponse().getContentAsString();
         String expectedResult = AppUtility.getContentFromResourceFile("json/createSymptoms_response.json");
 
-        Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
+        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
 
     private MvcResult createSymptom(String symptom) throws Exception {

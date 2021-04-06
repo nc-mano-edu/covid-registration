@@ -14,4 +14,6 @@ public interface TaskInstanceRepository extends CrudRepository<TaskInstance, Lon
     List<TaskInstance> findAll();
 
     Optional<TaskInstance> findById(Long id);
+
+    List<TaskInstance> findByRequestRequestId(Long id);
 }

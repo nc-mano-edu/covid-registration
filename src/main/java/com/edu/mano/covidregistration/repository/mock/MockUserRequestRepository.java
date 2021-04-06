@@ -88,6 +88,4 @@ public class MockUserRequestRepository implements UserRequestRepository {
     public boolean existsById(Long aLong) {
         return false;
     }
-
-
 }

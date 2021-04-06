@@ -33,9 +33,16 @@ public class TestDataPreparation {
         return String.valueOf(new Random().nextInt());
     }
 
-    public static String getJsonValue(String json, String jsonPath) {
+    public static String getJsonValue(String json, String jsonKey) {
+        String jsonPath = "$[0]." + jsonKey;
         DocumentContext parsed = JsonPath.parse(json);
         return parsed.read(jsonPath);
+    }
+
+    public static String changeJsonValue(String json, String jsonKey, String value) {
+        String jsonPath = "$[0]." + jsonKey;
+        DocumentContext parsed = JsonPath.parse(json);
+        return parsed.set(jsonPath, value).jsonString();
     }
 
     public static String getCurrentDate() {
