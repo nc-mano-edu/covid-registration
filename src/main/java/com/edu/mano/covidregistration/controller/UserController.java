@@ -14,9 +14,8 @@ import java.util.List;
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_BASE_PREFIX;
 
 @RestController
-@RequestMapping(value = USER_BASE_PREFIX)
 @CrossOrigin //todo: this is WA. Need to fix on the frontend part
-@RequestMapping(value = "/users")
+@RequestMapping(value = USER_BASE_PREFIX)
 public class UserController {
     private final UserService userService;
 
@@ -43,7 +42,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@RequestBody @Valid User user, @PathVariable Long id){
+    public ResponseEntity<String> updateUser(@RequestBody @Valid User user, @PathVariable Long id) {
         userService.updateUser(user, id);
 
         return ResponseEntity.ok("Edited a user with id" + user.getId());
@@ -51,7 +50,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable long id){
+    public ResponseEntity<String> deleteUser(@PathVariable long id) {
         return userService.deleteUser(id);
     }
 

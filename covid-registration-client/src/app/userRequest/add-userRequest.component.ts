@@ -1,26 +1,37 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {UserRequest} from "./models/userRequest.model";
+import {UserRequestService} from "./userRequest.service"
+import {UserService} from "../user/user.service";
+import {User} from "../user/user.model";
 
-import { User } from './user.model';
-import { UserService } from './user.service';
 
 @Component({
-  templateUrl: './add-user.component.html'
+  selector: 'app-request',
+  templateUrl: './add-userRequest.component.html',
+  providers: [UserRequestService],
+  styles: []
 })
-export class AddUserComponent {
+export class AddUserRequestComponent implements OnInit {
 
-  user: User = new User();
+  request: UserRequest = new UserRequest();
+  user: User;
 
-  constructor(private router: Router, private userService: UserService) {
-
+  constructor(public activatedRoute: ActivatedRoute,
+              private userService: UserService,
+              private userRequestService: UserRequestService) {
   }
 
-  createUser(): void {
-    this.userService.createUser(this.user)
-      .subscribe( data => {
-        alert("User created successfully.");
-      });
-
+  ngOnInit() {
+    this.activatedRoute.queryParams.subscribe(params => {
+        const userId = params['userId'];
+        this.userService.getUser(userId).subscribe(user => {
+          this.user = user;
+        }, err => {
+          this.user = null;
+        });
+      }
+    );
   };
 
 }

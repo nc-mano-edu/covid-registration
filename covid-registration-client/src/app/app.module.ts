@@ -1,8 +1,7 @@
 import {NgModule} from '@angular/core';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
 
 import {AngularMaterialModule} from './angular-material.module';
 import {AppRoutingModule} from './app-routing.module';
@@ -21,12 +20,14 @@ import {HttpClientModule} from "@angular/common/http";
 import {AddUserComponent} from './user/add-user.component';
 import {HeaderComponent} from "./header/header.component";
 import {UserService} from "./user/user.service";
+import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
     AddUserComponent,
+    AddUserRequestComponent,
     LoginComponent,
     HeaderComponent,
     HomeComponent
@@ -47,4 +48,5 @@ import {UserService} from "./user/user.service";
   providers: [AuthService, AuthGuard, UserService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

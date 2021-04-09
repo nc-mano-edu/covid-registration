@@ -1,27 +1,31 @@
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import { User } from './user.model';
+import {User} from './user.model';
 
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable()
 export class UserService {
 
-  constructor(private http:HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
-  //private userUrl = 'http://localhost:8080/user-portal/user';
-  private userUrl = 'http://localhost:8080/users';
+  private userUrl = 'http://localhost:8080/backend/users';
 
   public getUsers() {
-    return this.http.get<User[]>(this.userUrl+ "/all");
+    return this.http.get<User[]>(this.userUrl + "/all");
+  }
+
+  public getUser(userId) {
+    return this.http.get<User>(this.userUrl + "/" + userId);
   }
 
   public deleteUser(user) {
-    return this.http.delete(this.userUrl + "/"+ user.id);
+    return this.http.delete(this.userUrl + "/" + user.id);
   }
 
   public createUser(user) {
