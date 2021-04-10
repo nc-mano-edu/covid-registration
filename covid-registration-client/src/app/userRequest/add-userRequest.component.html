@@ -1,4 +1,21 @@
-<div *ngIf="user == null; else elseBlock">
-  <h4>Пользователь не найден</h4>
+<div class="center">
+  <div *ngIf="user == null; else elseBlock">
+    <h2 class="mat-h2">Пользователь не найден</h2>
+  </div>
+  <ng-template #elseBlock>
+
+    <h2 class="mat-h2">Выберите ваши симптомы:</h2>
+    <mat-chip-list selectable multiple>
+      <div class="mat-chip-list-wrapper">
+        <mat-chip #c="matChip" *ngFor="let symptom of symptoms" [value]="symptom.symptomId"
+                  (click)="symptomSelection(c)">
+          <mat-icon *ngIf="c.selected">check</mat-icon>
+          {{symptom.name}}
+        </mat-chip>
+      </div>
+    </mat-chip-list>
+
+    <button mat-button class="create-btn" (click)="onSave()">Лечиться</button>
+
+  </ng-template>
 </div>
-<ng-template #elseBlock>{{user}}</ng-template>

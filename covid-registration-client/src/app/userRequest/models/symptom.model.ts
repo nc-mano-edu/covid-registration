@@ -1,6 +1,6 @@
 export class Symptom {
 
-  id: string;
+  symptomId: string;
   name: string;
   description: string;
 

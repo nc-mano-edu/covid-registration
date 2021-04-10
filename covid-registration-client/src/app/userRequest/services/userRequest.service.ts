@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {UserRequest} from "./models/userRequest.model";
+import {UserRequest} from "../models/userRequest.model";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
