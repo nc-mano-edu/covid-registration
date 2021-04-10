@@ -1,3 +1,46 @@
-p {
-  font-family: Arial;
+h1{
+  font-family: 'Raleway', sans-serif;
+  margin-top: 0;
+  margin-bottom: 50px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #333;
 }
+
+h5{
+  font-family:"Philosopher", sans-serif;
+  margin: 0 0 10px 0;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color:#00a89d;
+}
+
+p{
+  font-size: 16px;
+  color: #666;
+  line-height: 25px;
+  letter-spacing: 1px;
+}
+
+
+.home{
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0 10px;
+}
+
+.text-side{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.background-img{
+  position: absolute;
+  opacity: 0.1;
+  height: 50%;
+}
+
