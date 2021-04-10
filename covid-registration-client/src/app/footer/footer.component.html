@@ -1,0 +1,14 @@
+<footer>
+  <div class="left-side">
+    <div class="text-wrap" *ngFor = "let info of contentLeft">
+      <h5 class="head">{{info[0]}}</h5>
+      <p>{{info[1]}}</p>
+    </div>
+  </div>
+  <div class="right-side">
+    <div class="text-wrap" *ngFor = "let info of contentRight">
+      <h5 class="head">{{info[0]}}</h5>
+      <p>{{info[1]}}</p>
+    </div>
+  </div>
+</footer>
