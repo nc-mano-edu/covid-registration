@@ -1,5 +1,6 @@
 package com.edu.mano.covidregistration.controller;
 
+import com.edu.mano.covidregistration.domain.TaskInstance;
 import com.edu.mano.covidregistration.domain.User;
 import com.edu.mano.covidregistration.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_BASE_PREFIX;
+
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = USER_BASE_PREFIX)
 public class UserController {
     private final UserService userService;
 
@@ -35,5 +38,30 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody @Valid User user) {
         return ResponseEntity.ok(userService.createUser(user));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateUser(@RequestBody @Valid User user, @PathVariable Long id){
+        userService.updateUser(user, id);
+
+        return ResponseEntity.ok("Edited a user with id" + user.getId());
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable long id){
+        return userService.deleteUser(id);
+    }
+
+    @GetMapping("/{id}/tasks")
+    public ResponseEntity<List<TaskInstance>> findAllTasks(@PathVariable Long id) {
+        List<TaskInstance> tasks = userService.findTasks(id);
+        return ResponseEntity.ok(tasks);
+    }
+
+    @GetMapping("/{id}/active-tasks")
+    public ResponseEntity<List<TaskInstance>> findActiveTasks(@PathVariable Long id) {
+        List<TaskInstance> tasks = userService.findActiveTasks(id);
+        return ResponseEntity.ok(tasks);
     }
 }

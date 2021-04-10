@@ -12,14 +12,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.ATTRIBUTES_BASE_PREFIX;
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.ATTR_TYPES_BASE_PREFIX;
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.TASKS_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class TasksBaseFlowTest extends SpringBootIntegrationTests {
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -52,7 +51,7 @@ public class TasksBaseFlowTest extends SpringBootIntegrationTests {
 
         String expectedResult = AppUtility.getContentFromResourceFile("json/getTasks_response.json");
 
-        Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
+        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
 
     private void createTask(String name, String schedule, String description) throws Exception {
@@ -82,9 +81,8 @@ public class TasksBaseFlowTest extends SpringBootIntegrationTests {
 
         String expectedResult = AppUtility.getContentFromResourceFile("json/getAttributes_response.json");
 
-        Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
+        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
-
 
     private void createAttrTypes() throws Exception {
         createAttributeType("stringAttr", "");
@@ -101,7 +99,7 @@ public class TasksBaseFlowTest extends SpringBootIntegrationTests {
 
         String expectedResult = AppUtility.getContentFromResourceFile("json/createAttrTypes_response.json");
 
-        Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
+        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
 
     }
 

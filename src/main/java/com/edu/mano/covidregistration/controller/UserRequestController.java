@@ -7,20 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_REQUEST_BASE_PREFIX;
+
 @RestController
-@RequestMapping(value = "/backend/userRequest")
+@RequestMapping(value = USER_REQUEST_BASE_PREFIX)
 public class UserRequestController {
 
     private static Logger log = LoggerFactory.getLogger(UserRequestController.class);
@@ -62,14 +56,14 @@ public class UserRequestController {
             return new ResponseEntity<UserRequest>(HttpStatus.NOT_FOUND);
         }
         this.userRequestService.deleteUserRequest(id);
-        return new ResponseEntity<>(userRequest,HttpStatus.OK);
+        return new ResponseEntity<>(userRequest, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserRequest> updateUserRequest (@RequestBody UserRequest userRequestDetails, @PathVariable Long id) {
+    public ResponseEntity<UserRequest> updateUserRequest(@RequestBody UserRequest userRequestDetails, @PathVariable Long id) {
         UserRequest userRequest = userRequestService.findRequestByRequestId(id);
         if (userRequest == null) {
-            return  new ResponseEntity<UserRequest>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<UserRequest>(HttpStatus.NOT_FOUND);
         }
 
         userRequest.setUser(userRequestDetails.getUser());

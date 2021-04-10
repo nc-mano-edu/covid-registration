@@ -1,9 +1,20 @@
 [
   {
-    "id": 3,
-    "firstName": "firstName",
-    "middleName": "middleName",
-    "lastName": "lastName",
+    "id": 1,
+    "firstName": "FirstName",
+    "middleName": "MiddleName",
+    "lastName": "LastName",
+    "dateOfBirth": null,
+    "insuranceNumber": null,
+    "phoneNumber": null,
+    "specialisations": [],
+    "roles": []
+  },
+  {
+    "id": 4,
+    "firstName": "Max",
+    "middleName": "Jo",
+    "lastName": "Petersen",
     "dateOfBirth": "12.12.1912",
     "insuranceNumber": "123321123",
     "phoneNumber": "8 888 8888 888888888",
@@ -11,12 +22,12 @@
       {
         "name": "therapist",
         "description": "therapist_description",
-        "id": 1
+        "id": 2
       },
       {
         "name": "immunologist",
         "description": "immunologist_description",
-        "id": 2
+        "id": 3
       }
     ],
     "roles": [

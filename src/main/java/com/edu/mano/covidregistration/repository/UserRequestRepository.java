@@ -15,5 +15,4 @@ public interface UserRequestRepository extends CrudRepository<UserRequest, Long>
     UserRequest findUserRequestByRequestId(Long id);
 
     List<UserRequest> findUserRequestsByUserId(Long userId);
-
 }

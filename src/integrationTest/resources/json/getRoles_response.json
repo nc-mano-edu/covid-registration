@@ -1,0 +1,12 @@
+[
+  {
+    "roleId": 1,
+    "name": "Doctor",
+    "description": "Doctor descr"
+  },
+  {
+    "roleId": 2,
+    "name": "Patient",
+    "description": "Patient descr"
+  }
+]

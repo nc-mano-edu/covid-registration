@@ -11,11 +11,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.ATTR_TYPES_BASE_PREFIX;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 public class AttributeTypeRestApiTests extends SpringBootTests {
 
@@ -27,13 +26,13 @@ public class AttributeTypeRestApiTests extends SpringBootTests {
 
     @Test
     public void checkFindAll() throws Exception {
-        mockMvc.perform(get("/attributeType/all"))
+        mockMvc.perform(get(ATTR_TYPES_BASE_PREFIX + "/all"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void checkFind() throws Exception {
-        MvcResult result = mockMvc.perform(get("/attributeType/1"))
+        MvcResult result = mockMvc.perform(get(ATTR_TYPES_BASE_PREFIX + "/1"))
                 .andExpect(status().isOk())
                 .andReturn();
         String actualResult = result.getResponse().getContentAsString();
@@ -54,31 +53,26 @@ public class AttributeTypeRestApiTests extends SpringBootTests {
     private Long checkAdd() throws Exception {
         AttributeType attributeType = new AttributeType(1L, "Numeric value", "\\d+(\\.\\d+)?");
 
-        MvcResult result = mockMvc.perform(post("/attributeType")
+        MvcResult result = mockMvc.perform(post(ATTR_TYPES_BASE_PREFIX)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(attributeType)))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Pattern p = Pattern.compile("id ([0-9]+)");
-        Matcher m = p.matcher(result.getResponse().getContentAsString());
-        if (m.find()) {
-            return Long.parseLong(m.group(1));
-        }
-        return null;
+        return Long.parseLong(result.getResponse().getContentAsString());
     }
 
     public void checkUpdate(Long attributeId) throws Exception {
         AttributeType attributeType = new AttributeType(1L, "Image value", "file:\\\\*");
 
-        mockMvc.perform(put("/attributeType/" + attributeId)
+        mockMvc.perform(put(ATTR_TYPES_BASE_PREFIX + "/" + attributeId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(attributeType)))
-                .andExpect(status().isOk());
+                .andExpect(status().isAccepted());
     }
 
     public void checkDelete(Long attributeId) throws Exception {
-        mockMvc.perform(delete("/attributeType/" + attributeId))
-                .andExpect(status().isOk());
+        mockMvc.perform(delete(ATTR_TYPES_BASE_PREFIX + "/" + attributeId))
+                .andExpect(status().isAccepted());
     }
 }

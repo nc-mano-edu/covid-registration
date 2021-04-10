@@ -1,49 +1,58 @@
 package com.edu.mano.covidregistration.service;
 
+import com.edu.mano.covidregistration.domain.Attribute;
 import com.edu.mano.covidregistration.domain.Task;
 import com.edu.mano.covidregistration.domain.TaskInstance;
-import com.edu.mano.covidregistration.exception.baseExceptions.InvalidDateException;
+import com.edu.mano.covidregistration.domain.TaskInstanceData;
 import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
 import com.edu.mano.covidregistration.repository.TaskInstanceRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.edu.mano.covidregistration.tools.AppUtility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
 public class TaskInstanceService {
 
-    private static final Logger log = LoggerFactory.getLogger(TaskInstanceService.class);
-
     private final TaskInstanceRepository taskInstanceRepository;
 
     private final TaskService taskService;
 
+    private final TaskInstanceDataService taskInstanceDataService;
+
     @Autowired
-    public TaskInstanceService(TaskInstanceRepository taskInstanceRepository, TaskService taskService) {
+    public TaskInstanceService(TaskInstanceRepository taskInstanceRepository,
+                               TaskService taskService,
+                               TaskInstanceDataService taskInstanceDataService) {
         this.taskInstanceRepository = taskInstanceRepository;
         this.taskService = taskService;
+        this.taskInstanceDataService = taskInstanceDataService;
     }
 
-    private void checkFinishedTime(TaskInstance taskInstance) {
-        Date finishedTime = taskInstance.getFinishedTime();
-        if (finishedTime != null && finishedTime.before(taskInstance.getCreatedTime())) {
-            throw new InvalidDateException("Finished time can`t be earlier than the creation time");
+    private void setFinished(TaskInstance taskInstance) {
+        List<TaskInstanceData> data = taskInstance.getData();
+        if (data != null && data.stream().allMatch(d -> {
+            if (d.getStringValue() != null)
+                return true;
+            if (d.getImageValue() != null)
+                return true;
+            if (d.getDateValue() != null)
+                return true;
+            return d.getNumericValue() != null;
+        })) {
+            taskInstance.setFinishedTime(AppUtility.getCurrentDate());
+            taskInstance.setActive(false);
         }
     }
 
     public List<TaskInstance> findAll() {
-        log.info("Retrieving a list of TaskInstances");
         return taskInstanceRepository.findAll();
     }
 
     public TaskInstance find(Long id) {
-        log.info("Retrieving an taskInstance with id " + id);
         try {
             return taskInstanceRepository.findById(id).get();
         } catch (NoSuchElementException e) {
@@ -51,35 +60,57 @@ public class TaskInstanceService {
         }
     }
 
+    public List<TaskInstance> findByRequestId(Long id) {
+        return taskInstanceRepository.findByRequestRequestId(id);
+    }
+
+    @Transactional
     public Long add(TaskInstance taskInstance) {
-        taskService.find(taskInstance.getTask().getId());
-        checkFinishedTime(taskInstance);
-        Long taskInstanceId = taskInstanceRepository.save(taskInstance).getId();
-        log.info("TaskInstance created with id " + taskInstanceId);
-        return taskInstanceId;
+        Task task = taskInstance.getTask();
+        taskService.find(task.getId());
+
+        List<Attribute> attributes = task.getAttributes();
+        Long id = taskInstanceRepository.save(taskInstance).getId();
+
+        attributes.forEach(attribute -> {
+            TaskInstanceData taskInstanceData = new TaskInstanceData();
+            taskInstanceData.setTaskInstance(taskInstance);
+            taskInstanceData.setAttribute(attribute);
+            taskInstanceDataService.add(taskInstanceData);
+        });
+
+        taskInstance.setActive(true);
+        setFinished(taskInstance);
+        return id;
     }
 
+    @Transactional
     public void delete(Long id) {
-        log.info("Deleting a taskInstance with id " + id);
-        try {
-            taskInstanceRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException(TaskInstance.class, id);
+        TaskInstance taskInstance = find(id);
+        List<TaskInstanceData> data = taskInstance.getData();
+        if (data != null) {
+            data.forEach(d -> {
+                taskInstanceDataService.delete(d.getId());
+            });
         }
+
+        taskInstanceRepository.deleteById(id);
     }
 
+    @Transactional
     public void update(Long id, TaskInstance taskInstance) {
-        Task task = taskService.find(taskInstance.getTask().getId());
-        taskInstance.setTask(task);
-        checkFinishedTime(taskInstance);
+        find(id);
+        taskInstance.setId(id);
+        taskService.find(taskInstance.getTask().getId());
 
-        try {
-            taskInstance.setId(taskInstanceRepository.findById(id).get().getId());
-            taskInstanceRepository.save(taskInstance).getId();
-            log.info("TaskInstance updated successfully");
-        } catch (NoSuchElementException e) {
-            throw new NotFoundException(TaskInstance.class, id);
+        List<TaskInstanceData> data = taskInstance.getData();
+        if (data != null) {
+            data.forEach(d -> {
+                taskInstanceDataService.update(d.getId(), d);
+            });
         }
-    }
 
+        setFinished(taskInstance);
+        taskInstanceRepository.save(taskInstance);
+    }
 }
