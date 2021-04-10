@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
+
+.center {
+  width: 50%;
+  margin: 5px auto;
+  text-align: center;
+}
+
+.mat-chip-list-wrapper {
+  justify-content: center;
+}
+
+.material-icons {
+  font-family: 'Material Icons', serif !important;
+}
+
+mat-icon {
+  height: 20px;
+  width: 20px;
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.mat-chip-selected {
+  background-color: #2fafa6;
+  color: #fafafa !important;
+}
+
+.create-btn {
+  font-weight: bold;
+  margin: 15px 0;
+  background-color: #2fafa6;
+  color: #fafafa !important;
+}
+

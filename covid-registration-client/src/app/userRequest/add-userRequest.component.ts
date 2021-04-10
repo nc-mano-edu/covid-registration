@@ -1,26 +1,70 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {UserRequest} from "./models/userRequest.model";
+import {UserRequestService} from "./services/userRequest.service"
+import {UserService} from "../user/user.service";
+import {User} from "../user/user.model";
+import {SymptomService} from "./services/symptom.service";
+import {Symptom} from "./models/symptom.model";
+import {MatChip} from "@angular/material/chips";
 
-import { User } from './user.model';
-import { UserService } from './user.service';
 
 @Component({
-  templateUrl: './add-user.component.html'
+  selector: 'app-request',
+  templateUrl: './add-userRequest.component.html',
+  providers: [UserRequestService, SymptomService],
+  styleUrls: ['./userRequest.component.css']
 })
-export class AddUserComponent {
+export class AddUserRequestComponent implements OnInit {
 
-  user: User = new User();
+  request: UserRequest = new UserRequest();
+  user: User;
+  symptoms: Symptom[];
+  symptomsSelected = new Set();
 
-  constructor(private router: Router, private userService: UserService) {
-
+  constructor(public activatedRoute: ActivatedRoute,
+              private userService: UserService,
+              private symptomService: SymptomService,
+              private userRequestService: UserRequestService) {
   }
 
-  createUser(): void {
-    this.userService.createUser(this.user)
-      .subscribe( data => {
-        alert("User created successfully.");
-      });
+  symptomSelection(chip: MatChip) {
+    const id = chip.value;
+    if (this.symptomsSelected.has(id))
+      this.symptomsSelected.delete(id);
+    else
+      this.symptomsSelected.add(id);
+    chip.toggleSelected();
+  }
 
+  onSave() {
+    const request = new UserRequest();
+    request.startDate = new Date().toISOString().split('T')[0];
+    request.treatmentState = 'started';
+    request.user = this.user;
+    request.symptoms = this.symptoms.filter(symptom =>
+      this.symptomsSelected.has(symptom.symptomId)
+    );
+    this.userRequestService.createRequest(request).subscribe(data => {
+      alert("UserRequest created successfully.");
+    });
+  }
+
+  ngOnInit() {
+    this.activatedRoute.queryParams.subscribe(params => {
+        const userId = params['userId'];
+
+        this.userService.getUser(userId).subscribe(user => {
+          this.user = user;
+        }, err => {
+          this.user = null;
+        });
+
+        this.symptomService.getAllSymptoms().subscribe(symptoms => {
+          this.symptoms = symptoms;
+        });
+      }
+    );
   };
 
 }
