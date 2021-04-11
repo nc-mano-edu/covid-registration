@@ -1,3 +1,4 @@
+
 logging:
   level:
     org.springframework.web: debug
@@ -10,12 +11,18 @@ spring:
     restart:
       enabled: true
   datasource:
-    url: jdbc:postgresql://localhost/userDB
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB_NAME:covid-registration}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
     initialization-mode: always
     data: classpath:data.sql
+  jackson:
+    time-zone: GMT+4
   jpa:
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: GMT+4
     generate-ddl: true
     hibernate:
       ddl-auto: create
@@ -31,5 +38,3 @@ spring:
   profiles: test
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
-
-
