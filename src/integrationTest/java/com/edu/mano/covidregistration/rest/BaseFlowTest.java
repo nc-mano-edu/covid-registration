@@ -9,8 +9,14 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import java.io.File;
+import java.nio.file.Files;
 
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.SPECIALIZATION_BASE_PREFIX;
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.SYMPTOMS_BASE_PREFIX;
@@ -32,6 +38,9 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
     @Autowired
     private TestDataPreparation testDataPreparation;
 
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
     @Test
     @Order(1)
     public void integrationFlow() throws Exception {
@@ -46,6 +55,7 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
 
         createUserRequest();
 
+        addFile();
 
     }
 
@@ -165,12 +175,6 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
 
         String inputJsonRequest = testDataPreparation.getJson("json/updateSymptom_request.json");
 
-        MvcResult resultBeforeChange = mockMvc.perform(
-                get(SYMPTOMS_BASE_PREFIX + "/{id}", id)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
         mockMvc.perform(
                 put(SYMPTOMS_BASE_PREFIX + "/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -189,7 +193,6 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
 
         String expectedResult = AppUtility.getContentFromResourceFile("json/updateSymptom_response.json");
 
-        Assertions.assertNotEquals(objectMapper.readTree(resultAfterChange.getResponse().getContentAsString()), objectMapper.readTree(resultBeforeChange.getResponse().getContentAsString()));
         Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
 
     }
@@ -206,6 +209,22 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
                 .andExpect(status().isNotFound());
 
     }
+
+    private void addFile() throws Exception {
+        MockMultipartFile file  = new MockMultipartFile(
+                "file",
+                "/images/img.png",
+                MediaType.IMAGE_PNG_VALUE,
+                "Our Image".getBytes()
+        );
+
+        MockMvc mockMvc
+                = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc.perform(multipart("/files").file(file))
+                .andExpect(status().isOk());
+
+    }
+
 
 
 }
