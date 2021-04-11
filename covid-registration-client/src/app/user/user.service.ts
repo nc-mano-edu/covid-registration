@@ -14,7 +14,7 @@ export class UserService {
   constructor(private http:HttpClient) {}
 
   //private userUrl = 'http://localhost:8080/user-portal/user';
-  private userUrl = 'http://localhost:8080/users';
+  private userUrl = 'http://localhost:8080/backend/users';
 
   public getUsers() {
     return this.http.get<User[]>(this.userUrl+ "/all");
