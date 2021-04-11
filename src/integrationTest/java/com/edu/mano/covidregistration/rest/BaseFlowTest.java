@@ -218,6 +218,7 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
                 "Our Image".getBytes()
         );
 
+
         MockMvc mockMvc
                 = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         mockMvc.perform(multipart("/files").file(file))
