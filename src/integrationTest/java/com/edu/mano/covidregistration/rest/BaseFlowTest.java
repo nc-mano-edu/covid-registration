@@ -12,8 +12,11 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
@@ -23,10 +26,7 @@ import static com.edu.mano.covidregistration.CovidRegistrationApplication.SPECIA
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.SYMPTOMS_BASE_PREFIX;
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_BASE_PREFIX;
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_REQUEST_BASE_PREFIX;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class BaseFlowTest extends SpringBootIntegrationTests {
@@ -40,6 +40,9 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
     private TestDataPreparation testDataPreparation;
 
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
     @BeforeEach
     public void init() {
@@ -55,9 +58,14 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
         createRoles();
         createSymptoms();
 
+        deleteSymptom(3);
+        updateSymptom(1);
+
         checkUser();
 
         createUserRequest();
+
+        addFile();
     }
 
     private void createRoles() throws Exception {
@@ -234,6 +242,7 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
 
         createSymptom("cough");
         createSymptom("temperature");
+        createSymptom("headache");
 
         MvcResult result = mockMvc.perform(
                 get(SYMPTOMS_BASE_PREFIX + "/all")
@@ -273,5 +282,60 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
                 .andExpect(status().isOk())
                 .andReturn();
         return result;
+    }
+
+    private void updateSymptom(int id) throws Exception {
+
+        String inputJsonRequest = testDataPreparation.getJson("json/updateSymptom_request.json");
+
+        mockMvc.perform(
+                put(SYMPTOMS_BASE_PREFIX + "/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(inputJsonRequest)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        MvcResult resultAfterChange = mockMvc.perform(
+                get(SYMPTOMS_BASE_PREFIX + "/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String actualResult = resultAfterChange.getResponse().getContentAsString();
+
+        String expectedResult = AppUtility.getContentFromResourceFile("json/updateSymptom_response.json");
+
+        Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
+
+    }
+
+    private void deleteSymptom(int id) throws Exception {
+
+        mockMvc.perform(
+                delete(SYMPTOMS_BASE_PREFIX + "/{id}", id))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(
+                get(SYMPTOMS_BASE_PREFIX + "/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+
+    }
+
+
+    private void addFile() throws Exception {
+        MockMultipartFile file  = new MockMultipartFile(
+                "file",
+                "/images/img.png",
+                MediaType.IMAGE_PNG_VALUE,
+                "Our Image".getBytes()
+        );
+
+        MockMvc mockMvc
+                = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc.perform(multipart("/files").file(file))
+                .andExpect(status().isOk());
+
     }
 }
