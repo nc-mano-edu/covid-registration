@@ -1,4 +1,4 @@
-<footer>
+<footer *ngIf="isLoggedIn$ | async as isLoggedIn">
   <div class="left-side">
     <div class="text-wrap" *ngFor = "let info of contentLeft">
       <h5 class="head">{{info[0]}}</h5>

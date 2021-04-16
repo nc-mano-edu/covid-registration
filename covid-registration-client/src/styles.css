@@ -11,7 +11,20 @@ body{
   height: 100%;
   /* overflow: hidden; */
 }
+app-root{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  height: 100%
+}
 
+ng-component, app-user{
+  height: 100%;
+}
+
+app-login{
+  margin-bottom: auto;
+}
 
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
