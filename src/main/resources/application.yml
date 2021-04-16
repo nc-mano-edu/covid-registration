@@ -25,6 +25,7 @@ spring:
         jdbc:
           time_zone: GMT+4
           use_streams_for_binary: false
+        enable_lazy_load_no_trans: true
     generate-ddl: true
     hibernate:
       ddl-auto: create

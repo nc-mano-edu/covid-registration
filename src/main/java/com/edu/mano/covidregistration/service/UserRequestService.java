@@ -62,4 +62,8 @@ public class UserRequestService {
     public void deleteUserRequest(Long id) {
         userRequestRepository.deleteById(id);
     }
+
+    public List<UserRequest> findActive() {
+        return userRequestRepository.findAllByEndDateIsNull();
+    }
 }

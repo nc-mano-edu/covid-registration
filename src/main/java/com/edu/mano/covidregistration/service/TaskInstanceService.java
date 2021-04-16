@@ -113,4 +113,12 @@ public class TaskInstanceService {
         setFinished(taskInstance);
         taskInstanceRepository.save(taskInstance);
     }
+
+    public List<TaskInstance> findActive() {
+        return taskInstanceRepository.findAllByActiveIsTrue();
+    }
+
+    public List<TaskInstance> findOneForEachRequestByTaskId(Long taskId) {
+        return taskInstanceRepository.findOneForEachRequestByTaskId(taskId);
+    }
 }
