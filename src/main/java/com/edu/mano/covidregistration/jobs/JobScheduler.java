@@ -48,16 +48,9 @@ public class JobScheduler {
         public void run() {
             System.out.println("[SCH] run task for " + task);
 
-            taskInstanceService.findOneForEachRequestByTaskId(task.getId()).forEach(ti -> {
-                if (userRequestService.findRequestByRequestId(ti.getRequest().getRequestId()).getEndDate() == null) {
-                    TaskInstance taskInstance = new TaskInstance();
-                    taskInstance.setCreatedTime(new Date());
-                    taskInstance.setRequest(ti.getRequest());
-                    taskInstance.setTask(ti.getTask());
-
-                    taskInstanceService.add(taskInstance);
-                }
-            });
+            userRequestService.findActive().forEach(request -> taskInstanceService.add(
+                        new TaskInstance(null, task, request, new Date(), null, true, null)
+            ));
         }
     }
 

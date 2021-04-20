@@ -117,8 +117,4 @@ public class TaskInstanceService {
     public List<TaskInstance> findActive() {
         return taskInstanceRepository.findAllByActiveIsTrue();
     }
-
-    public List<TaskInstance> findOneForEachRequestByTaskId(Long taskId) {
-        return taskInstanceRepository.findOneForEachRequestByTaskId(taskId);
-    }
 }
