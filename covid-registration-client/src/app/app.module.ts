@@ -10,6 +10,10 @@ import {AuthService} from './auth/auth.service';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+
 import {UserComponent} from './user/user.component';
 import {HttpClientModule} from "@angular/common/http";
 import {AddUserComponent} from './user/add-user.component';
@@ -17,17 +21,9 @@ import {HeaderComponent} from "./header/header.component";
 import {UserService} from "./user/user.service";
 import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    AngularMaterialModule,
-    ReactiveFormsModule,
-    FormsModule,
-  ],
   declarations: [
     AppComponent,
     UserComponent,
@@ -35,10 +31,23 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     AddUserRequestComponent,
     LoginComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    FooterComponent
+  ],
+  imports: [
+    AppRoutingModule,
+    BrowserModule,
+    HttpClientModule,
+    MatSlideToggleModule,
+    MatFormFieldModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    AngularMaterialModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [AuthService, AuthGuard, UserService],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }

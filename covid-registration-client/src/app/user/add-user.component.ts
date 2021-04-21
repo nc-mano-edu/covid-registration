@@ -5,7 +5,8 @@ import { User } from './user.model';
 import { UserService } from './user.service';
 
 @Component({
-  templateUrl: './add-user.component.html'
+  templateUrl: './add-user.component.html',
+  styles:['.col-md-6{padding-left:10px; height:50%}']
 })
 export class AddUserComponent {
 

@@ -1,12 +1,28 @@
-<mat-toolbar color="primary" *ngIf="isLoggedIn$ | async as isLoggedIn">
-  <!-- logo -->
-  <div class="navbar-brand">
-    <a class="navbar-item">
-      <img src="assets/img/logo.png">
-    </a>
+<header *ngIf="isLoggedIn$ | async as isLoggedIn">
+  <div class="introduction-block">
+    <div class="logo">
+      <img src="assets/img/company_name.png">
+    </div>
+    <div class="address">
+      <h2>USA</h2>
+      <span>1360 E Anaheim St, Long Beach, CA 90813</span>
+    </div>
+    <div class="phone">
+      <h2>+11005553535</h2>
+      <span>Working on weekdays - from 8AM until 7PM</span>
+    </div>
   </div>
-  <span class="fill-remaining-space"></span>
-  <button mat-button routerLink="/users">List Users</button>
-  <button mat-button routerLink="/add">Add User</button>
-  <button mat-button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
-</mat-toolbar>
+  <mat-toolbar >
+    <!-- logo -->
+    <!-- <div class="navbar-brand">
+      <a class="navbar-item">
+        <img src="assets/img/logo.png">
+      </a>
+    </div> -->
+    <!-- <span class="fill-remaining-space"></span> -->
+    <button mat-button routerLink="/home">Main Page</button>
+    <button mat-button routerLink="/users">List Users</button>
+    <button mat-button routerLink="/add">Add User</button>
+    <button mat-button (click)="onLogout()" *ngIf="isLoggedIn">Logout</button>
+  </mat-toolbar>
+</header>
