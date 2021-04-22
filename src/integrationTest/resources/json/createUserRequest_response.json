@@ -1,13 +1,10 @@
 {
   "requestId": 1,
-  "startDate": "#startDate#",
+  "startDate": "2021-04-20",
   "endDate": null,
   "treatmentState": "started",
   "user": {
-    "id":
-    #
-    userId
-    #,
+    "id": 1,
     "firstName": null,
     "middleName": null,
     "lastName": null,
