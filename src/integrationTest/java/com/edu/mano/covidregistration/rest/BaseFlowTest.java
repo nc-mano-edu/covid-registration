@@ -57,6 +57,9 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
         createRoles();
         createSymptoms();
 
+        deleteSymptom(3);
+        updateSymptom(1);
+
         //checkUser();
 
         //createUserRequest();
@@ -282,4 +285,44 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
                 .andReturn();
         return result;
     }
+
+    private void updateSymptom(int id) throws Exception {
+
+        String inputJsonRequest = testDataPreparation.getJson("json/updateSymptom_request.json");
+
+        mockMvc.perform(
+                put(SYMPTOMS_BASE_PREFIX + "/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(inputJsonRequest)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        MvcResult resultAfterChange = mockMvc.perform(
+                get(SYMPTOMS_BASE_PREFIX + "/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String actualResult = resultAfterChange.getResponse().getContentAsString();
+
+        String expectedResult = AppUtility.getContentFromResourceFile("json/updateSymptom_response.json");
+
+        Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
+
+    }
+
+    private void deleteSymptom(int id) throws Exception {
+
+        mockMvc.perform(
+                delete(SYMPTOMS_BASE_PREFIX + "/{id}", id))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(
+                get(SYMPTOMS_BASE_PREFIX + "/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+
+    }
+
 }
