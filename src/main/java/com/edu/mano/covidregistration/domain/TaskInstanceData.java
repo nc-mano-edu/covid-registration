@@ -8,7 +8,16 @@ import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.sql.Blob;
 import java.util.Date;
@@ -32,7 +41,7 @@ public class TaskInstanceData {
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnoreProperties({"task", "request", "data"})
+    @JsonIgnoreProperties({"task", "request", "data", "createdTime", "finishedTime"})
     private TaskInstance taskInstance;
 
     @NotNull

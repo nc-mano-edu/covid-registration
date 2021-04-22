@@ -41,6 +41,8 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
 
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
+    private Long firstUserId;
+
     @BeforeEach
     public void init() {
         sdf.setTimeZone(TimeZone.getTimeZone("Europe/Samara"));
@@ -125,7 +127,10 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
     }
 
     private void checkUser() throws Exception {
-        createUser("Max", "Jo", "Petersen");
+        User firstUser = createUser("Max", "Jo", "Petersen");
+
+        firstUserId = firstUser.getId();
+
         User secondUser = createUser("Max2", "Jo2", "Petersen2");
 
         updateUser(secondUser.getId());
@@ -196,7 +201,9 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
     private void createUserRequest() throws Exception {
         String inputJsonRequest = testDataPreparation.getJson("json/createUserRequest_request.json");
         String currentDate = TestDataPreparation.getCurrentDate();
-        inputJsonRequest = inputJsonRequest.replace("#startDate#", currentDate);
+        inputJsonRequest = inputJsonRequest
+                .replace("#userId#", String.valueOf(firstUserId))
+                .replace("#startDate#", currentDate);
 
         MvcResult result = mockMvc.perform(
                 post(USER_REQUEST_BASE_PREFIX)
@@ -208,7 +215,8 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
         String actualResult = result.getResponse().getContentAsString();
 
         String expectedResult = AppUtility.getContentFromResourceFile("json/createUserRequest_response.json");
-        expectedResult = expectedResult.replace("#startDate#", currentDate);
+        expectedResult = expectedResult.replace("#startDate#", currentDate)
+                .replace("#userId#", String.valueOf(firstUserId));
 
         Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
