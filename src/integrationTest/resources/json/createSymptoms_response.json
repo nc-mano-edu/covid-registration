@@ -1,11 +1,56 @@
 [
   {
     "symptomId": 1,
+    "name": "Temperature",
+    "description": null
+  },
+  {
+    "symptomId": 2,
+    "name": "Loss of taste",
+    "description": null
+  },
+  {
+    "symptomId": 3,
+    "name": "Dry cough",
+    "description": null
+  },
+  {
+    "symptomId": 4,
+    "name": "Wet cough",
+    "description": null
+  },
+  {
+    "symptomId": 5,
+    "name": "Fatigue",
+    "description": null
+  },
+  {
+    "symptomId": 6,
+    "name": "Headache",
+    "description": null
+  },
+  {
+    "symptomId": 7,
+    "name": "Increased heart rate",
+    "description": null
+  },
+  {
+    "symptomId": 8,
+    "name": "Sore throat",
+    "description": null
+  },
+  {
+    "symptomId": 9,
+    "name": "Nasal congestion",
+    "description": null
+  },
+  {
+    "symptomId": 10,
     "name": "cough",
     "description": "cough_description"
   },
   {
-    "symptomId": 2,
+    "symptomId": 11,
     "name": "temperature",
     "description": "temperature_description"
   }

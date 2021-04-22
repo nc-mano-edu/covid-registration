@@ -2,11 +2,11 @@
   {
     "name": "therapist",
     "description": "therapist_description",
-    "id": 2
+    "id": 1
   },
   {
     "name": "immunologist",
     "description": "immunologist_description",
-    "id": 3
+    "id": 2
   }
 ]
