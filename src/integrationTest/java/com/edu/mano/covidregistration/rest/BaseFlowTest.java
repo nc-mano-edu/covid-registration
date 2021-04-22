@@ -11,7 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -23,10 +26,7 @@ import static com.edu.mano.covidregistration.CovidRegistrationApplication.SPECIA
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.SYMPTOMS_BASE_PREFIX;
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_BASE_PREFIX;
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_REQUEST_BASE_PREFIX;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class BaseFlowTest extends SpringBootIntegrationTests {
@@ -60,6 +60,7 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
         //checkUser();
 
         //createUserRequest();
+        addFile();
     }
 
     private void createRoles() throws Exception {
@@ -281,5 +282,47 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
                 .andExpect(status().isOk())
                 .andReturn();
         return result;
+    }
+
+    private void addFile() throws Exception {
+
+        MockMultipartFile file = new MockMultipartFile(
+                "file",
+                "/images/img.png",
+                MediaType.IMAGE_PNG_VALUE,
+                "Our Image".getBytes()
+        );
+
+        MvcResult result = mockMvc.perform(multipart("/files").file(file))
+                .andExpect(status().isOk()).andReturn();
+
+        byte[] actualResult = result.getResponse().getContentAsByteArray();
+        byte[] expectedResult = file.getBytes();
+
+        System.out.println(actualResult);
+        System.out.println(expectedResult);
+
+        // Assertions.assertEquals(objectMapper.readTree(actualResult), objectMapper.readTree(expectedResult));
+
+        // from byte[] to file (doesn't work)
+
+//        byte [] data = actualResult;
+//        ByteArrayInputStream bis = new ByteArrayInputStream(data);
+//        BufferedImage bImage2 = ImageIO.read(bis);
+//        ImageIO.write(bImage2, "jpg", new File("E:\\Программирование\\spring\\Project Mono 15.04.21\\src\\integrationTest\\resources\\images\\output.jpg") );
+//        System.out.println("image created");
+
+        // from file to file (work)
+
+//        BufferedImage bImage = ImageIO.read(new File("E:\\Программирование\\spring\\Project Mono 15.04.21\\src\\integrationTest\\resources\\images\\img.jpg"));
+//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//        ImageIO.write(bImage, "jpg", bos );
+//
+//        byte [] data = bos.toByteArray();
+//        ByteArrayInputStream bis = new ByteArrayInputStream(data);
+//        BufferedImage bImage2 = ImageIO.read(bis);
+//        ImageIO.write(bImage2, "jpg", new File("E:\\Программирование\\spring\\Project Mono 15.04.21\\src\\integrationTest\\resources\\images\\output.jpg") );
+//        System.out.println("image created");
+
     }
 }
