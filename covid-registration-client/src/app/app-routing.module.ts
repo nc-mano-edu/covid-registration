@@ -7,6 +7,7 @@ import {HomeComponent} from './home/home.component';
 import {AddUserComponent} from "./user/add-user.component";
 import {UserComponent} from "./user/user.component";
 import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
+import {TaskComponent} from "./task/task.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'add', component: AddUserComponent},
   {path: 'users', component: UserComponent},
   {path: 'request/create', component: AddUserRequestComponent},
+  {path: 'task/:task_id', component: TaskComponent},
   {path: '**', redirectTo: 'home'}
 ];
 

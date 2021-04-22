@@ -21,7 +21,8 @@ import {HeaderComponent} from "./header/header.component";
 import {UserService} from "./user/user.service";
 import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { FooterComponent } from './footer/footer.component';
+import {FooterComponent} from './footer/footer.component';
+import {TaskComponent} from './task/task.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { FooterComponent } from './footer/footer.component';
     LoginComponent,
     HeaderComponent,
     HomeComponent,
-    FooterComponent
+    FooterComponent,
+    TaskComponent
   ],
   imports: [
     AppRoutingModule,
