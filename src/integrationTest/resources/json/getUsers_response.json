@@ -1,17 +1,6 @@
 [
   {
-    "id": 1,
-    "firstName": "FirstName",
-    "middleName": "MiddleName",
-    "lastName": "LastName",
-    "dateOfBirth": null,
-    "insuranceNumber": null,
-    "phoneNumber": null,
-    "specialisations": [],
-    "roles": []
-  },
-  {
-    "id": 4,
+    "id": 3,
     "firstName": "Max",
     "middleName": "Jo",
     "lastName": "Petersen",
@@ -22,12 +11,12 @@
       {
         "name": "therapist",
         "description": "therapist_description",
-        "id": 2
+        "id": 1
       },
       {
         "name": "immunologist",
         "description": "immunologist_description",
-        "id": 3
+        "id": 2
       }
     ],
     "roles": [

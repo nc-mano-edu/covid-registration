@@ -38,9 +38,6 @@ values (1, 1),
        (3, 6),
        (3, 8);
 
-insert into covid_users(id, first_name, last_name, middle_name)
-values (1, 'Alexander', 'Pishulev', 'Dmitrievich');
-
 insert into symptoms(name)
 values ('Temperature'),
        ('Loss of taste'),

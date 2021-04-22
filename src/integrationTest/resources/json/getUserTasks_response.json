@@ -32,8 +32,6 @@
         "id": 1,
         "taskInstance": {
           "id": 1,
-          "createdTime": null,
-          "finishedTime": null,
           "active": true
         },
         "attribute": {
@@ -54,8 +52,6 @@
         "id": 2,
         "taskInstance": {
           "id": 1,
-          "createdTime": null,
-          "finishedTime": null,
           "active": true
         },
         "attribute": {
@@ -76,8 +72,6 @@
         "id": 3,
         "taskInstance": {
           "id": 1,
-          "createdTime": null,
-          "finishedTime": null,
           "active": true
         },
         "attribute": {
@@ -130,8 +124,6 @@
         "id": 4,
         "taskInstance": {
           "id": 2,
-          "createdTime": null,
-          "finishedTime": null,
           "active": true
         },
         "attribute": {
@@ -152,8 +144,6 @@
         "id": 5,
         "taskInstance": {
           "id": 2,
-          "createdTime": null,
-          "finishedTime": null,
           "active": true
         },
         "attribute": {
@@ -174,8 +164,6 @@
         "id": 6,
         "taskInstance": {
           "id": 2,
-          "createdTime": null,
-          "finishedTime": null,
           "active": true
         },
         "attribute": {
@@ -196,8 +184,6 @@
         "id": 7,
         "taskInstance": {
           "id": 2,
-          "createdTime": null,
-          "finishedTime": null,
           "active": true
         },
         "attribute": {
@@ -218,8 +204,6 @@
         "id": 8,
         "taskInstance": {
           "id": 2,
-          "createdTime": null,
-          "finishedTime": null,
           "active": true
         },
         "attribute": {
@@ -272,8 +256,6 @@
         "id": 9,
         "taskInstance": {
           "id": 3,
-          "createdTime": null,
-          "finishedTime": null,
           "active": true
         },
         "attribute": {
@@ -294,8 +276,6 @@
         "id": 10,
         "taskInstance": {
           "id": 3,
-          "createdTime": null,
-          "finishedTime": null,
           "active": true
         },
         "attribute": {
@@ -305,202 +285,6 @@
             "id": 4,
             "name": "Date value",
             "checkMask": "\\d{4}-[01]\\d-[0-3]\\d(\\s[0-2]\\d:[0-5]\\d:[0-5]\\d)?(?:\\.\\d+)?Z?"
-          }
-        },
-        "stringValue": null,
-        "imageValue": null,
-        "dateValue": null,
-        "numericValue": null
-      }
-    ],
-    "active": true
-  },
-  {
-    "id": 4,
-    "task": {
-      "id": 4,
-      "name": "firstTask",
-      "schedule": "* * * * *",
-      "description": "run every minute"
-    },
-    "request": {
-      "requestId": 1,
-      "startDate": null,
-      "endDate": null,
-      "treatmentState": null,
-      "user": {
-        "id": 1,
-        "firstName": "FirstName",
-        "middleName": "MiddleName",
-        "lastName": "LastName",
-        "dateOfBirth": null,
-        "insuranceNumber": null,
-        "phoneNumber": null,
-        "specialisations": [],
-        "roles": []
-      },
-      "symptoms": []
-    },
-    "createdTime": null,
-    "finishedTime": null,
-    "data": [
-      {
-        "id": 11,
-        "taskInstance": {
-          "id": 4,
-          "createdTime": null,
-          "finishedTime": null,
-          "active": true
-        },
-        "attribute": {
-          "id": 1,
-          "name": "Account photo",
-          "attributeType": {
-            "id": 3,
-            "name": "Image value",
-            "checkMask": ".{1,1024}"
-          }
-        },
-        "stringValue": null,
-        "imageValue": null,
-        "dateValue": null,
-        "numericValue": null
-      },
-      {
-        "id": 12,
-        "taskInstance": {
-          "id": 4,
-          "createdTime": null,
-          "finishedTime": null,
-          "active": true
-        },
-        "attribute": {
-          "id": 2,
-          "name": "Age",
-          "attributeType": {
-            "id": 2,
-            "name": "Numeric value",
-            "checkMask": "\\d+(\\.\\d+)?"
-          }
-        },
-        "stringValue": null,
-        "imageValue": null,
-        "dateValue": null,
-        "numericValue": null
-      },
-      {
-        "id": 13,
-        "taskInstance": {
-          "id": 4,
-          "createdTime": null,
-          "finishedTime": null,
-          "active": true
-        },
-        "attribute": {
-          "id": 3,
-          "name": "Contact phone number",
-          "attributeType": {
-            "id": 5,
-            "name": "Phone number value",
-            "checkMask": "[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*"
-          }
-        },
-        "stringValue": null,
-        "imageValue": null,
-        "dateValue": null,
-        "numericValue": null
-      }
-    ],
-    "active": true
-  },
-  {
-    "id": 5,
-    "task": {
-      "id": 5,
-      "name": "secondTask",
-      "schedule": "* * * * *",
-      "description": "run every minute"
-    },
-    "request": {
-      "requestId": 1,
-      "startDate": null,
-      "endDate": null,
-      "treatmentState": null,
-      "user": {
-        "id": 1,
-        "firstName": "FirstName",
-        "middleName": "MiddleName",
-        "lastName": "LastName",
-        "dateOfBirth": null,
-        "insuranceNumber": null,
-        "phoneNumber": null,
-        "specialisations": [],
-        "roles": []
-      },
-      "symptoms": []
-    },
-    "createdTime": null,
-    "finishedTime": null,
-    "data": [
-      {
-        "id": 14,
-        "taskInstance": {
-          "id": 5,
-          "createdTime": null,
-          "finishedTime": null,
-          "active": true
-        },
-        "attribute": {
-          "id": 1,
-          "name": "Account photo",
-          "attributeType": {
-            "id": 3,
-            "name": "Image value",
-            "checkMask": ".{1,1024}"
-          }
-        },
-        "stringValue": null,
-        "imageValue": null,
-        "dateValue": null,
-        "numericValue": null
-      },
-      {
-        "id": 15,
-        "taskInstance": {
-          "id": 5,
-          "createdTime": null,
-          "finishedTime": null,
-          "active": true
-        },
-        "attribute": {
-          "id": 2,
-          "name": "Age",
-          "attributeType": {
-            "id": 2,
-            "name": "Numeric value",
-            "checkMask": "\\d+(\\.\\d+)?"
-          }
-        },
-        "stringValue": null,
-        "imageValue": null,
-        "dateValue": null,
-        "numericValue": null
-      },
-      {
-        "id": 16,
-        "taskInstance": {
-          "id": 5,
-          "createdTime": null,
-          "finishedTime": null,
-          "active": true
-        },
-        "attribute": {
-          "id": 3,
-          "name": "Contact phone number",
-          "attributeType": {
-            "id": 5,
-            "name": "Phone number value",
-            "checkMask": "[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*"
           }
         },
         "stringValue": null,
