@@ -2,7 +2,10 @@
   "startDate": "#startDate#",
   "treatmentState": "started",
   "user": {
-    "id": 1
+    "id":
+    #
+    userId
+    #
   },
   "symptoms": [
     {

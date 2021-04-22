@@ -1,16 +1,5 @@
 [
   {
-    "id": 1,
-    "firstName": "Alexander",
-    "middleName": "Dmitrievich",
-    "lastName": "Pishulev",
-    "dateOfBirth": null,
-    "insuranceNumber": null,
-    "phoneNumber": null,
-    "specialisations": [],
-    "roles": []
-  },
-  {
     "id": 3,
     "firstName": "Max",
     "middleName": "Jo",
