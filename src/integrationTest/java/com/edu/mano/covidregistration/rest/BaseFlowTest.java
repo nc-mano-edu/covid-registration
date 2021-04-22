@@ -57,9 +57,9 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
         createRoles();
         createSymptoms();
 
-        checkUser();
+        //checkUser();
 
-        createUserRequest();
+        //createUserRequest();
     }
 
     private void createRoles() throws Exception {

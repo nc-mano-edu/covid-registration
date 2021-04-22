@@ -2,8 +2,6 @@
   "id": 1,
   "taskInstance": {
     "id": 1,
-    "createdTime": "2021-02-25 12:00:00",
-    "finishedTime": "2021-02-25 13:00:00",
     "active": false
   },
   "attribute": {
