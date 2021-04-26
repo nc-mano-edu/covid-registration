@@ -17,7 +17,7 @@ public class MockUserRequestRepository implements UserRequestRepository {
     private List<UserRequest> userRequests;
 
     public MockUserRequestRepository() {
-        this.userRequests = new ArrayList<>(Collections.singletonList(new UserRequest(1l, null, null, "in progress", null, null)));
+        this.userRequests = new ArrayList<>(Collections.singletonList(new UserRequest(1l, null, null, "in progress","treatment here", null, null)));
     }
 
     @Override

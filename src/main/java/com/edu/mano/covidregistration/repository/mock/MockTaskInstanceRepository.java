@@ -17,7 +17,7 @@ public class MockTaskInstanceRepository implements TaskInstanceRepository {
 
     private List<TaskInstance> taskInstances;
 
-    private final UserRequest userRequest = new UserRequest(1L, null, null, "in progress", null, null);
+    private final UserRequest userRequest = new UserRequest(1L,null, null, "in progress", "treatment here", null, null);
 
     MockTaskInstanceRepository() {
         Date createdDate, finishedDate;
@@ -25,6 +25,7 @@ public class MockTaskInstanceRepository implements TaskInstanceRepository {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             sdf.setTimeZone(TimeZone.getTimeZone("RUS"));
             createdDate = sdf.parse("2021-02-25 12:00:00");
+
             finishedDate = sdf.parse("2021-02-25 13:00:00");
         } catch (ParseException e) {
             createdDate = null;

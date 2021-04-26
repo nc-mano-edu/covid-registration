@@ -7,14 +7,21 @@ import {HomeComponent} from './home/home.component';
 import {AddUserComponent} from "./user/add-user.component";
 import {UserComponent} from "./user/user.component";
 import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
+import { MyLoginComponent } from './loginAndRegistration/components/my-login/my-login.component';
+import { RegistrationComponent } from './loginAndRegistration/components/registration/registration.component';
+
 
 const routes: Routes = [
-  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
-  {path: 'login', component: LoginComponent},
+ // {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'home', component: HomeComponent},
+  {path: 'login', component: MyLoginComponent},
+ // {path: 'login', component: LoginComponent},
   {path: 'add', component: AddUserComponent},
   {path: 'users', component: UserComponent},
   {path: 'request/create', component: AddUserRequestComponent},
-  {path: '**', redirectTo: 'home'}
+  {path: 'registration', component: RegistrationComponent},
+  {path: '**', redirectTo: 'home'},
+  
 ];
 
 @NgModule({

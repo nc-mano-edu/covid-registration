@@ -1,0 +1,60 @@
+<h1 style="text-align: center;">
+    Register Page
+</h1>
+<form [formGroup]="newRegistryForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+        <mat-form-field>
+            <input matInput placeholder="Username" formControlName="username">
+            <mat-hint *ngIf="newRegistryForm.get('username').errors">Username is required</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="First name" formControlName="firstName">
+            <mat-hint *ngIf="newRegistryForm.get('firstName').errors">Firstname is required</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Middle Name" formControlName="middleName">
+            <mat-hint *ngIf="newRegistryForm.get('middleName').errors">MiddleName is required</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Last Name" formControlName="lastName">
+            <mat-hint *ngIf="newRegistryForm.get('lastName').errors">Last name is required</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="legacy">
+            <mat-label>Birthday</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+            <mat-hint *ngIf="newRegistryForm.get('dateOfBirth').errors">Birthday is required</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Insurance number" formControlName="insuranceNumber">
+        <mat-hint *ngIf="newRegistryForm.get('insuranceNumber').errors">Insurance number is required</mat-hint>
+    </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Phone number" formControlName="phoneNumber">
+            <mat-hint *ngIf="newRegistryForm.get('phoneNumber').errors">Phone number is required</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email">
+            <mat-hint *ngIf="newRegistryForm.get('email').errors">Email is required</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Password" formControlName="password">
+            <mat-hint *ngIf="newRegistryForm.get('password').errors">Email is required</mat-hint>
+        </mat-form-field>
+  
+        <button mat-flat-button color="registryButton"  type="submit">Register</button>
+    </div>
+
+</form>
+
+
+

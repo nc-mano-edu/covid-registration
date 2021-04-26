@@ -43,10 +43,27 @@ public class User {
     private String lastName;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(pattern = "dd.mm.yyyy")
     private Date dateOfBirth;
+
+    @NotNull
+    @Size(min = 2)
     private String insuranceNumber;
+
+    @NotNull
+    @Size(min = 2)
     private String phoneNumber;
+
+    @NotNull
+    @Size(min = 2)
+    private String email;
+
+    @NotNull
+    @Size(min = 2)
+    private String password;
+
+    @NotNull
+    @Size(min = 1)
+    private String username;
 
     @ManyToMany
     private List<Specialisation> specialisations;

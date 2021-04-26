@@ -13,6 +13,9 @@ import {LoginComponent} from './login/login.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+
 
 import {UserComponent} from './user/user.component';
 import {HttpClientModule} from "@angular/common/http";
@@ -22,6 +25,14 @@ import {UserService} from "./user/user.service";
 import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { FooterComponent } from './footer/footer.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MyLoginComponent } from './loginAndRegistration/components/my-login/my-login.component';
+import { RegistrationComponent } from './loginAndRegistration/components/registration/registration.component';
+
+
+
+
+
 
 @NgModule({
   declarations: [
@@ -32,7 +43,10 @@ import { FooterComponent } from './footer/footer.component';
     LoginComponent,
     HeaderComponent,
     HomeComponent,
-    FooterComponent
+    FooterComponent,
+    MyLoginComponent,
+    RegistrationComponent,
+
   ],
   imports: [
     AppRoutingModule,
@@ -45,7 +59,11 @@ import { FooterComponent } from './footer/footer.component';
     AngularMaterialModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    
   ],
   providers: [AuthService, AuthGuard, UserService],
   bootstrap: [AppComponent]

@@ -15,7 +15,7 @@ public class MockTaskInstanceDataRepository implements TaskInstanceDataRepositor
 
     private List<TaskInstanceData> taskInstanceData;
 
-    private final UserRequest userRequest = new UserRequest(1L, null, null, "in progress", null, null);
+    private final UserRequest userRequest = new UserRequest(1L, null, null, "in progress","treatment here", null, null);
 
     MockTaskInstanceDataRepository() {
         Date createdDate, finishedDate;
