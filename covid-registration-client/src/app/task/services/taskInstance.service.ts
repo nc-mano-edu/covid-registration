@@ -14,4 +14,8 @@ export class TaskInstanceService {
     return this.http.get<TaskInstance>(this.taskInstanceUrl + '/' + id);
   }
 
+  public update(id: string, body: TaskInstance) {
+    return this.http.put<TaskInstance>(this.taskInstanceUrl + '/' + id, body);
+  }
+
 }

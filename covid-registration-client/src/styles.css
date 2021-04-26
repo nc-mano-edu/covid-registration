@@ -18,12 +18,16 @@ app-root{
   height: 100%
 }
 
-ng-component, app-user{
+ng-component, app-user {
   height: 100%;
 }
 
-app-login{
+app-login {
   margin-bottom: auto;
+}
+
+.content-wrapper {
+  padding: 10px;
 }
 
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
