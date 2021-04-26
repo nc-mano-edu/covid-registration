@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+/*------------- Dates block -------------*/
+
+.task-dates {
+  display: flex;
+}
+
+.task-dates h3 {
+  margin-right: 15px;
+}
+
+/*------------ Active badge ------------*/
+
+.text-badged {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+}
+
+.text-badged h1 {
+  display: inline-block;
+}
+
+.mat-badge-content {
+  width: auto;
+  height: 27px;
+  padding: 3px 7px;
+  box-sizing: border-box;
+  top: 3px !important;
+  right: -60px !important;
+}
+
+.active .mat-badge-content {
+  color: #ffffff;
+  background: #46a35e;
+}
+
+.inactive .mat-badge-content {
+  color: #ffffff;
+  background: #b9b9b9;
+  right: -65px !important;
+}
+
+/*----------- Form fields -----------*/
+
+mat-form-field {
+  width: 410px;
+  margin-bottom: 10px;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  color: #2fafa6 !important;
+}
+
+::ng-deep .mat-form-field-ripple {
+  background-color: #2fafa6 !important;
+}
+
+::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+  color: #f44336 !important;
+}
+
+::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+  background-color: #f44336 !important;
+}
+
+::ng-deep .mat-input-invalid .mat-input-placeholder {
+  color: #f44336;
+}
+
+/*---------- Images previews ---------*/
+
+.form-image-preview img {
+  max-width: 200px;
+  margin: -3px 5px 5px 0;
+  border-radius: 10px;
+}
+
+/*------------ Date picker ------------*/
+
+::ng-deep .mat-datepicker-toggle {
+  margin-right: 10px !important;
+}
+
+::ng-deep .md-icon-button + ::ng-deep .md-datepicker-input-container {
+  float: left;
+  margin-top: 7px;
+}
+
+/*-------------- Button --------------*/
+
+.form-submit-button {
+  margin-top: 10px;
+  width: 100px;
+  display: inline-block;
+  color: #ffffff;
+  background: #46a35e;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  opacity: 1;
+}

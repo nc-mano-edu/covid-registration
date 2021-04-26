@@ -7,7 +7,7 @@ export class TaskInstance {
   task: Task;
   createdTime: string;
   finishedTime: string;
-  isActive: string;
+  active: string;
   data: TaskInstanceData[];
 
 }
