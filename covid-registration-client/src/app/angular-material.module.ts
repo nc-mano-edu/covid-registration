@@ -10,6 +10,10 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatSelectModule} from "@angular/material/select";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatBadgeModule} from '@angular/material/badge';
+import {NgxMatFileInputModule} from '@angular-material-components/file-input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
   exports: [
@@ -25,6 +29,10 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     MatSlideToggleModule,
     MatFormFieldModule,
     MatInputModule,
+    MatBadgeModule,
+    NgxMatFileInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ]
 })
 
