@@ -18,10 +18,11 @@ app-root{
   height: 100%
 }
 
-app-root > :nth-child(3){
+ng-component, app-user {
   height: 100%;
 }
-app-login{
+
+app-login {
   margin-bottom: auto;
 }
 
