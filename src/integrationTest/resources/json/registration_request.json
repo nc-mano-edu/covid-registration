@@ -1,0 +1,28 @@
+{
+  "firstName": "#firstName#",
+  "middleName": "#middleName#",
+  "lastName": "#lastName#",
+  "dateOfBirth": null,
+  "insuranceNumber": "123321123",
+  "phoneNumber": "8 888 8888 888888888",
+  "email": "#email#",
+  "password": "#password#",
+  "username": "#username#",
+
+  "roles": [
+    {
+      "roleId": "1"
+    },
+    {
+      "roleId": "2"
+    }
+  ],
+  "specialisations": [
+    {
+      "id": "2"
+    },
+    {
+      "id": "1"
+    }
+  ]
+}

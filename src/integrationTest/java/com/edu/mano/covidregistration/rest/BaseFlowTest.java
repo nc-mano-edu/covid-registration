@@ -18,11 +18,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.ROLE_BASE_PREFIX;
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.SPECIALIZATION_BASE_PREFIX;
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.SYMPTOMS_BASE_PREFIX;
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_BASE_PREFIX;
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_REQUEST_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -57,7 +53,11 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
         createRoles();
         createSymptoms();
 
+        registration("nick", "ddd@mail.rt","113424");
+        //login("ddd@mail.rt", "113424"); ошибка
+
         //checkUser();
+
 
         //createUserRequest();
     }
@@ -281,5 +281,38 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
                 .andExpect(status().isOk())
                 .andReturn();
         return result;
+    }
+
+    private void login(String email, String password) throws Exception {
+
+        String inputJsonRequest = testDataPreparation.getJson("json/login_request.json");
+        inputJsonRequest.replace("#email#", email);
+        inputJsonRequest.replace("#password#", password);
+
+        MvcResult result = mockMvc.perform(
+                post(LOGIN_BASE_PREFIX)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(inputJsonRequest)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+    }
+
+
+    private MvcResult registration(String username, String email, String password) throws Exception {
+        String inputJsonRequest = testDataPreparation.getJson("json/registration_request.json");
+        inputJsonRequest = inputJsonRequest.replace("#password#", password);
+        inputJsonRequest = inputJsonRequest.replace("#email#", email);
+        inputJsonRequest = inputJsonRequest.replace("#username#", username);
+
+        MvcResult result = mockMvc.perform(
+                post(REGISTER_BASE_PREFIX)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(inputJsonRequest)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        return result;
+
     }
 }

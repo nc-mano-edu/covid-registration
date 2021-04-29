@@ -15,6 +15,8 @@ public class CovidRegistrationApplication {
     public static final String TASKS_INSTANCE_BASE_PREFIX = "/backend/taskInstance";
     public static final String TASKS_INSTANCE_DATA_BASE_PREFIX = "/backend/taskInstanceData";
     public static final String ROLE_BASE_PREFIX = "/backend/Role";
+    public static final String LOGIN_BASE_PREFIX = "/login";
+    public static final String REGISTER_BASE_PREFIX = "/registeruser";
 
     public static void main(String[] args) {
         SpringApplication.run(CovidRegistrationApplication.class, args);

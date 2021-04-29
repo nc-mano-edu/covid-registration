@@ -44,6 +44,9 @@ public class UserRequest {
     @Size(min = 3)
     private String treatmentState;
 
+    @Size(min = 3)
+    private String doctorRecommendations;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = true)
     private User user;
