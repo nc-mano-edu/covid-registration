@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Completion of registration",
-    "schedule": "0 12 */2 * *",
+    "schedule": "0 0 12 */2 * *",
     "description": "Complete filling of the user account",
     "attributes": [
       {
@@ -37,7 +37,7 @@
   {
     "id": 2,
     "name": "Request for treatment",
-    "schedule": "0 12 * * *",
+    "schedule": "0 0 12 * * *",
     "description": "Filling out a treatment request",
     "attributes": [
       {
@@ -90,7 +90,7 @@
   {
     "id": 3,
     "name": "Payment for treatment",
-    "schedule": "0 */5 * * *",
+    "schedule": "0 0 */5 * * *",
     "description": "Confirmation of completion of treatment and payment",
     "attributes": [
       {
@@ -116,7 +116,7 @@
   {
     "id": 4,
     "name": "firstTask",
-    "schedule": "* * * * *",
+    "schedule": "0 * * * * *",
     "description": "run every minute",
     "attributes": [
       {
@@ -151,8 +151,8 @@
   {
     "id": 5,
     "name": "secondTask",
-    "schedule": "* * * * *",
-    "description": "run every minute",
+    "schedule": "* * * * * *",
+    "description": "run every second",
     "attributes": [
       {
         "id": 1,

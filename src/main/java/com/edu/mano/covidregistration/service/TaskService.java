@@ -3,6 +3,7 @@ package com.edu.mano.covidregistration.service;
 import com.edu.mano.covidregistration.domain.Attribute;
 import com.edu.mano.covidregistration.domain.Task;
 import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
+import com.edu.mano.covidregistration.jobs.JobScheduler;
 import com.edu.mano.covidregistration.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,7 @@ public class TaskService {
         for (Attribute attr : task.getAttributes()) {
             attributeService.find(attr.getId());
         }
+
         return taskRepository.save(task).getId();
     }
 

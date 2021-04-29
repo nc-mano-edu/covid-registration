@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -60,8 +61,11 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
         createUserRequest();
         getTasks();
         checkTasksIsActive(true);
+        getActiveTasks();
         updateTasks();
         checkTasksIsActive(false);
+
+        checkScheduleJobs();
     }
 
     private void createUser() throws Exception {
@@ -153,6 +157,38 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
         actualResult = actualResult.replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
 
         Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
+    }
+
+    private void getActiveTasks() throws Exception {
+        MvcResult result = mockMvc.perform(get(TASKS_INSTANCE_BASE_PREFIX + "/active")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String actualResult = result.getResponse().getContentAsString();
+        String expectedResult = testDataPreparation.getJson("json/getUserTasks_response.json");
+
+        actualResult = actualResult.replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
+        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
+    }
+
+    private void checkScheduleJobs() {
+        try {
+            System.out.println("[Test] Waiting for scheduled tasks");
+            TimeUnit.SECONDS.sleep(5);
+            MvcResult result = mockMvc.perform(get(TASKS_INSTANCE_BASE_PREFIX + "/all")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+            List<TaskInstance> lt = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<TaskInstance>>(){});
+            Assertions.assertTrue(tasks.size() < lt.size());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
