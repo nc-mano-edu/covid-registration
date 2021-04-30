@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-direction: center;
+}
+
+.container > * {
+    width: 40%;
+}
+
+.mat-loginButton {
+    background-color: #17a096;
+    color: white;
+}
