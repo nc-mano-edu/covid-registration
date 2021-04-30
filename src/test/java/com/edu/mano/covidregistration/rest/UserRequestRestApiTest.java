@@ -31,7 +31,7 @@ class UserRequestRestApiTest extends SpringBootTests {
     @Autowired
     private ObjectMapper objectMapper;
 
-    final UserRequest userRequest = new UserRequest(1l, null, null, "in progress", null, null);
+    final UserRequest userRequest = new UserRequest(1l, null, null, "in progress","recommendations", null, null);
 
     @Test
     void MockMvcTest() {

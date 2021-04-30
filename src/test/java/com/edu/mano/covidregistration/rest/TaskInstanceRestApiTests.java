@@ -35,7 +35,7 @@ public class TaskInstanceRestApiTests extends SpringBootTests {
     Logger logger = LoggerFactory.getLogger(TaskInstanceRestApiTests.class);
 
 
-    private final UserRequest userRequest = new UserRequest(1L, null, null, "in progress", null, null);
+    private final UserRequest userRequest = new UserRequest(1L, null, null, "in progress","recommendations", null, null);
 
     @Test
     public void checkFindAll() throws Exception {

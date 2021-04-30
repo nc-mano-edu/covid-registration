@@ -17,7 +17,7 @@ public class MockTaskInstanceRepository implements TaskInstanceRepository {
 
     private List<TaskInstance> taskInstances;
 
-    private final UserRequest userRequest = new UserRequest(1L, null, null, "in progress", null, null);
+    private final UserRequest userRequest = new UserRequest(1L, null, null, "in progress","recommendations", null, null);
 
     MockTaskInstanceRepository() {
         Date createdDate, finishedDate;

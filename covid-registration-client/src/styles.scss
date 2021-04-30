@@ -61,3 +61,6 @@ $accent: mat-palette($mat-myapp-accent);
 $theme: mat-light-theme($primary, $accent);
 
 @include angular-material-theme($theme);
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
