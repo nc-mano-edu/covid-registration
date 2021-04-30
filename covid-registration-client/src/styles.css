@@ -25,5 +25,9 @@ app-login{
   margin-bottom: auto;
 }
 
+.content-wrapper {
+  padding: 10px;
+}
+
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';

@@ -9,7 +9,7 @@ import {UserComponent} from "./user/user.component";
 import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
 import { RegistrationComponent } from './loginRegistration/components/registration/registration.component';
 import { NewLoginComponent } from './loginRegistration/components/new-login/new-login.component';
-
+import {TaskComponent} from "./task/task.component";
 
 const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
@@ -19,6 +19,8 @@ const routes: Routes = [
   {path: 'add', component: AddUserComponent},
   {path: 'users', component: UserComponent},
   {path: 'request/create', component: AddUserRequestComponent},  
+  {path: 'request/create', component: AddUserRequestComponent},
+  {path: 'task/:task_id', component: TaskComponent},
   {path: '**', redirectTo: 'home'}
 ];
 

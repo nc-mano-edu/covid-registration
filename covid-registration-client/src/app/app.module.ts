@@ -16,6 +16,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {UserComponent} from './user/user.component';
 import {HttpClientModule} from "@angular/common/http";
@@ -27,6 +28,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { FooterComponent } from './footer/footer.component';
 import { RegistrationComponent } from './loginRegistration/components/registration/registration.component';
 import { NewLoginComponent } from './loginRegistration/components/new-login/new-login.component';
+import {FooterComponent} from './footer/footer.component';
+import {TaskComponent} from './task/task.component';
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -39,7 +43,8 @@ import { NewLoginComponent } from './loginRegistration/components/new-login/new-
     HomeComponent,
     FooterComponent,
     RegistrationComponent,
-    NewLoginComponent,    
+    NewLoginComponent,
+    TaskComponent
   ],
   imports: [
     AppRoutingModule,
@@ -56,9 +61,10 @@ import { NewLoginComponent } from './loginRegistration/components/new-login/new-
     MatDatepickerModule,
     MatNativeDateModule,
     MatRippleModule,
-    MatButtonModule
+    MatButtonModule,
+    FlexLayoutModule
   ],
-  providers: [AuthService, AuthGuard, UserService],
+  providers: [AuthService, AuthGuard, UserService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
