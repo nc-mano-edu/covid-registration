@@ -13,6 +13,7 @@ import {LoginComponent} from './login/login.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {UserComponent} from './user/user.component';
 import {HttpClientModule} from "@angular/common/http";
@@ -21,7 +22,10 @@ import {HeaderComponent} from "./header/header.component";
 import {UserService} from "./user/user.service";
 import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { FooterComponent } from './footer/footer.component';
+import {FooterComponent} from './footer/footer.component';
+import {TaskComponent} from './task/task.component';
+import {DatePipe} from "@angular/common";
+
 
 @NgModule({
   declarations: [
@@ -32,7 +36,8 @@ import { FooterComponent } from './footer/footer.component';
     LoginComponent,
     HeaderComponent,
     HomeComponent,
-    FooterComponent
+    FooterComponent,
+    TaskComponent
   ],
   imports: [
     AppRoutingModule,
@@ -45,9 +50,10 @@ import { FooterComponent } from './footer/footer.component';
     AngularMaterialModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    FlexLayoutModule
   ],
-  providers: [AuthService, AuthGuard, UserService],
+  providers: [AuthService, AuthGuard, UserService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

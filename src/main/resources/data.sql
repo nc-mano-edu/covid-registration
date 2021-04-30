@@ -3,11 +3,12 @@
 --        ('Patient', 'Patient descr');
 
 insert into attribute_types (name, check_mask)
-values ('String value', '[A-Za-zА-Яа-яЁё\s]+'),
+values ('String value', '[A-Za-zА-Я0-9а-яЁё\s]+'),
        ('Numeric value', '\d+(\.\d+)?'),
        ('Image value', '.{1,1024}'),
        ('Date value', '\d{4}-[01]\d-[0-3]\d(\s[0-2]\d:[0-5]\d:[0-5]\d)?(?:\.\d+)?Z?'),
-       ('Phone number value', '[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*');
+       ('Phone number value', '[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*'),
+       ('Url value', '(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&''\(\)\*\+,;=.]+');
 
 insert into attributes (name, attribute_type_id)
 values ('Account photo', 3),
@@ -18,7 +19,7 @@ values ('Account photo', 3),
        ('Service payment amount', 2),
        ('Photo of inflammation on the skin', 3),
        ('End date of treatment', 4),
-       ('Clinic link', 3),
+       ('Clinic link', 6),
        ('Description of patient complaints', 1);
 
 insert into tasks(name, schedule, description)
