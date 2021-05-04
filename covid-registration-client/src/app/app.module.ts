@@ -25,12 +25,16 @@ import {HeaderComponent} from "./header/header.component";
 import {UserService} from "./user/user.service";
 import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { FooterComponent } from './footer/footer.component';
 import { RegistrationComponent } from './loginRegistration/components/registration/registration.component';
 import { NewLoginComponent } from './loginRegistration/components/new-login/new-login.component';
 import {FooterComponent} from './footer/footer.component';
 import {TaskComponent} from './task/task.component';
 import {DatePipe} from "@angular/common";
+import {TaskInstanceService} from './task/services/taskInstance.service';
+import {TaskInstanceComponent} from './task-instance/task-instance/task-instance.component';
+import {TaskInstanceActiveComponent} from './task-instance/task-instance-active/task-instance-active.component';
+import {TaskInstanceActiveForUserComponent} from './task-instance/task-instance-active-for-user/task-instance-active-for-user.component';
+import {TaskInstanceForUserComponent} from './task-instance/task-instance-for-user/task-instance-for-user.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +48,11 @@ import {DatePipe} from "@angular/common";
     FooterComponent,
     RegistrationComponent,
     NewLoginComponent,
-    TaskComponent
+    TaskComponent,
+    TaskInstanceComponent,
+    TaskInstanceActiveComponent,
+    TaskInstanceActiveForUserComponent,
+    TaskInstanceForUserComponent
   ],
   imports: [
     AppRoutingModule,
@@ -64,7 +72,7 @@ import {DatePipe} from "@angular/common";
     MatButtonModule,
     FlexLayoutModule
   ],
-  providers: [AuthService, AuthGuard, UserService, DatePipe],
+  providers: [AuthService, AuthGuard, UserService, DatePipe, TaskInstanceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
