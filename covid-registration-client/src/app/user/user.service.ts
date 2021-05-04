@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {User} from './user.model';
+import { TaskInstance } from '../task/models/taskInstance.model';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -29,6 +30,14 @@ export class UserService {
 
   public createUser(user) {
     return this.http.post<User>(this.userUrl, user);
+  }
+
+  public getAllTasks(id) {
+    return this.http.get<TaskInstance[]>(this.userUrl + "/" + id + "/tasks")
+  }
+
+  public getActiveTasks(id) {
+    return this.http.get<TaskInstance[]>(this.userUrl + "/" + id + "/active-tasks")
   }
 
 }
