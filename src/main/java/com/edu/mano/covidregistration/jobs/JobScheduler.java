@@ -31,9 +31,13 @@ public class JobScheduler {
 
         System.out.println("[SCH] scheduling tasks");
 
+        rescheduleTasks(taskService, scheduler);
+    }
+
+    public void rescheduleTasks(TaskService taskService, TaskScheduler scheduler) {
+        //todo implement removing already scheduled tasks
         taskService.findAll().forEach(task -> {
-            scheduler.schedule(new ReschedulingTask(task), new CronTrigger("*/4 * * * * *"));
-            //scheduler.schedule(new ReschedulingTask(task), new CronTrigger(task.getSchedule()));
+            scheduler.schedule(new ReschedulingTask(task), new CronTrigger(task.getSchedule()));
         });
     }
 
