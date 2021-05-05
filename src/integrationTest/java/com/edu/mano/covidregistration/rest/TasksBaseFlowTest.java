@@ -37,8 +37,8 @@ public class TasksBaseFlowTest extends SpringBootIntegrationTests {
     }
 
     private void createTasks() throws Exception {
-        createTask("firstTask", "* * * * *", "run every minute");
-        createTask("secondTask", "* * * * *", "run every minute");
+        createTask("firstTask", "0 * * * * *", "run every minute");
+        createTask("secondTask", "* * * * * *", "run every second");
 
         MvcResult result = mockMvc.perform(
                 get(TASKS_BASE_PREFIX + "/all")

@@ -76,4 +76,16 @@ public class UserRequestController {
         return new ResponseEntity<UserRequest>(updatedUserRequest, HttpStatus.OK);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<UserRequest>> findAll() {
+        List<UserRequest> userRequests = userRequestService.findAll();
+        return new ResponseEntity<>(userRequests, HttpStatus.OK);
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<UserRequest>> findActive() {
+        List<UserRequest> userRequests = userRequestService.findActive();
+        return new ResponseEntity<>(userRequests, HttpStatus.OK);
+    }
+
 }

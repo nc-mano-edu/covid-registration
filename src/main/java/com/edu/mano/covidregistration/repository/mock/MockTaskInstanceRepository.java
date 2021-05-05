@@ -109,4 +109,9 @@ public class MockTaskInstanceRepository implements TaskInstanceRepository {
     public List<TaskInstance> findByRequestRequestId(Long id) {
         return null;
     }
+
+    @Override
+    public List<TaskInstance> findAllByActiveIsTrue() {
+        return new ArrayList<>();
+    }
 }

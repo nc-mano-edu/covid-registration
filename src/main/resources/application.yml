@@ -12,7 +12,7 @@ spring:
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB_NAME:covid-registration}
     username: ${POSTGRES_USERNAME:postgres}
-    password: ${POSTGRES_PASSWORD:postgres}
+    password: ${POSTGRES_PASSWORD:mysecretpassword}
     initialization-mode: always
     sql-script-encoding: UTF-8
     data: classpath:data.sql
@@ -25,6 +25,7 @@ spring:
         jdbc:
           time_zone: GMT+4
           use_streams_for_binary: false
+        enable_lazy_load_no_trans: true
     generate-ddl: true
     hibernate:
       ddl-auto: create
