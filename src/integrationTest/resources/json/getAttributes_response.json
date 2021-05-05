@@ -32,7 +32,7 @@
     "attributeType": {
       "id": 1,
       "name": "String value",
-      "checkMask": "[A-Za-zÐ-Ð¯Ð°-ÑÐÑ\\s]+"
+      "checkMask": "[A-Za-zÐ-Ð¯0-9Ð°-ÑÐÑ\\s]+"
     }
   },
   {
@@ -75,9 +75,9 @@
     "id": 9,
     "name": "Clinic link",
     "attributeType": {
-      "id": 3,
-      "name": "Image value",
-      "checkMask": ".{1,1024}"
+      "id": 6,
+      "name": "Url value",
+      "checkMask": "(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+"
     }
   },
   {
@@ -86,7 +86,7 @@
     "attributeType": {
       "id": 1,
       "name": "String value",
-      "checkMask": "[A-Za-zÐ-Ð¯Ð°-ÑÐÑ\\s]+"
+      "checkMask": "[A-Za-zÐ-Ð¯0-9Ð°-ÑÐÑ\\s]+"
     }
   }
 ]

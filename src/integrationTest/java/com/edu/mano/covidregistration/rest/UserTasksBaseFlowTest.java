@@ -77,6 +77,9 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
         user.setFirstName("FirstName");
         user.setMiddleName("MiddleName");
         user.setLastName("LastName");
+        user.setPassword("123456789abcdefg!");
+        user.setUsername("userLogin");
+        user.setEmail("e@e.com");
 
         MvcResult result = mockMvc.perform(
                 post(USER_BASE_PREFIX)
@@ -188,7 +191,8 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
                     .andExpect(status().isOk())
                     .andReturn();
 
-            List<TaskInstance> lt = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<TaskInstance>>(){});
+            List<TaskInstance> lt = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<TaskInstance>>() {
+            });
             Assertions.assertTrue(tasks.size() < lt.size());
 
         } catch (Exception e) {

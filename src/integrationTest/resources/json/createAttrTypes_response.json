@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "String value",
-    "checkMask": "[A-Za-zÐ-Ð¯Ð°-ÑÐÑ\\s]+"
+    "checkMask": "[A-Za-zÐ-Ð¯0-9Ð°-ÑÐÑ\\s]+"
   },
   {
     "id": 2,
@@ -26,11 +26,16 @@
   },
   {
     "id": 6,
+    "name": "Url value",
+    "checkMask": "(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+"
+  },
+  {
+    "id": 7,
     "name": "stringAttr",
     "checkMask": ""
   },
   {
-    "id": 7,
+    "id": 8,
     "name": "dateAttr",
     "checkMask": ""
   }
