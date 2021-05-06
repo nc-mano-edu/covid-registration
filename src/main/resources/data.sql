@@ -50,13 +50,13 @@ values ('Temperature'),
        ('Sore throat'),
        ('Nasal congestion');
 
--- insert into covid_users(id, date_of_birth, first_name, insurance_number, last_name, middle_name, phone_number)
+-- insert into covid_users(id, date_of_birth, first_name, insurance_number, last_name, middle_name, phone_number, email, username, password)
 -- values (1, TIMESTAMP '1986-06-04 00:00:00.000000', 'Гэйла', '382-305-637 21', 'Чудина', 'Валентиновна',
---         '+7 (956) 517-57-46'),
+--         '+7 (956) 517-57-46', 'geyla@ya.ru', 'geyla', '123'),
 --        (2, TIMESTAMP '1982-10-12 00:00:00.000000', 'Умит', '467-573-256 64', 'Рубенцов', 'Федорович',
---         '+7 (984) 080-73-02'),
+--         '+7 (984) 080-73-02', 'umit@ya.ru', 'umit', '123'),
 --        (3, TIMESTAMP '1992-10-05 00:00:00.000000', 'Поликар', '926-375-535 15', 'Покровский', 'Валентинович',
---         '+7 (979) 654-34-83');
+--         '+7 (979) 654-34-83', 'polycar@ya.ru', 'polycar', '123');
 --
 -- insert into user_request(request_id, start_date, end_date, treatment_state, user_id)
 -- values (1, TIMESTAMP '2021-01-16 15:36', TIMESTAMP '2021-01-18 15:36', 'text', 1),
