@@ -25,7 +25,6 @@ import {HeaderComponent} from "./header/header.component";
 import {UserService} from "./user/user.service";
 import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { FooterComponent } from './footer/footer.component';
 import { RegistrationComponent } from './loginRegistration/components/registration/registration.component';
 import { NewLoginComponent } from './loginRegistration/components/new-login/new-login.component';
 import {FooterComponent} from './footer/footer.component';
