@@ -28,9 +28,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { FooterComponent } from './footer/footer.component';
 import { RegistrationComponent } from './loginRegistration/components/registration/registration.component';
 import { NewLoginComponent } from './loginRegistration/components/new-login/new-login.component';
-import {FooterComponent} from './footer/footer.component';
 import {TaskComponent} from './task/task.component';
 import {DatePipe} from "@angular/common";
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,8 @@ import {DatePipe} from "@angular/common";
     FooterComponent,
     RegistrationComponent,
     NewLoginComponent,
-    TaskComponent
+    TaskComponent,
+    AccountComponent
   ],
   imports: [
     AppRoutingModule,

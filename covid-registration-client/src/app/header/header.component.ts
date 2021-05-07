@@ -17,8 +17,11 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn$ = this.authService.isLoggedIn;
   }
 
-  onLogout() {
+  toLoginPage() {
     this.authService.logout();
   }
 
+  toAccountPage(){
+    this.authService.getAccountInfo();
+  }
 }

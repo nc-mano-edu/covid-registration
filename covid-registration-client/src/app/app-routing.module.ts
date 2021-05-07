@@ -10,12 +10,14 @@ import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
 import { RegistrationComponent } from './loginRegistration/components/registration/registration.component';
 import { NewLoginComponent } from './loginRegistration/components/new-login/new-login.component';
 import {TaskComponent} from "./task/task.component";
+import { AccountComponent } from './account/account.component';
 
 const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   {path: 'login', component: NewLoginComponent},
   {path: 'home', component: HomeComponent/*, canActivate: [AuthGuard]*/},
  // {path: 'login', component: LoginComponent},
+  {path: 'account', component: AccountComponent},
   {path: 'add', component: AddUserComponent},
   {path: 'users', component: UserComponent},
   {path: 'request/create', component: AddUserRequestComponent},  

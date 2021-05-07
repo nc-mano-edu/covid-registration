@@ -1,0 +1,9 @@
+.account-container{
+  display: flex;
+  justify-content:space-evenly;
+
+}
+
+.user-info{
+  display: flex;
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 import { RegistrationService } from '../../services/registration.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class NewLoginComponent implements OnInit {
 
   constructor(
     private _service: RegistrationService,
-    private _router : Router
+    private _router : Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -37,11 +39,12 @@ export class NewLoginComponent implements OnInit {
     this._service.loginUser(this.myLoginForm.value).subscribe(
       data => {
         console.log("response recieved");
+        this.authService.login()
         this._router.navigate(['/home'])
 
       } ,
       error =>  {
-        this.errorMsg = "Invalid username and passwor. Please try again"
+        this.errorMsg = "Invalid username and password. Please try again"
         console.log("exception occured");
       }
     )
