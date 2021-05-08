@@ -1,13 +1,33 @@
 <div class="account-container">
   <div class="user-info">
-    <div>
+    <!-- <div>
       <img>
-    </div>
-    <div *ngFor= 'let values of valuesOfUserObjectKeys'>
-      {{values}}
-    </div>
+    </div> -->
+    <h1>First name</h1>
+    <p>{{ user.firstName }}</p>
+    <h1>Middle name</h1>
+    <p>{{ user.middleName }}</p>
+    <h1>Last name</h1>
+    <p>{{ user.lastName }}</p>
+    <h1>Date of birth</h1>
+    <p>{{ user.dateOfBirth | date: "dd.MM.yyyy" }}</p>
+    <h1>Insurance number</h1>
+    <p>{{ user.insuranceNumber }}</p>
+    <h1>Phone number</h1>
+    <p>{{ user.phoneNumber }}</p>
   </div>
   <div class="request-details">
-
+    <h1>Start</h1>
+    <p>{{userRequest.startDate}}</p>
+    <h1>End</h1>
+    <p>{{userRequest.endDate}}</p>
+    <h1>Current treatment state</h1>
+    <p>{{userRequest.treatmentState}}</p>
+    <h1>Doctor's recommendations</h1>
+    <p>{{userRequest.doctorRecommendations}}</p>
+    <h1>Symptoms</h1>
+    <p *ngFor = 'let symptom of userRequest.symptoms'>
+      {{symptom}}
+    </p>
   </div>
 </div>

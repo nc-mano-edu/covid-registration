@@ -3,7 +3,22 @@
   justify-content:space-evenly;
 
 }
-
-.user-info{
+.account-container .user-info, .request-details{
   display: flex;
+  flex-flow: column wrap;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  /* background-color: antiquewhite; */
+  box-shadow: -3px 3px 5px 1px #00a89d
 }
+/* .user-info{
+  display: flex;
+  flex-flow: column wrap;
+  margin: 10px;
+}
+.request-details{
+  display: flex;
+  flex-flow: column wrap;
+  margin: 10px;
+} */

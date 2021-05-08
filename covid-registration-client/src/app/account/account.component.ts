@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../user/user.model';
+import { UserRequest } from '../userRequest/models/userRequest.model';
 
 @Component({
   selector: 'user-account',
@@ -11,22 +14,24 @@ import { User } from '../user/user.model';
 })
 export class AccountComponent implements OnInit {
   user: User;
-  valuesOfUserObjectKeys: string[];
+  userRequest: UserRequest;
+  // private userObservable$: Observable<User>;
+  // private userRequestObservable$: Observable<UserRequest>;
+  // valuesOfUserObjectKeys: string[];
+
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService
   ) {}
-
   ngOnInit() {
-    // this.user$ = this.httpClient.get<any>(
-    //   'http://localhost:8080/login',
-    //   JSON.parse(sessionStorage.getItem('user-info'))
-    // );
-    // this.user$.subscribe(item=>this.user = item);
-    // console.log(this.user);
-    this.authService.userSubject$.subscribe((item) => {
-      this.user = item;
-      this.valuesOfUserObjectKeys = Object.values(this.user);
-    });
+    this.user = JSON.parse(sessionStorage.getItem("User"));
+    this.userRequest = JSON.parse(sessionStorage.getItem("Request"))[0];
+    
+    let date: Date = new Date(this.userRequest.startDate);
+    let tempVarForDateFormat = moment(date).format("DD.MM.YYYY");
+    this.userRequest.startDate = tempVarForDateFormat.toString();
+    tempVarForDateFormat = moment(this.userRequest.endDate).format("DD.MM.YYYY");
+    this.userRequest.endDate = tempVarForDateFormat;
+
   }
 }

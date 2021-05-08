@@ -40,6 +40,7 @@ export class NewLoginComponent implements OnInit {
       data => {
         console.log("response recieved");
         this.authService.login()
+        this.authService.getAccountInfo();
         this._router.navigate(['/home'])
 
       } ,

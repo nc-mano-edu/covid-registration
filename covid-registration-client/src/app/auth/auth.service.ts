@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { User } from '../user/user.model';
+import { UserRequest } from '../userRequest/models/userRequest.model';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +15,10 @@ export class AuthService {
   private onLogginPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
-  public userSubject$: BehaviorSubject<any> = new BehaviorSubject(new User());
+  // public userSubject$: Subject<User> = new Subject();
+  // public userRequestSubject$: Subject<UserRequest> = new Subject();
+  // public userForAccountInfo: User;
+  // public userRequestForAccountInfo: UserRequest;
   get isLoggedIn() {
     return this.loggedIn.asObservable();
   }
@@ -21,31 +27,45 @@ export class AuthService {
   }
   private static tokenAvailable(): boolean {
     // localStorage.setItem('token', 'false');
-    return localStorage.getItem('isLogged') == 'true' ? true : false;
+    return sessionStorage.getItem('isLogged') == 'true' ? true : false;
   }
 
   constructor(private router: Router, private httpClient: HttpClient) {}
 
   getAccountInfo() {
     let desirableUser: User = new User();
-    let emailNpass: User = JSON.parse(sessionStorage.getItem("user-data"));
-    console.log(emailNpass);
+    let desirableUserRequest: UserRequest = new UserRequest();
+    let emailNpass: User = JSON.parse(sessionStorage.getItem('user-data'));
+    // console.log(emailNpass);
     desirableUser.email = emailNpass.email;
     desirableUser.password = emailNpass.password;
     this.httpClient
-      .post<any>(
-        'http://localhost:8080/login',
-        desirableUser
+      .post<User>('http://localhost:8080/login', desirableUser)
+      .subscribe((item) => {
+        // this.userSubject$.next(item);
+        // this.userForAccountInfo = item;
+        sessionStorage.setItem("User", JSON.stringify(item));
+        desirableUser.id = item.id;
+        this.httpClient
+        .get<UserRequest>(
+          'http://localhost:8080/backend/userRequest' +
+            '?userId=' +
+            desirableUser.id
         )
-      .subscribe(this.userSubject$);
-      this.userSubject$.next(this.userSubject$.value);
+        .subscribe((item) => {
+          // this.userRequestSubject$.next(item);
+          // this.userRequestForAccountInfo = item;
+          sessionStorage.setItem("Request", JSON.stringify(item));
+        });
+    
+      });
   }
 
   login(/*user: User*/) {
     // if (user.username !== '' && user.password !== '' ) {
     this.loggedIn.next(true);
     this.onLogginPage.next(false);
-    localStorage.setItem('isLogged', 'true');
+    sessionStorage.setItem('isLogged', 'true');
     this.router.navigate(['/home']);
     // }
   }
@@ -53,7 +73,7 @@ export class AuthService {
   logout() {
     this.loggedIn.next(false);
     this.onLogginPage.next(true);
-    localStorage.removeItem('isLogged');
+    sessionStorage.removeItem('isLogged');
     this.router.navigate(['/login']);
   }
 }

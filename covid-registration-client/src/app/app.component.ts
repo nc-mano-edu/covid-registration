@@ -16,6 +16,7 @@ export class AppComponent {
   ngOnInit() {
     this.isOnLogginPage$ = this.authService.isOnLogginPage;
     this.isOnLogginPage$.subscribe((item)=>{this.isOnLogginPage = item})
+    this.authService.getAccountInfo();
   }
 
 }

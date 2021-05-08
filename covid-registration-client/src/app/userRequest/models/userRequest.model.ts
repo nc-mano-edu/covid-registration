@@ -7,6 +7,7 @@ export class UserRequest {
   startDate: string;
   endDate: string;
   treatmentState: string;
+  doctorRecommendations: string;
   user: User;
   symptoms: Symptom[];
 
