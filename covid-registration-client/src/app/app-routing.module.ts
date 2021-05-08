@@ -25,7 +25,6 @@ const routes: Routes = [
   {path: 'user/:id/tasks', component: TaskInstanceForUserComponent},
   {path: 'user/:id/tasks/active', component: TaskInstanceActiveForUserComponent},
   {path: 'request/create', component: AddUserRequestComponent},
-  {path: 'request/create', component: AddUserRequestComponent},
   {path: 'task/:task_id', component: TaskComponent},
   {path: 'task_instances', component: TaskInstanceComponent},
   {path: 'task_instances/active', component: TaskInstanceActiveComponent},
