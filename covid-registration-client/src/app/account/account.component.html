@@ -25,9 +25,11 @@
     <p>{{userRequest.treatmentState}}</p>
     <h1>Doctor's recommendations</h1>
     <p>{{userRequest.doctorRecommendations}}</p>
-    <h1>Symptoms</h1>
-    <p *ngFor = 'let symptom of userRequest.symptoms'>
-      {{symptom}}
-    </p>
+    <span *ngIf = "userRequest.symptoms.length != 0">
+      <h1>Symptoms</h1>
+      <p *ngFor = 'let symptom of userRequest.symptoms'>
+        {{symptom}}
+      </p>
+      </span>
   </div>
 </div>
