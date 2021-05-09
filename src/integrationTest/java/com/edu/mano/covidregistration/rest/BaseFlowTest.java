@@ -5,9 +5,7 @@ import com.edu.mano.covidregistration.TestDataPreparation;
 import com.edu.mano.covidregistration.domain.User;
 import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
-
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class BaseFlowTest extends SpringBootIntegrationTests {
@@ -35,16 +27,7 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
     @Autowired
     private TestDataPreparation testDataPreparation;
 
-    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
     private Long firstUserId;
-
-    @BeforeEach
-    public void init() {
-        sdf.setTimeZone(TimeZone.getTimeZone("Europe/Samara"));
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        objectMapper.setDateFormat(sdf);
-    }
 
     @Test
     @Order(1)

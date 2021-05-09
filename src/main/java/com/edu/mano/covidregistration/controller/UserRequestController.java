@@ -60,20 +60,8 @@ public class UserRequestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserRequest> updateUserRequest(@RequestBody UserRequest userRequestDetails, @PathVariable Long id) {
-        UserRequest userRequest = userRequestService.findRequestByRequestId(id);
-        if (userRequest == null) {
-            return new ResponseEntity<UserRequest>(HttpStatus.NOT_FOUND);
-        }
-
-        userRequest.setUser(userRequestDetails.getUser());
-        userRequest.setEndDate(userRequestDetails.getEndDate());
-        userRequest.setStartDate(userRequestDetails.getStartDate());
-        userRequest.setSymptoms(userRequestDetails.getSymptoms());
-        userRequest.setTreatmentState(userRequestDetails.getTreatmentState());
-
-        final UserRequest updatedUserRequest = userRequestService.saveUserRequest(userRequest);
-        return new ResponseEntity<UserRequest>(updatedUserRequest, HttpStatus.OK);
+    public ResponseEntity<UserRequest> updateUserRequest(@PathVariable Long id, @RequestBody UserRequest userRequestDetails) {
+        return ResponseEntity.ok().body(userRequestService.updateUserRequest(id, userRequestDetails));
     }
 
     @GetMapping("/all")
@@ -86,6 +74,16 @@ public class UserRequestController {
     public ResponseEntity<List<UserRequest>> findActive() {
         List<UserRequest> userRequests = userRequestService.findActive();
         return new ResponseEntity<>(userRequests, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/recommendations")
+    public ResponseEntity<UserRequest> fillDoctorRecommendations(@PathVariable Long id, @RequestBody String rec) {
+        return new ResponseEntity<>(userRequestService.fillDoctorRecommendations(id, rec), HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/close")
+    public ResponseEntity<UserRequest> closeUserRequest(@PathVariable Long id, @RequestBody String rec) {
+        return new ResponseEntity<>(userRequestService.closeUserRequest(id, rec), HttpStatus.OK);
     }
 
 }
