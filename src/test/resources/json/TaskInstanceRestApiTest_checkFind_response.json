@@ -11,6 +11,7 @@
     "startDate": null,
     "endDate": null,
     "treatmentState": "in progress",
+    "doctorRecommendations": "recommendations",
     "user": null,
     "symptoms": null
   },

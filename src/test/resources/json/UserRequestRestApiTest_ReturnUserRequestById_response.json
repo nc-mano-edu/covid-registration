@@ -1,9 +1,9 @@
 {
-  "requestId" : 1,
+  "requestId": 1,
   "startDate": null,
   "endDate": null,
-  "treatmentState" : "in progress",
-  "user" : null,
-  "symptoms" : null
+  "treatmentState": "in progress",
+  "doctorRecommendations": "recommendations",
+  "user": null,
+  "symptoms": null
 }
-
