@@ -40,6 +40,11 @@ public class MockUserRequestRepository implements UserRequestRepository {
     }
 
     @Override
+    public List<UserRequest> findAllByEndDateIsNull() {
+        return userRequests;
+    }
+
+    @Override
     public Iterable<UserRequest> findAllById(Iterable<Long> iterable) {
         return null;
     }

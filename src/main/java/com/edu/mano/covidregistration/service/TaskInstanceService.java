@@ -113,4 +113,8 @@ public class TaskInstanceService {
         setFinished(taskInstance);
         taskInstanceRepository.save(taskInstance);
     }
+
+    public List<TaskInstance> findActive() {
+        return taskInstanceRepository.findAllByActiveIsTrue();
+    }
 }

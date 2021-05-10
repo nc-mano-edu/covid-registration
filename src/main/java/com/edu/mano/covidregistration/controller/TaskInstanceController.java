@@ -52,4 +52,10 @@ public class TaskInstanceController {
         return ResponseEntity.accepted().build();
     }
 
+    @GetMapping("/active")
+    public ResponseEntity<List<TaskInstance>> findActive() {
+        List<TaskInstance> taskInstances = taskInstanceService.findActive();
+        return ResponseEntity.ok(taskInstances);
+    }
+
 }

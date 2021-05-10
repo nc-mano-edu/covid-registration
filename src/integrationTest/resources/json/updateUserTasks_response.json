@@ -4,7 +4,7 @@
     "task": {
       "id": 1,
       "name": "Completion of registration",
-      "schedule": "0 12 */2 * *",
+      "schedule": "0 0 12 */2 * *",
       "description": "Complete filling of the user account"
     },
     "request": {
@@ -12,14 +12,18 @@
       "startDate": null,
       "endDate": null,
       "treatmentState": null,
+      "doctorRecommendations": null,
       "user": {
-        "id": 3,
+        "id": 4,
         "firstName": "FirstName",
         "middleName": "MiddleName",
         "lastName": "LastName",
         "dateOfBirth": null,
         "insuranceNumber": null,
         "phoneNumber": null,
+        "email": "e@e.com",
+        "password": "123456789abcdefg!",
+        "username": "userLogin",
         "specialisations": [],
         "roles": []
       },
@@ -96,7 +100,7 @@
     "task": {
       "id": 2,
       "name": "Request for treatment",
-      "schedule": "0 12 * * *",
+      "schedule": "0 0 12 * * *",
       "description": "Filling out a treatment request"
     },
     "request": {
@@ -104,14 +108,18 @@
       "startDate": null,
       "endDate": null,
       "treatmentState": null,
+      "doctorRecommendations": null,
       "user": {
-        "id": 3,
+        "id": 4,
         "firstName": "FirstName",
         "middleName": "MiddleName",
         "lastName": "LastName",
         "dateOfBirth": null,
         "insuranceNumber": null,
         "phoneNumber": null,
+        "email": "e@e.com",
+        "password": "123456789abcdefg!",
+        "username": "userLogin",
         "specialisations": [],
         "roles": []
       },
@@ -132,7 +140,7 @@
           "attributeType": {
             "id": 1,
             "name": "String value",
-            "checkMask": "[A-Za-zÐ-Ð¯Ð°-ÑÐÑ\\s]+"
+            "checkMask": "[A-Za-zÐ-Ð¯0-9Ð°-ÑÐÑ\\s]+"
           }
         },
         "stringValue": "TaskInstanceData 4 in TaskInstance 2",
@@ -190,9 +198,9 @@
           "id": 9,
           "name": "Clinic link",
           "attributeType": {
-            "id": 3,
-            "name": "Image value",
-            "checkMask": ".{1,1024}"
+            "id": 6,
+            "name": "Url value",
+            "checkMask": "(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+"
           }
         },
         "stringValue": "TaskInstanceData 7 in TaskInstance 2",
@@ -212,7 +220,7 @@
           "attributeType": {
             "id": 1,
             "name": "String value",
-            "checkMask": "[A-Za-zÐ-Ð¯Ð°-ÑÐÑ\\s]+"
+            "checkMask": "[A-Za-zÐ-Ð¯0-9Ð°-ÑÐÑ\\s]+"
           }
         },
         "stringValue": "TaskInstanceData 8 in TaskInstance 2",
@@ -228,7 +236,7 @@
     "task": {
       "id": 3,
       "name": "Payment for treatment",
-      "schedule": "0 */5 * * *",
+      "schedule": "0 0 */5 * * *",
       "description": "Confirmation of completion of treatment and payment"
     },
     "request": {
@@ -236,14 +244,18 @@
       "startDate": null,
       "endDate": null,
       "treatmentState": null,
+      "doctorRecommendations": null,
       "user": {
-        "id": 3,
+        "id": 4,
         "firstName": "FirstName",
         "middleName": "MiddleName",
         "lastName": "LastName",
         "dateOfBirth": null,
         "insuranceNumber": null,
         "phoneNumber": null,
+        "email": "e@e.com",
+        "password": "123456789abcdefg!",
+        "username": "userLogin",
         "specialisations": [],
         "roles": []
       },
@@ -300,7 +312,7 @@
     "task": {
       "id": 4,
       "name": "firstTask",
-      "schedule": "* * * * *",
+      "schedule": "0 * * * * *",
       "description": "run every minute"
     },
     "request": {
@@ -308,14 +320,18 @@
       "startDate": null,
       "endDate": null,
       "treatmentState": null,
+      "doctorRecommendations": null,
       "user": {
-        "id": 3,
+        "id": 4,
         "firstName": "FirstName",
         "middleName": "MiddleName",
         "lastName": "LastName",
         "dateOfBirth": null,
         "insuranceNumber": null,
         "phoneNumber": null,
+        "email": "e@e.com",
+        "password": "123456789abcdefg!",
+        "username": "userLogin",
         "specialisations": [],
         "roles": []
       },
@@ -392,22 +408,26 @@
     "task": {
       "id": 5,
       "name": "secondTask",
-      "schedule": "* * * * *",
-      "description": "run every minute"
+      "schedule": "* * * * * *",
+      "description": "run every second"
     },
     "request": {
       "requestId": 1,
       "startDate": null,
       "endDate": null,
       "treatmentState": null,
+      "doctorRecommendations": null,
       "user": {
-        "id": 3,
+        "id": 4,
         "firstName": "FirstName",
         "middleName": "MiddleName",
         "lastName": "LastName",
         "dateOfBirth": null,
         "insuranceNumber": null,
         "phoneNumber": null,
+        "email": "e@e.com",
+        "password": "123456789abcdefg!",
+        "username": "userLogin",
         "specialisations": [],
         "roles": []
       },

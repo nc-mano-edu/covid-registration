@@ -1,0 +1,41 @@
+<div class="col-md-6 content-wrapper">
+  <h2>Задачи пациентов</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Пациент</th>
+        <th>Дата создания</th>
+        <th>Дата завершения</th>
+        <th>Активна</th>
+        <th>Прикрепленные данные</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let taskInstance of taskInstances">
+        <td>
+          {{ taskInstance.request.user.firstName }}
+          {{ taskInstance.request.user.lastName }}
+        </td>
+        <td>{{ taskInstance.createdTime }}</td>
+        <td>{{ taskInstance.finishedTime }}</td>
+        <td>{{ taskInstance.active }}</td>
+        <td>
+          <div *ngFor="let data of taskInstance.data">
+            <div *ngIf="data.stringValue !== null">
+              {{ data.attribute.name }}: {{ data.stringValue }}
+            </div>
+            <div *ngIf="data.imageValue !== null">
+              {{ data.attribute.name }}: {{ data.imageValue }}
+            </div>
+            <div *ngIf="data.dateValue !== null">
+              {{ data.attribute.name }}: {{ data.dateValue }}
+            </div>
+            <div *ngIf="data.numericValue !== null">
+              {{ data.attribute.name }}: {{ data.numericValue }}
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
