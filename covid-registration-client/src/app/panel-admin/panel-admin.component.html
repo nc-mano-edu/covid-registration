@@ -1,0 +1,11 @@
+<h1>Admin panel</h1>
+<section>
+    <div class="example-button-row">
+      <button mat-flat-button color="loginButton" [routerLink]="['/user/:id/tasks']">User task</button>
+      <button mat-flat-button color="loginButton" [routerLink]="['/user/:id/tasks/active']" >User active task</button>
+      <button mat-flat-button color="loginButton" [routerLink]="['/request/create']">Create request</button>
+      <button mat-flat-button color="loginButton" [routerLink]="['/task/:task_id']">Task id</button>
+      <button mat-flat-button color="loginButton" [routerLink]="['/task_instances']">Task Instances</button>
+      <button mat-flat-button color="loginButton" [routerLink]="['/task_instances/active']">Task Instances Active</button>
+    </div>
+  </section>

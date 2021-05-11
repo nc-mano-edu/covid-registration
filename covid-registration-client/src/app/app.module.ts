@@ -35,6 +35,7 @@ import {TaskInstanceComponent} from './task-instance/task-instance/task-instance
 import {TaskInstanceActiveComponent} from './task-instance/task-instance-active/task-instance-active.component';
 import {TaskInstanceActiveForUserComponent} from './task-instance/task-instance-active-for-user/task-instance-active-for-user.component';
 import {TaskInstanceForUserComponent} from './task-instance/task-instance-for-user/task-instance-for-user.component';
+import { PanelAdminComponent } from './panel-admin/panel-admin.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {TaskInstanceForUserComponent} from './task-instance/task-instance-for-us
     TaskInstanceComponent,
     TaskInstanceActiveComponent,
     TaskInstanceActiveForUserComponent,
-    TaskInstanceForUserComponent
+    TaskInstanceForUserComponent,
+    PanelAdminComponent
   ],
   imports: [
     AppRoutingModule,
