@@ -35,6 +35,7 @@ import {TaskInstanceComponent} from './task-instance/task-instance/task-instance
 import {TaskInstanceActiveComponent} from './task-instance/task-instance-active/task-instance-active.component';
 import {TaskInstanceActiveForUserComponent} from './task-instance/task-instance-active-for-user/task-instance-active-for-user.component';
 import {TaskInstanceForUserComponent} from './task-instance/task-instance-for-user/task-instance-for-user.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import {TaskInstanceForUserComponent} from './task-instance/task-instance-for-us
     RegistrationComponent,
     NewLoginComponent,
     TaskComponent,
-    AccountComponent
+    AccountComponent,
     TaskInstanceComponent,
     TaskInstanceActiveComponent,
     TaskInstanceActiveForUserComponent,

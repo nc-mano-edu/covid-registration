@@ -20,9 +20,8 @@ import {TaskInstanceActiveForUserComponent} from './task-instance/task-instance-
 
 const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
-  {path: 'login', component: NewLoginComponent},
+  {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent/*, canActivate: [AuthGuard]*/},
- // {path: 'login', component: LoginComponent},
   {path: 'account', component: AccountComponent},
   {path: 'add', component: AddUserComponent},
   {path: 'users', component: UserComponent},
