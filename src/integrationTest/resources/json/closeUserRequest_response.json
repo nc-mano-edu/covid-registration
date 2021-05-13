@@ -1,0 +1,20 @@
+{
+  "startDate": null,
+  "endDate": null,
+  "treatmentState": "FINISHED",
+  "doctorRecommendations": "Have a great day!",
+  "user": {
+    "firstName": "FirstName",
+    "middleName": "MiddleName",
+    "lastName": "LastName",
+    "dateOfBirth": null,
+    "insuranceNumber": null,
+    "phoneNumber": null,
+    "email": "e@e.com",
+    "password": "123456789abcdefg!",
+    "username": "userLogin",
+    "specialisations": [],
+    "roles": []
+  },
+  "symptoms": []
+}

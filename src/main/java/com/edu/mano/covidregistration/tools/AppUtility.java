@@ -4,8 +4,15 @@ import com.edu.mano.covidregistration.exception.baseExceptions.InvalidFilePathEx
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.json.JSONException;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -77,5 +84,9 @@ public final class AppUtility {
 
     public static Date getCurrentDate() {
         return Date.from(LocalDateTime.now().atZone(ZoneId.of("Europe/Samara")).toInstant());
+    }
+
+    public static void validateEquals(String expected, String actual) throws JSONException {
+        JSONAssert.assertEquals(expected, actual, JSONCompareMode.LENIENT);
     }
 }

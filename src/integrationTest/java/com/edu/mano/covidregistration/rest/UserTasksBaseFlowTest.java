@@ -6,11 +6,11 @@ import com.edu.mano.covidregistration.domain.TaskInstance;
 import com.edu.mano.covidregistration.domain.TaskInstanceData;
 import com.edu.mano.covidregistration.domain.User;
 import com.edu.mano.covidregistration.domain.UserRequest;
+import com.edu.mano.covidregistration.repository.TaskInstanceRepository;
+import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.TASKS_INSTANCE_BASE_PREFIX;
@@ -43,34 +41,34 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
     @Autowired
     private TestDataPreparation testDataPreparation;
 
+    @Autowired
+    private TaskInstanceRepository taskInstanceRepository;
+
     private User user = new User();
 
     private UserRequest userRequest = new UserRequest();
 
     private List<TaskInstance> tasks = new ArrayList<>();
 
-    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    @BeforeEach
-    public void init() {
-        sdf.setTimeZone(TimeZone.getTimeZone("Europe/Samara"));
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        objectMapper.setDateFormat(sdf);
-    }
-
     @Test
     @Order(3)
     public void integrationFlow() throws Exception {
         createUser();
         createUserRequest();
-        getTasks();
+        checkUserTasks();
         checkTasksIsActive(true);
-        getActiveTasks();
+        checkActiveTasks();
         updateTasks();
         checkTasksIsActive(false);
 
         //todo improve testing
         //checkScheduleJobs();
+
+        activateTasks();
+        checkTasksIsActive(true);
+        fillUserRecommendations();
+        closeUserRequest();
+        checkTasksIsActive(false);
     }
 
     private void createUser() throws Exception {
@@ -109,32 +107,33 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
     }
 
     private void checkTasksIsActive(boolean activeExpected) throws Exception {
+        getTasks();
         Assertions.assertTrue(tasks.stream().allMatch(task -> task.isActive() == activeExpected));
     }
 
     private void getTasks() throws Exception {
-
-        String userID = String.valueOf(user.getId());
-
-        MvcResult result = mockMvc.perform(get(USER_BASE_PREFIX + "/" + userID + "/active-tasks")
+        MvcResult result = mockMvc.perform(get(USER_BASE_PREFIX + "/" + user.getId() + "/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
+        tasks = objectMapper.readValue(result.getResponse().getContentAsString(),
+                new TypeReference<List<TaskInstance>>() {
+                }
+        );
+    }
 
-        String actualResult = result.getResponse().getContentAsString();
-        String expectedResult = testDataPreparation.getJson("json/getUserTasks_response.json");
+    private void checkUserTasks() throws Exception {
+        getTasks();
+        final String actualResult = objectMapper
+                .writeValueAsString(tasks)
+                .replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
+        final String expectedResult = testDataPreparation.getJson("json/getUserTasks_response.json");
 
-        tasks = objectMapper.readValue(actualResult, new TypeReference<List<TaskInstance>>() {
-        });
-
-        actualResult = actualResult.replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
-        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
+        AppUtility.validateEquals(expectedResult, actualResult);
     }
 
     private void updateTasks() throws Exception {
-
-        String userID = String.valueOf(user.getId());
 
         for (TaskInstance task : tasks) {
             List<TaskInstanceData> data = task.getData();
@@ -150,24 +149,17 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
                     .andExpect(status().isAccepted());
         }
 
-        MvcResult result = mockMvc.perform(get(USER_BASE_PREFIX + "/" + userID + "/tasks")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
+        getTasks();
+        final String actualResult = objectMapper
+                .writeValueAsString(tasks)
+                .replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
+        final String expectedResult = testDataPreparation.getJson("json/updateUserTasks_response.json");
 
-        String actualResult = result.getResponse().getContentAsString();
-        String expectedResult = testDataPreparation.getJson("json/updateUserTasks_response.json");
+        AppUtility.validateEquals(expectedResult, actualResult);
 
-        tasks = objectMapper.readValue(actualResult, new TypeReference<List<TaskInstance>>() {
-        });
-
-        actualResult = actualResult.replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
-
-        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
     }
 
-    private void getActiveTasks() throws Exception {
+    private void checkActiveTasks() throws Exception {
         MvcResult result = mockMvc.perform(get(TASKS_INSTANCE_BASE_PREFIX + "/active")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -178,7 +170,7 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
         String expectedResult = testDataPreparation.getJson("json/getUserTasks_response.json");
 
         actualResult = actualResult.replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
-        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
+        AppUtility.validateEquals(expectedResult, actualResult);
     }
 
     private void checkScheduleJobs() {
@@ -198,6 +190,55 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void fillUserRecommendations() throws Exception {
+        MvcResult result = mockMvc.perform(
+                post(USER_REQUEST_BASE_PREFIX + "/" + userRequest.getRequestId() + "/recommendations")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("Have fun!")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String actualResult = result
+                .getResponse()
+                .getContentAsString()
+                .replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
+        String expectedResult = testDataPreparation.getJson("json/fillUserRecommendations_response.json");
+
+        AppUtility.validateEquals(expectedResult, actualResult);
+    }
+
+    private void activateTasks() {
+        for (int i = 0; i < tasks.size(); i++) {
+            TaskInstance task = tasks.get(i);
+            task.setActive(true);
+            task.setFinishedTime(null);
+            tasks.set(i, taskInstanceRepository.save(task));
+        }
+    }
+
+    private void closeUserRequest() throws Exception {
+        MvcResult result = mockMvc.perform(
+                post(USER_REQUEST_BASE_PREFIX + "/" + userRequest.getRequestId() + "/close")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("Have a great day!")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String actualResult = result.getResponse().getContentAsString();
+        final String expectedResult = testDataPreparation.getJson("json/closeUserRequest_response.json");
+
+        userRequest = objectMapper.readValue(actualResult, new TypeReference<UserRequest>() {
+        });
+
+        Assertions.assertNotNull(userRequest.getEndDate());
+
+        actualResult = actualResult.replaceAll("\"\\d{4}-\\d{2}-\\d{2}\"", "null");
+
+        AppUtility.validateEquals(expectedResult, actualResult);
     }
 
 }

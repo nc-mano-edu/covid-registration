@@ -1,6 +1,7 @@
 package com.edu.mano.covidregistration.repository.mock;
 
 import com.edu.mano.covidregistration.domain.UserRequest;
+import com.edu.mano.covidregistration.enums.TreatmentState;
 import com.edu.mano.covidregistration.repository.UserRequestRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class MockUserRequestRepository implements UserRequestRepository {
     private List<UserRequest> userRequests;
 
     public MockUserRequestRepository() {
-        this.userRequests = new ArrayList<>(Collections.singletonList(new UserRequest(1l, null, null, "in progress", "recommendations", null, null)));
+        this.userRequests = new ArrayList<>(Collections.singletonList(new UserRequest(1l, null, null, TreatmentState.STARTED, "recommendations", null, null)));
     }
 
     @Override

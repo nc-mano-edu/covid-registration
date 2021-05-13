@@ -32,7 +32,7 @@ public class TaskInstanceService {
         this.taskInstanceDataService = taskInstanceDataService;
     }
 
-    private void setFinished(TaskInstance taskInstance) {
+    private void finishTask(TaskInstance taskInstance) {
         List<TaskInstanceData> data = taskInstance.getData();
         if (data != null && data.stream().allMatch(d -> {
             if (d.getStringValue() != null)
@@ -80,7 +80,7 @@ public class TaskInstanceService {
         });
 
         taskInstance.setActive(true);
-        setFinished(taskInstance);
+        finishTask(taskInstance);
         return id;
     }
 
@@ -110,11 +110,21 @@ public class TaskInstanceService {
             });
         }
 
-        setFinished(taskInstance);
+        finishTask(taskInstance);
         taskInstanceRepository.save(taskInstance);
     }
 
     public List<TaskInstance> findActive() {
         return taskInstanceRepository.findAllByActiveIsTrue();
+    }
+
+    @Transactional
+    public void terminate(Long id) {
+        TaskInstance taskInstance = find(id);
+        if (taskInstance.getFinishedTime() == null) {
+            taskInstance.setFinishedTime(AppUtility.getCurrentDate());
+            taskInstance.setActive(false);
+            taskInstanceRepository.save(taskInstance);
+        }
     }
 }

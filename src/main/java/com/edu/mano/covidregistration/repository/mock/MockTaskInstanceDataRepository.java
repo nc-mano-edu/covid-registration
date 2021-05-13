@@ -1,13 +1,24 @@
 package com.edu.mano.covidregistration.repository.mock;
 
-import com.edu.mano.covidregistration.domain.*;
+import com.edu.mano.covidregistration.domain.Attribute;
+import com.edu.mano.covidregistration.domain.AttributeType;
+import com.edu.mano.covidregistration.domain.Task;
+import com.edu.mano.covidregistration.domain.TaskInstance;
+import com.edu.mano.covidregistration.domain.TaskInstanceData;
+import com.edu.mano.covidregistration.domain.UserRequest;
+import com.edu.mano.covidregistration.enums.TreatmentState;
 import com.edu.mano.covidregistration.repository.TaskInstanceDataRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.TimeZone;
 
 @Repository
 @Profile("test")
@@ -15,7 +26,7 @@ public class MockTaskInstanceDataRepository implements TaskInstanceDataRepositor
 
     private List<TaskInstanceData> taskInstanceData;
 
-    private final UserRequest userRequest = new UserRequest(1L, null, null, "in progress", "recommendations",null, null);
+    private final UserRequest userRequest = new UserRequest(1L, null, null, TreatmentState.STARTED, "recommendations", null, null);
 
     MockTaskInstanceDataRepository() {
         Date createdDate, finishedDate;

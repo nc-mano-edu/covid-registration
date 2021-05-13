@@ -1,5 +1,6 @@
 package com.edu.mano.covidregistration.domain;
 
+import com.edu.mano.covidregistration.enums.TreatmentState;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,8 +42,7 @@ public class UserRequest {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date endDate;
 
-    @Size(min = 3)
-    private String treatmentState;
+    private TreatmentState treatmentState;
 
     @Size(min = 3)
     private String doctorRecommendations;
