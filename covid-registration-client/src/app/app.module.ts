@@ -26,7 +26,6 @@ import {UserService} from "./user/user.service";
 import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { RegistrationComponent } from './loginRegistration/components/registration/registration.component';
-import { NewLoginComponent } from './loginRegistration/components/new-login/new-login.component';
 import {FooterComponent} from './footer/footer.component';
 import {TaskComponent} from './task/task.component';
 import {DatePipe} from "@angular/common";
@@ -35,6 +34,7 @@ import {TaskInstanceComponent} from './task-instance/task-instance/task-instance
 import {TaskInstanceActiveComponent} from './task-instance/task-instance-active/task-instance-active.component';
 import {TaskInstanceActiveForUserComponent} from './task-instance/task-instance-active-for-user/task-instance-active-for-user.component';
 import {TaskInstanceForUserComponent} from './task-instance/task-instance-for-user/task-instance-for-user.component';
+import { PanelAdminComponent } from './panel-admin/panel-admin.component';
 
 @NgModule({
   declarations: [
@@ -47,12 +47,12 @@ import {TaskInstanceForUserComponent} from './task-instance/task-instance-for-us
     HomeComponent,
     FooterComponent,
     RegistrationComponent,
-    NewLoginComponent,
     TaskComponent,
     TaskInstanceComponent,
     TaskInstanceActiveComponent,
     TaskInstanceActiveForUserComponent,
-    TaskInstanceForUserComponent
+    TaskInstanceForUserComponent,
+    PanelAdminComponent
   ],
   imports: [
     AppRoutingModule,

@@ -1,0 +1,17 @@
+section {
+    display: table;
+  }  
+ 
+  .example-button-row {
+    display: table-cell;
+    width: 490px;
+  }
+  
+  .example-button-row .mat-button-base {
+    margin: 8px 8px 8px 0;
+  }
+ 
+  .mat-loginButton {
+    background-color: #17a096;
+    color: white;
+  }
