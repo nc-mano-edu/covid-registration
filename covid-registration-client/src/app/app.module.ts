@@ -26,7 +26,6 @@ import {UserService} from "./user/user.service";
 import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { RegistrationComponent } from './loginRegistration/components/registration/registration.component';
-import { NewLoginComponent } from './loginRegistration/components/new-login/new-login.component';
 import {FooterComponent} from './footer/footer.component';
 import {TaskComponent} from './task/task.component';
 import {DatePipe} from "@angular/common";
@@ -48,7 +47,6 @@ import { PanelAdminComponent } from './panel-admin/panel-admin.component';
     HomeComponent,
     FooterComponent,
     RegistrationComponent,
-    NewLoginComponent,
     TaskComponent,
     TaskInstanceComponent,
     TaskInstanceActiveComponent,
