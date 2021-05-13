@@ -8,6 +8,7 @@ export class UserRequest {
   endDate: string;
   treatmentState: string;
   user: User;
+  doctorRecommendations: string;
   symptoms: Symptom[];
 
 }
