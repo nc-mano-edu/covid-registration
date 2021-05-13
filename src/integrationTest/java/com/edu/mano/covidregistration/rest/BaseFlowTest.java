@@ -13,8 +13,17 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.LOGIN_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.REGISTER_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.ROLE_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.SPECIALIZATION_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.SYMPTOMS_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_REQUEST_BASE_PREFIX;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class BaseFlowTest extends SpringBootIntegrationTests {
@@ -218,7 +227,7 @@ public class BaseFlowTest extends SpringBootIntegrationTests {
         String actualResult = result.getResponse().getContentAsString();
         String expectedResult = AppUtility.getContentFromResourceFile("json/createSpecializations_response.json");
 
-        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
+        AppUtility.validateEquals(expectedResult, actualResult);
     }
 
     private void createSymptoms() throws Exception {

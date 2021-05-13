@@ -7,11 +7,10 @@ import com.edu.mano.covidregistration.domain.TaskInstanceData;
 import com.edu.mano.covidregistration.domain.User;
 import com.edu.mano.covidregistration.domain.UserRequest;
 import com.edu.mano.covidregistration.repository.TaskInstanceRepository;
+import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +18,16 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-import static com.edu.mano.covidregistration.CovidRegistrationApplication.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.TASKS_INSTANCE_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_BASE_PREFIX;
+import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_REQUEST_BASE_PREFIX;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
@@ -106,6 +107,7 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
     }
 
     private void checkTasksIsActive(boolean activeExpected) throws Exception {
+        getTasks();
         Assertions.assertTrue(tasks.stream().allMatch(task -> task.isActive() == activeExpected));
     }
 
@@ -127,7 +129,8 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
                 .writeValueAsString(tasks)
                 .replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
         final String expectedResult = testDataPreparation.getJson("json/getUserTasks_response.json");
-        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
+
+        AppUtility.validateEquals(expectedResult, actualResult);
     }
 
     private void updateTasks() throws Exception {
@@ -152,7 +155,8 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
                 .replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
         final String expectedResult = testDataPreparation.getJson("json/updateUserTasks_response.json");
 
-        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
+        AppUtility.validateEquals(expectedResult, actualResult);
+
     }
 
     private void checkActiveTasks() throws Exception {
@@ -166,7 +170,7 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
         String expectedResult = testDataPreparation.getJson("json/getUserTasks_response.json");
 
         actualResult = actualResult.replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
-        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
+        AppUtility.validateEquals(expectedResult, actualResult);
     }
 
     private void checkScheduleJobs() {
@@ -190,7 +194,7 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
 
     private void fillUserRecommendations() throws Exception {
         MvcResult result = mockMvc.perform(
-                post(USER_REQUEST_BASE_PREFIX + "/" + user.getId() + "/recommendations")
+                post(USER_REQUEST_BASE_PREFIX + "/" + userRequest.getRequestId() + "/recommendations")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("Have fun!")
                         .accept(MediaType.APPLICATION_JSON))
@@ -203,7 +207,7 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
                 .replaceAll("\"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\"", "null");
         String expectedResult = testDataPreparation.getJson("json/fillUserRecommendations_response.json");
 
-        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
+        AppUtility.validateEquals(expectedResult, actualResult);
     }
 
     private void activateTasks() {
@@ -233,9 +237,8 @@ public class UserTasksBaseFlowTest extends SpringBootIntegrationTests {
         Assertions.assertNotNull(userRequest.getEndDate());
 
         actualResult = actualResult.replaceAll("\"\\d{4}-\\d{2}-\\d{2}\"", "null");
-        Assertions.assertEquals(objectMapper.readTree(expectedResult), objectMapper.readTree(actualResult));
 
-        getTasks();
+        AppUtility.validateEquals(expectedResult, actualResult);
     }
 
 }

@@ -2,6 +2,7 @@ package com.edu.mano.covidregistration.rest;
 
 import com.edu.mano.covidregistration.SpringBootTests;
 import com.edu.mano.covidregistration.domain.UserRequest;
+import com.edu.mano.covidregistration.enums.TreatmentState;
 import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -31,7 +32,7 @@ class UserRequestRestApiTest extends SpringBootTests {
     @Autowired
     private ObjectMapper objectMapper;
 
-    final UserRequest userRequest = new UserRequest(1l, null, null, "in progress","recommendations", null, null);
+    final UserRequest userRequest = new UserRequest(1l, null, null, TreatmentState.STARTED, "recommendations", null, null);
 
     @Test
     void MockMvcTest() {

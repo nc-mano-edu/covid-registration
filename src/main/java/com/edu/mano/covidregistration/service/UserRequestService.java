@@ -3,6 +3,7 @@ package com.edu.mano.covidregistration.service;
 import com.edu.mano.covidregistration.domain.Task;
 import com.edu.mano.covidregistration.domain.TaskInstance;
 import com.edu.mano.covidregistration.domain.UserRequest;
+import com.edu.mano.covidregistration.enums.TreatmentState;
 import com.edu.mano.covidregistration.exception.baseExceptions.NotFoundException;
 import com.edu.mano.covidregistration.repository.UserRequestRepository;
 import com.edu.mano.covidregistration.tools.AppUtility;
@@ -47,6 +48,10 @@ public class UserRequestService {
 
     @Transactional
     public UserRequest saveUserRequest(UserRequest request) {
+        if (request.getTreatmentState() == null) {
+            request.setTreatmentState(TreatmentState.STARTED);
+        }
+
         userRequestRepository.save(request);
 
         List<Task> tasks = taskService.findAll();
@@ -102,6 +107,7 @@ public class UserRequestService {
         List<TaskInstance> tasks = findTasks(id);
         tasks.forEach(task -> taskInstanceService.terminate(task.getId()));
 
+        userRequest.setTreatmentState(TreatmentState.FINISHED);
         userRequest.setEndDate(AppUtility.getCurrentDate());
         userRequest.setDoctorRecommendations(doctorRecommendations);
 

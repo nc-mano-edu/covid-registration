@@ -1,11 +1,9 @@
 {
-  "requestId": 1,
   "startDate": null,
   "endDate": null,
-  "treatmentState": null,
+  "treatmentState": "FINISHED",
   "doctorRecommendations": "Have a great day!",
   "user": {
-    "id": 1,
     "firstName": "FirstName",
     "middleName": "MiddleName",
     "lastName": "LastName",

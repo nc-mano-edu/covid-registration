@@ -1,7 +1,12 @@
 package com.edu.mano.covidregistration.rest;
 
 import com.edu.mano.covidregistration.SpringBootTests;
-import com.edu.mano.covidregistration.domain.*;
+import com.edu.mano.covidregistration.domain.Attribute;
+import com.edu.mano.covidregistration.domain.AttributeType;
+import com.edu.mano.covidregistration.domain.Task;
+import com.edu.mano.covidregistration.domain.TaskInstance;
+import com.edu.mano.covidregistration.domain.UserRequest;
+import com.edu.mano.covidregistration.enums.TreatmentState;
 import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -20,7 +25,10 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.TASKS_INSTANCE_BASE_PREFIX;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -35,7 +43,7 @@ public class TaskInstanceRestApiTests extends SpringBootTests {
     Logger logger = LoggerFactory.getLogger(TaskInstanceRestApiTests.class);
 
 
-    private final UserRequest userRequest = new UserRequest(1L, null, null, "in progress","recommendations", null, null);
+    private final UserRequest userRequest = new UserRequest(1L, null, null, TreatmentState.STARTED, "recommendations", null, null);
 
     @Test
     public void checkFindAll() throws Exception {

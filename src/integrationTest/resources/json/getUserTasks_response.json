@@ -1,20 +1,16 @@
 [
   {
-    "id": 1,
     "task": {
-      "id": 1,
       "name": "Completion of registration",
       "schedule": "0 0 12 */2 * *",
       "description": "Complete filling of the user account"
     },
     "request": {
-      "requestId": 1,
       "startDate": null,
       "endDate": null,
-      "treatmentState": null,
+      "treatmentState": "STARTED",
       "doctorRecommendations": null,
       "user": {
-        "id": 1,
         "firstName": "FirstName",
         "middleName": "MiddleName",
         "lastName": "LastName",
@@ -33,16 +29,12 @@
     "finishedTime": null,
     "data": [
       {
-        "id": 1,
         "taskInstance": {
-          "id": 1,
           "active": true
         },
         "attribute": {
-          "id": 1,
           "name": "Account photo",
           "attributeType": {
-            "id": 3,
             "name": "Image value",
             "checkMask": ".{1,1024}"
           }
@@ -53,16 +45,12 @@
         "numericValue": null
       },
       {
-        "id": 2,
         "taskInstance": {
-          "id": 1,
           "active": true
         },
         "attribute": {
-          "id": 2,
           "name": "Age",
           "attributeType": {
-            "id": 2,
             "name": "Numeric value",
             "checkMask": "\\d+(\\.\\d+)?"
           }
@@ -73,16 +61,12 @@
         "numericValue": null
       },
       {
-        "id": 3,
         "taskInstance": {
-          "id": 1,
           "active": true
         },
         "attribute": {
-          "id": 3,
           "name": "Contact phone number",
           "attributeType": {
-            "id": 5,
             "name": "Phone number value",
             "checkMask": "[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*"
           }
@@ -96,9 +80,7 @@
     "active": true
   },
   {
-    "id": 2,
     "task": {
-      "id": 2,
       "name": "Request for treatment",
       "schedule": "0 0 12 * * *",
       "description": "Filling out a treatment request"
@@ -107,10 +89,9 @@
       "requestId": 1,
       "startDate": null,
       "endDate": null,
-      "treatmentState": null,
+      "treatmentState": "STARTED",
       "doctorRecommendations": null,
       "user": {
-        "id": 1,
         "firstName": "FirstName",
         "middleName": "MiddleName",
         "lastName": "LastName",
@@ -129,16 +110,12 @@
     "finishedTime": null,
     "data": [
       {
-        "id": 4,
         "taskInstance": {
-          "id": 2,
           "active": true
         },
         "attribute": {
-          "id": 4,
           "name": "Blood test results",
           "attributeType": {
-            "id": 1,
             "name": "String value",
             "checkMask": "[A-Za-zÐ-Ð¯0-9Ð°-ÑÐÑ\\s]+"
           }
@@ -149,16 +126,12 @@
         "numericValue": null
       },
       {
-        "id": 5,
         "taskInstance": {
-          "id": 2,
           "active": true
         },
         "attribute": {
-          "id": 5,
           "name": "Date of the application",
           "attributeType": {
-            "id": 4,
             "name": "Date value",
             "checkMask": "\\d{4}-[01]\\d-[0-3]\\d(\\s[0-2]\\d:[0-5]\\d:[0-5]\\d)?(?:\\.\\d+)?Z?"
           }
@@ -169,16 +142,12 @@
         "numericValue": null
       },
       {
-        "id": 6,
         "taskInstance": {
-          "id": 2,
           "active": true
         },
         "attribute": {
-          "id": 7,
           "name": "Photo of inflammation on the skin",
           "attributeType": {
-            "id": 3,
             "name": "Image value",
             "checkMask": ".{1,1024}"
           }
@@ -189,16 +158,12 @@
         "numericValue": null
       },
       {
-        "id": 7,
         "taskInstance": {
-          "id": 2,
           "active": true
         },
         "attribute": {
-          "id": 9,
           "name": "Clinic link",
           "attributeType": {
-            "id": 6,
             "name": "Url value",
             "checkMask": "(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+"
           }
@@ -209,16 +174,12 @@
         "numericValue": null
       },
       {
-        "id": 8,
         "taskInstance": {
-          "id": 2,
           "active": true
         },
         "attribute": {
-          "id": 10,
           "name": "Description of patient complaints",
           "attributeType": {
-            "id": 1,
             "name": "String value",
             "checkMask": "[A-Za-zÐ-Ð¯0-9Ð°-ÑÐÑ\\s]+"
           }
@@ -232,9 +193,7 @@
     "active": true
   },
   {
-    "id": 3,
     "task": {
-      "id": 3,
       "name": "Payment for treatment",
       "schedule": "0 0 */5 * * *",
       "description": "Confirmation of completion of treatment and payment"
@@ -243,10 +202,9 @@
       "requestId": 1,
       "startDate": null,
       "endDate": null,
-      "treatmentState": null,
+      "treatmentState": "STARTED",
       "doctorRecommendations": null,
       "user": {
-        "id": 1,
         "firstName": "FirstName",
         "middleName": "MiddleName",
         "lastName": "LastName",
@@ -265,16 +223,12 @@
     "finishedTime": null,
     "data": [
       {
-        "id": 9,
         "taskInstance": {
-          "id": 3,
           "active": true
         },
         "attribute": {
-          "id": 6,
           "name": "Service payment amount",
           "attributeType": {
-            "id": 2,
             "name": "Numeric value",
             "checkMask": "\\d+(\\.\\d+)?"
           }
@@ -285,16 +239,12 @@
         "numericValue": null
       },
       {
-        "id": 10,
         "taskInstance": {
-          "id": 3,
           "active": true
         },
         "attribute": {
-          "id": 8,
           "name": "End date of treatment",
           "attributeType": {
-            "id": 4,
             "name": "Date value",
             "checkMask": "\\d{4}-[01]\\d-[0-3]\\d(\\s[0-2]\\d:[0-5]\\d:[0-5]\\d)?(?:\\.\\d+)?Z?"
           }
@@ -308,9 +258,7 @@
     "active": true
   },
   {
-    "id": 4,
     "task": {
-      "id": 4,
       "name": "firstTask",
       "schedule": "0 * * * * *",
       "description": "run every minute"
@@ -319,10 +267,9 @@
       "requestId": 1,
       "startDate": null,
       "endDate": null,
-      "treatmentState": null,
+      "treatmentState": "STARTED",
       "doctorRecommendations": null,
       "user": {
-        "id": 1,
         "firstName": "FirstName",
         "middleName": "MiddleName",
         "lastName": "LastName",
@@ -341,16 +288,12 @@
     "finishedTime": null,
     "data": [
       {
-        "id": 11,
         "taskInstance": {
-          "id": 4,
           "active": true
         },
         "attribute": {
-          "id": 1,
           "name": "Account photo",
           "attributeType": {
-            "id": 3,
             "name": "Image value",
             "checkMask": ".{1,1024}"
           }
@@ -361,16 +304,12 @@
         "numericValue": null
       },
       {
-        "id": 12,
         "taskInstance": {
-          "id": 4,
           "active": true
         },
         "attribute": {
-          "id": 2,
           "name": "Age",
           "attributeType": {
-            "id": 2,
             "name": "Numeric value",
             "checkMask": "\\d+(\\.\\d+)?"
           }
@@ -381,16 +320,12 @@
         "numericValue": null
       },
       {
-        "id": 13,
         "taskInstance": {
-          "id": 4,
           "active": true
         },
         "attribute": {
-          "id": 3,
           "name": "Contact phone number",
           "attributeType": {
-            "id": 5,
             "name": "Phone number value",
             "checkMask": "[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*"
           }
@@ -404,9 +339,7 @@
     "active": true
   },
   {
-    "id": 5,
     "task": {
-      "id": 5,
       "name": "secondTask",
       "schedule": "* * * * * *",
       "description": "run every second"
@@ -415,10 +348,9 @@
       "requestId": 1,
       "startDate": null,
       "endDate": null,
-      "treatmentState": null,
+      "treatmentState": "STARTED",
       "doctorRecommendations": null,
       "user": {
-        "id": 1,
         "firstName": "FirstName",
         "middleName": "MiddleName",
         "lastName": "LastName",
@@ -437,16 +369,12 @@
     "finishedTime": null,
     "data": [
       {
-        "id": 14,
         "taskInstance": {
-          "id": 5,
           "active": true
         },
         "attribute": {
-          "id": 1,
           "name": "Account photo",
           "attributeType": {
-            "id": 3,
             "name": "Image value",
             "checkMask": ".{1,1024}"
           }
@@ -457,16 +385,12 @@
         "numericValue": null
       },
       {
-        "id": 15,
         "taskInstance": {
-          "id": 5,
           "active": true
         },
         "attribute": {
-          "id": 2,
           "name": "Age",
           "attributeType": {
-            "id": 2,
             "name": "Numeric value",
             "checkMask": "\\d+(\\.\\d+)?"
           }
@@ -477,16 +401,12 @@
         "numericValue": null
       },
       {
-        "id": 16,
         "taskInstance": {
-          "id": 5,
           "active": true
         },
         "attribute": {
-          "id": 3,
           "name": "Contact phone number",
           "attributeType": {
-            "id": 5,
             "name": "Phone number value",
             "checkMask": "[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*"
           }
