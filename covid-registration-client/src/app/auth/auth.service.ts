@@ -26,7 +26,7 @@ export class AuthService {
   }
   private static tokenAvailable(): boolean {
     // localStorage.setItem('token', 'false');
-    return localStorage.getItem('isLogged') == "true" ? true : false;
+    return sessionStorage.getItem('isLogged') == "true" ? true : false;
   }
 
   constructor(
@@ -68,7 +68,7 @@ export class AuthService {
     if (user.username !== '' && user.password !== '' ) {
       this.loggedIn.next(true);
       this.onLogginPage.next(false);
-      localStorage.setItem('isLogged', 'true');      
+      sessionStorage.setItem('isLogged', 'true');      
 
       sessionStorage.setItem(AUTH_TOKEN_KEY, user.email+"random_string");
       sessionStorage.setItem(AUTH_USER_DATA, JSON.stringify(user));      
@@ -83,7 +83,7 @@ export class AuthService {
   logout() {
     this.loggedIn.next(false);
     this.onLogginPage.next(true);
-    localStorage.removeItem('isLogged');
+    sessionStorage.removeItem('isLogged');
     this.router.navigate(['/login']);
 
     sessionStorage.removeItem(AUTH_TOKEN_KEY);

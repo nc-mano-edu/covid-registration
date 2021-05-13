@@ -19,7 +19,7 @@ import { AccountComponent } from './account/account.component';
 const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'home', component: HomeComponent/*, canActivate: [AuthGuard]*/},
   {path: 'add', component: AddUserComponent},
   {path: 'users', component: UserComponent},
   {path: 'user/:id/tasks', component: TaskInstanceForUserComponent},
