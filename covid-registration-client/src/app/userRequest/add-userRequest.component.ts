@@ -40,7 +40,6 @@ export class AddUserRequestComponent implements OnInit {
   onSave() {
     const request = new UserRequest();
     request.startDate = new Date().toISOString().split('T')[0];
-    request.treatmentState = 'started';
     request.user = this.user;
     request.symptoms = this.symptoms.filter(symptom =>
       this.symptomsSelected.has(symptom.symptomId)
