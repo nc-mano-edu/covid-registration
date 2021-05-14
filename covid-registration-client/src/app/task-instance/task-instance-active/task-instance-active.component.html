@@ -1,12 +1,14 @@
 <div class="col-md-6 content-wrapper">
-  <h2>Активные задачи пациентов</h2>
+  <h2>Active patients tasks</h2>
   <table>
     <thead>
       <tr>
-        <th>Пациент</th>
-        <th>Дата создания</th>
-        <th>Дата завершения</th>
-        <th>Прикрепленные данные</th>
+        <th>Patient</th>
+        <th>Task</th>
+        <th>Description</th>
+        <th>Creation date</th>
+        <th>Completion Date</th>
+        <th>Attached data</th>
       </tr>
     </thead>
     <tbody>
@@ -15,6 +17,8 @@
           {{ taskInstance.request.user.firstName }}
           {{ taskInstance.request.user.lastName }}
         </td>
+        <td>{{ taskInstance.task.name }}</td>
+        <td>{{ taskInstance.task.description }}</td>
         <td>{{ taskInstance.createdTime }}</td>
         <td>{{ taskInstance.finishedTime }}</td>
         <td>

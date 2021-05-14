@@ -1,15 +1,19 @@
 <div class="col-md-6 content-wrapper">
-  <h2>Задачи пациента: {{ user.firstName }} {{ user.lastName }}</h2>
+  <h2>Patient tasks: {{ user.firstName }} {{ user.lastName }}</h2>
   <table>
     <thead>
       <tr>
-        <th>Дата создания</th>
-        <th>Дата завершения</th>
-        <th>Прикрепленные данные</th>
+        <th>Task</th>
+        <th>Description</th>
+        <th>Creation date</th>
+        <th>Completion Date</th>
+        <th>Attached data</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let taskInstance of taskInstances">
+        <td>{{ taskInstance.task.name }}</td>
+        <td>{{ taskInstance.task.description }}</td>
         <td>{{ taskInstance.createdTime }}</td>
         <td>{{ taskInstance.finishedTime }}</td>
         <td>

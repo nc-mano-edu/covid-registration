@@ -2,7 +2,7 @@
   "requestId": 1,
   "startDate": "#startDate#",
   "endDate": null,
-  "treatmentState": "started",
+  "treatmentState": "STARTED",
   "user": {
     "id":
     #

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {UserRequest} from "./models/userRequest.model";
 import {UserRequestService} from "./services/userRequest.service"
 import {UserService} from "../user/user.service";
@@ -19,10 +19,12 @@ export class AddUserRequestComponent implements OnInit {
 
   request: UserRequest = new UserRequest();
   user: User;
+  userId: string;
   symptoms: Symptom[];
   symptomsSelected = new Set();
 
   constructor(public activatedRoute: ActivatedRoute,
+              private router: Router,
               private userService: UserService,
               private symptomService: SymptomService,
               private userRequestService: UserRequestService) {
@@ -40,21 +42,22 @@ export class AddUserRequestComponent implements OnInit {
   onSave() {
     const request = new UserRequest();
     request.startDate = new Date().toISOString().split('T')[0];
-    request.treatmentState = 'started';
+    request.treatmentState = 'STARTED';
     request.user = this.user;
     request.symptoms = this.symptoms.filter(symptom =>
       this.symptomsSelected.has(symptom.symptomId)
     );
     this.userRequestService.createRequest(request).subscribe(data => {
-      alert("UserRequest created successfully.");
+      this.router.navigate(['user/' + this.userId + '/tasks/active']);
+      console.log(this.userId);
     });
   }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
-        const userId = params['userId'];
+        this.userId = params['userId'];
 
-        this.userService.getUser(userId).subscribe(user => {
+        this.userService.getUser(this.userId).subscribe(user => {
           this.user = user;
         }, err => {
           this.user = null;

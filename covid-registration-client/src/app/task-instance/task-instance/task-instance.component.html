@@ -1,13 +1,14 @@
 <div class="col-md-6 content-wrapper">
-  <h2>Задачи пациентов</h2>
+  <h2>Patients tasks</h2>
   <table>
     <thead>
       <tr>
-        <th>Пациент</th>
-        <th>Дата создания</th>
-        <th>Дата завершения</th>
-        <th>Активна</th>
-        <th>Прикрепленные данные</th>
+        <th>Patient</th>
+        <th>Task</th>
+        <th>Description</th>
+        <th>Creation date</th>
+        <th>Completion Date</th>
+        <th>Attached data</th>
       </tr>
     </thead>
     <tbody>
@@ -16,9 +17,10 @@
           {{ taskInstance.request.user.firstName }}
           {{ taskInstance.request.user.lastName }}
         </td>
+        <td>{{ taskInstance.task.name }}</td>
+        <td>{{ taskInstance.task.description }}</td>
         <td>{{ taskInstance.createdTime }}</td>
         <td>{{ taskInstance.finishedTime }}</td>
-        <td>{{ taskInstance.active }}</td>
         <td>
           <div *ngFor="let data of taskInstance.data">
             <div *ngIf="data.stringValue !== null">
