@@ -2,7 +2,7 @@
   "requestId": 1,
   "startDate": null,
   "endDate": null,
-  "treatmentState": "in progress",
+  "treatmentState": "STARTED",
   "doctorRecommendations": "recommendations",
   "user": null,
   "symptoms": null
