@@ -1,11 +1,30 @@
 <h1>Admin panel</h1>
 <section>
     <div class="example-button-row">
-      <button mat-flat-button color="loginButton" [routerLink]="['/user/:id/tasks']">User task</button>
-      <button mat-flat-button color="loginButton" [routerLink]="['/user/:id/tasks/active']" >User active task</button>
-      <button mat-flat-button color="loginButton" [routerLink]="['/request/create']">Create request</button>
-      <button mat-flat-button color="loginButton" [routerLink]="['/task/:task_id']">Task id</button>
-      <button mat-flat-button color="loginButton" [routerLink]="['/task_instances']">Task Instances</button>
-      <button mat-flat-button color="loginButton" [routerLink]="['/task_instances/active']">Task Instances Active</button>
+      <button mat-flat-button color="loginButton" routerLink="/users">List Users</button> 
+      <button mat-flat-button color="loginButton" [routerLink]="['/task_instances']">Task instances</button>
+      <button mat-flat-button color="loginButton" [routerLink]="['/task_instances/active']">Task instances active</button>
     </div>
   </section>
+  <br>
+  <h1>User panel</h1>
+  <section>
+    <div class="example-button-row">
+   
+    <button mat-flat-button color="loginButton" (click)="createRequest()">Создать запрос на лечение </button>
+    <button mat-flat-button color="loginButton" (click)="getAllTasks()">All user tasks </button>
+    <button mat-flat-button color="loginButton" (click)="getActiveTasks()">Active user tasks </button>
+      
+    </div>
+  </section>
+
+  <h1>В кабинете пользователя</h1>
+  <section>
+    <div class="example-button-row">
+      <button mat-flat-button color="loginButton" routerLink="/task/1">Completion of registration </button>   
+      <button mat-flat-button color="loginButton" routerLink="/task/2">Request for treatment </button> 
+      <button mat-flat-button color="loginButton" routerLink="/task/3">Payment for treatment </button>   
+
+    </div>
+  </section>
+

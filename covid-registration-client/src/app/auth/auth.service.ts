@@ -11,16 +11,17 @@ import { UserRequest } from '../userRequest/models/userRequest.model';
 
 export const AUTH_TOKEN_KEY="auth-token";
 export const AUTH_USER_DATA="user-data";
+export const USER_ID="user-id";
 
 @Injectable()
 export class AuthService {
-  
+
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(AuthService.tokenAvailable());
   private onLogginPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   get isLoggedIn() {
     return this.loggedIn.asObservable();
-  } 
+  }
   get isOnLogginPage(){
     return this.onLogginPage.asObservable();
   }
@@ -59,22 +60,34 @@ export class AuthService {
           // this.userRequestForAccountInfo = item;
           sessionStorage.setItem("Request", JSON.stringify(item));
         });
-    
-      });  
-    }   
+
+      });
+    }
 
 
   login(user: User) : Observable<any> {
     if (user.username !== '' && user.password !== '' ) {
       this.loggedIn.next(true);
       this.onLogginPage.next(false);
-      sessionStorage.setItem('isLogged', 'true');      
+      sessionStorage.setItem('isLogged', 'true');
 
       sessionStorage.setItem(AUTH_TOKEN_KEY, user.email+"random_string");
-      sessionStorage.setItem(AUTH_USER_DATA, JSON.stringify(user));      
+      sessionStorage.setItem(AUTH_USER_DATA, JSON.stringify(user));
       console.log(sessionStorage);
-      
+
       this.router.navigate(['/home']);
+
+
+      //получить id
+      let desirableUser: User = new User();
+      this._http
+      .post<User>('http://localhost:8080/login', user)
+      .subscribe((user) => {
+        desirableUser.id = user.id;
+        sessionStorage.setItem("user-id", JSON.stringify(desirableUser.id));
+      })
+
+      /*******/
 
       return this._http.post<any>("http://localhost:8080/login", user);
     }
@@ -88,43 +101,9 @@ export class AuthService {
 
     sessionStorage.removeItem(AUTH_TOKEN_KEY);
     sessionStorage.removeItem(AUTH_USER_DATA);
-    console.log("after logout")
-    console.log( sessionStorage);
-  }  
+    sessionStorage.removeItem(USER_ID);
+    console.log('after logout');
 
-
-  /*
-  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(AuthService.tokenAvailable());
-  private onLogginPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  get isLoggedIn() {
-    return this.loggedIn.asObservable();
-  } 
-  get isOnLogginPage(){
-    return this.onLogginPage.asObservable();
-  }
-  private static tokenAvailable(): boolean {
-    // localStorage.setItem('token', 'false');
-    return localStorage.getItem('isLogged') == "true" ? true : false;
   }
 
-  constructor(
-    private router: Router
-  ) {}
-
-  login(user: User) {
-    if (user.username !== '' && user.password !== '' ) {
-      this.loggedIn.next(true);
-      this.onLogginPage.next(false);
-      localStorage.setItem('isLogged', 'true');
-      this.router.navigate(['/home']);
-    }
-  }
-
-  logout() {
-    this.loggedIn.next(false);
-    this.onLogginPage.next(true);
-    localStorage.removeItem('isLogged');
-    this.router.navigate(['/login']);
-  }  
-  */
 }

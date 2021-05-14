@@ -39,11 +39,11 @@ export class LoginComponent implements OnInit {
         console.log("response recieved");
         this._authService.getAccountInfo();
         this._router.navigate(['/home'])
-
       } ,
       error =>  {
         this.errorMsg = "Invalid username and passwor. Please try again"
         console.log("exception occured");
+        alert('Вы ввели неверный логин или пароль, попробуйте еще раз')
         this._router.navigate(['/login'])
       }
     )
