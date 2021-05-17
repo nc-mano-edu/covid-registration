@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
@@ -13,24 +13,21 @@ import { UserRequest } from '../userRequest/models/userRequest.model';
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-  user: User;
-  userRequest: UserRequest;
-
+  user: User = JSON.parse(sessionStorage.getItem("User"));
+  userRequest: UserRequest = JSON.parse(sessionStorage.getItem("Request"))[0];
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService
   ) { }
 
   ngOnInit(): void {
-    this.user = JSON.parse(sessionStorage.getItem("User"));
-    this.userRequest = JSON.parse(sessionStorage.getItem("Request"))[0];
 
     let date: Date = new Date(this.userRequest.startDate);
     let tempVarForDateFormat = moment(date).format("DD.MM.YYYY");
     this.userRequest.startDate = tempVarForDateFormat.toString();
     tempVarForDateFormat = moment(this.userRequest.endDate).format("DD.MM.YYYY");
-    this.userRequest.endDate = tempVarForDateFormat;
+    this.userRequest.endDate = tempVarForDateFormat.toString();
+    console.log(this.userRequest.endDate);
 
   }
-
 }

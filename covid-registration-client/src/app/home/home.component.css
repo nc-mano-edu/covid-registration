@@ -24,7 +24,9 @@ p{
   letter-spacing: 1px;
 }
 
-
+img{
+  height: 100%;
+}
 .home{
   display: flex;
   justify-content: space-evenly;

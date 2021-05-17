@@ -7,6 +7,7 @@ import {User} from "../user/user.model";
 import {SymptomService} from "./services/symptom.service";
 import {Symptom} from "./models/symptom.model";
 import {MatChip} from "@angular/material/chips";
+import { AuthService } from '../auth/auth.service';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class AddUserRequestComponent implements OnInit {
               private router: Router,
               private userService: UserService,
               private symptomService: SymptomService,
-              private userRequestService: UserRequestService) {
+              private userRequestService: UserRequestService,
+              private authService:AuthService) {
   }
 
   symptomSelection(chip: MatChip) {
@@ -51,6 +53,8 @@ export class AddUserRequestComponent implements OnInit {
       this.router.navigate(['user/' + this.userId + '/tasks/active']);
       console.log(this.userId);
     });
+    sessionStorage.setItem('Request', JSON.stringify(request));
+    this.authService.getAccountInfo();
   }
 
   ngOnInit() {

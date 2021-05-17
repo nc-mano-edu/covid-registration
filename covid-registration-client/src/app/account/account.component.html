@@ -20,7 +20,9 @@
       <h1>Start</h1>
      <p>{{userRequest.startDate}}</p>
       <h1>End</h1>
-      <p>{{userRequest.endDate}}</p>
+      <span *ngIf = "userRequest.endDate != 'Invalid date'">
+        <p>{{userRequest.endDate}}</p>
+      </span>
       <h1>Current treatment state</h1>
       <p>{{userRequest.treatmentState}}</p>
       <h1>Doctor's recommendations</h1>
@@ -28,8 +30,8 @@
       <span *ngIf = "userRequest.symptoms.length != 0">
         <h1>Symptoms</h1>
         <p *ngFor = 'let symptom of userRequest.symptoms'>
-          {{symptom}}
+          {{symptom.name}}
         </p>
-        </span>
+      </span>
     </div>
   </div>
