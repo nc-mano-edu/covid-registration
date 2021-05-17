@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PanelAdminComponent implements OnInit {
 
+  isPatient: boolean;
+  isDoctor: boolean;
+  isAdmin: boolean;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.isPatient = (sessionStorage.getItem("isPatient")=="true");
+    this.isDoctor = (sessionStorage.getItem("isDoctor")=="true");
+    this.isAdmin = (sessionStorage.getItem("isAdmin")=="true");
   }
 
 }

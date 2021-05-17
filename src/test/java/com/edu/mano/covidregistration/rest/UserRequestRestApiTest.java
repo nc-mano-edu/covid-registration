@@ -6,14 +6,10 @@ import com.edu.mano.covidregistration.enums.TreatmentState;
 import com.edu.mano.covidregistration.tools.AppUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.SYMPTOMS_BASE_PREFIX;
 import static com.edu.mano.covidregistration.CovidRegistrationApplication.USER_REQUEST_BASE_PREFIX;
@@ -39,7 +35,7 @@ class UserRequestRestApiTest extends SpringBootTests {
         assertNotNull(mockMvc);
     }
 
-    @Test
+/*    @Test
     @Disabled
     public void findAllTest() throws Exception {
         List<UserRequest> userRequests = new ArrayList<>();
@@ -49,7 +45,7 @@ class UserRequestRestApiTest extends SpringBootTests {
                 .andExpect(status().isOk())
                 .andReturn();
         Assertions.assertEquals(objectMapper.readTree(objectMapper.writeValueAsString(userRequests)), objectMapper.readTree(result.getResponse().getContentAsString()));
-    }
+    }*/
 
     @Test
     public void getSymptomBySymptomIdTest() throws Exception {
