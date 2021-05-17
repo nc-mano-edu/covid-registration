@@ -14,13 +14,13 @@ export const AUTH_USER_DATA="user-data";
 
 @Injectable()
 export class AuthService {
-  
+
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(AuthService.tokenAvailable());
   private onLogginPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   get isLoggedIn() {
     return this.loggedIn.asObservable();
-  } 
+  }
   get isOnLogginPage(){
     return this.onLogginPage.asObservable();
   }
@@ -47,6 +47,10 @@ export class AuthService {
         // this.userSubject$.next(item);
         // this.userForAccountInfo = item;
         sessionStorage.setItem("User", JSON.stringify(item));
+        sessionStorage.setItem("isPatient", JSON.stringify(item.roles).includes("Patient").toString());
+        sessionStorage.setItem("isDoctor", JSON.stringify(item.roles).includes("Doctor").toString());
+        sessionStorage.setItem("isAdmin", JSON.stringify(item.roles).includes("Admin").toString());
+
         desirableUser.id = item.id;
         this._http
         .get<UserRequest>(
@@ -59,21 +63,21 @@ export class AuthService {
           // this.userRequestForAccountInfo = item;
           sessionStorage.setItem("Request", JSON.stringify(item));
         });
-    
-      });  
-    }   
+
+      });
+    }
 
 
   login(user: User) : Observable<any> {
     if (user.username !== '' && user.password !== '' ) {
       this.loggedIn.next(true);
       this.onLogginPage.next(false);
-      sessionStorage.setItem('isLogged', 'true');      
+      sessionStorage.setItem('isLogged', 'true');
 
       sessionStorage.setItem(AUTH_TOKEN_KEY, user.email+"random_string");
-      sessionStorage.setItem(AUTH_USER_DATA, JSON.stringify(user));      
+      sessionStorage.setItem(AUTH_USER_DATA, JSON.stringify(user));
       console.log(sessionStorage);
-      
+
       this.router.navigate(['/home']);
 
       return this._http.post<any>("http://localhost:8080/login", user);
@@ -90,7 +94,7 @@ export class AuthService {
     sessionStorage.removeItem(AUTH_USER_DATA);
     console.log("after logout")
     console.log( sessionStorage);
-  }  
+  }
 
 
   /*
@@ -98,7 +102,7 @@ export class AuthService {
   private onLogginPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   get isLoggedIn() {
     return this.loggedIn.asObservable();
-  } 
+  }
   get isOnLogginPage(){
     return this.onLogginPage.asObservable();
   }
@@ -125,6 +129,6 @@ export class AuthService {
     this.onLogginPage.next(true);
     localStorage.removeItem('isLogged');
     this.router.navigate(['/login']);
-  }  
+  }
   */
 }
