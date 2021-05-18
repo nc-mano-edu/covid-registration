@@ -8,32 +8,12 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
-  
-  isPatient: boolean;
-  isDoctor: boolean;
-  isAdmin: boolean;
-  
-  constructor(
-
-    private _router : Router
-  ) { }
+ 
+  constructor( ) { }
 
   ngOnInit(): void {
-    this.isPatient = (sessionStorage.getItem("isPatient")=="true");
-    this.isDoctor = (sessionStorage.getItem("isDoctor")=="true");
-    this.isAdmin = (sessionStorage.getItem("isAdmin")=="true");
 
   }   
-
-  getAllTaskInstances(){
-    this._router.navigate(['/task_instances'], {      
-    })
-  }
-
-  getActiveTaskInstances(){
-    this._router.navigate(['/task_instances/active'], {      
-    })
-  }
-  
+ 
 }
 

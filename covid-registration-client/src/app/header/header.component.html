@@ -14,10 +14,12 @@
   </div>
   <mat-toolbar *ngIf = "isLoggedIn$ | async as isLoggedIn; else elseBlock">
     <button mat-button routerLink="/home">Main Page</button>
-    <button mat-button routerLink="/users">List Users</button>
-    <button mat-button routerLink="/add">Add User</button>
-    <button mat-button (click)="getAccountInfo()" routerLink="/account">Account</button>
+    <button mat-button *ngIf="isPatient==false" routerLink="/users">List Users</button>
+    <button mat-button *ngIf="isPatient" (click)="getAccountInfo()" routerLink="/account">Account</button>
+    <button mat-button *ngIf="isPatient==false"  (click)="getAllTaskInstances()">All Task Instances </button>
+    <button  mat-button *ngIf="isPatient==false" (click)="getActiveTaskInstances()">Active Task Instances </button>
     <button mat-button (click)="onLogout()" >Logout</button>
+
   </mat-toolbar>
   <ng-template #elseBlock>
     <mat-toolbar>
