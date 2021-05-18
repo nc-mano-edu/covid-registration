@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_DB=covid-registration
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+    ports:
+      - '5432:5432'
+    restart: always
+  backend:
+    image: 'covid-registration-backend'
+    build: .
+    container_name: backend
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/covid-registration
+    ports:
+      - '8080:8080'
+    restart: always
+  frontend:
+    image: 'covid-registration-frontend'
+    build: ./covid-registration-client
+    container_name: frontend
+    depends_on:
+      - backend
+    ports:
+      - '4200:80'
