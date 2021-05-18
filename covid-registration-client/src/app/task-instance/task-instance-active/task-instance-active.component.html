@@ -9,7 +9,6 @@
         <th>Creation date</th>
         <th>Completion Date</th>
         <th>Operations:</th>
-        <th>Attached data</th>
       </tr>
     </thead>
     <tbody>
@@ -25,22 +24,6 @@
       <td>
         <button mat-flat-button color="loginButton" [routerLink]="['/task/', taskInstance.id]">View</button>
       </td>
-      <td>
-        <div *ngFor="let data of taskInstance.data">
-          <div *ngIf="data.stringValue !== null">
-            {{ data.attribute.name }}: {{ data.stringValue }}
-          </div>
-          <div *ngIf="data.imageValue !== null">
-            {{ data.attribute.name }}: {{ data.imageValue }}
-          </div>
-          <div *ngIf="data.dateValue !== null">
-            {{ data.attribute.name }}: {{ data.dateValue }}
-            </div>
-            <div *ngIf="data.numericValue !== null">
-              {{ data.attribute.name }}: {{ data.numericValue }}
-            </div>
-          </div>
-        </td>
       </tr>
     </tbody>
   </table>
