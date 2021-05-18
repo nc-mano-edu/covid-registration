@@ -4,7 +4,8 @@ import { TaskInstanceService } from 'src/app/task/services/taskInstance.service'
 
 @Component({
   templateUrl: './task-instance-active.component.html',
-  styleUrls: ['../../user/user.component.css']
+  styleUrls: ['../../user/user.component.css'
+             , '../../panel-admin/panel-admin.component.css']
 })
 export class TaskInstanceActiveComponent implements OnInit {
 

@@ -1,43 +1,49 @@
+
 <div class="col-md-6 content-wrapper">
-  <h2>Patients tasks</h2>
+  <h2>Patient tasks</h2>
   <table>
     <thead>
-      <tr>
-        <th>Patient</th>
-        <th>Task</th>
-        <th>Description</th>
-        <th>Creation date</th>
-        <th>Completion Date</th>
-        <th>Attached data</th>
-      </tr>
+    <tr>
+      <th>Patient</th>
+      <th>Task</th>
+      <th>Description</th>
+      <th>Creation date</th>
+      <th>Completion Date</th>
+      <th>Operations:</th>
+      <th>Attached data</th>
+    </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let taskInstance of taskInstances">
-        <td>
-          {{ taskInstance.request.user.firstName }}
-          {{ taskInstance.request.user.lastName }}
-        </td>
-        <td>{{ taskInstance.task.name }}</td>
-        <td>{{ taskInstance.task.description }}</td>
-        <td>{{ taskInstance.createdTime }}</td>
-        <td>{{ taskInstance.finishedTime }}</td>
-        <td>
-          <div *ngFor="let data of taskInstance.data">
-            <div *ngIf="data.stringValue !== null">
-              {{ data.attribute.name }}: {{ data.stringValue }}
-            </div>
-            <div *ngIf="data.imageValue !== null">
-              {{ data.attribute.name }}: {{ data.imageValue }}
-            </div>
-            <div *ngIf="data.dateValue !== null">
-              {{ data.attribute.name }}: {{ data.dateValue }}
-            </div>
-            <div *ngIf="data.numericValue !== null">
-              {{ data.attribute.name }}: {{ data.numericValue }}
-            </div>
+    <tr *ngFor="let taskInstance of taskInstances">
+      <td>
+        {{ taskInstance.request.user.firstName }}
+        {{ taskInstance.request.user.lastName }}
+      </td>
+      <td>{{ taskInstance.task.name }}</td>
+      <td>{{ taskInstance.task.description }}</td>
+      <td>{{ taskInstance.createdTime }}</td>
+      <td>{{ taskInstance.finishedTime }}</td>
+
+      <td>
+        <button mat-flat-button color="loginButton" [routerLink]="['/task/', taskInstance.id]">View</button>
+      </td>
+      <td>
+        <div *ngFor="let data of taskInstance.data">
+          <div *ngIf="data.stringValue !== null">
+            {{ data.attribute.name }}: {{ data.stringValue }}
           </div>
-        </td>
-      </tr>
+          <div *ngIf="data.imageValue !== null">
+            {{ data.attribute.name }}: {{ data.imageValue }}
+          </div>
+          <div *ngIf="data.dateValue !== null">
+            {{ data.attribute.name }}: {{ data.dateValue }}
+          </div>
+          <div *ngIf="data.numericValue !== null">
+            {{ data.attribute.name }}: {{ data.numericValue }}
+          </div>
+        </div>
+      </td>
+    </tr>
     </tbody>
   </table>
 </div>
