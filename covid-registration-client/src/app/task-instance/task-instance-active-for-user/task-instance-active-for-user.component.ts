@@ -6,7 +6,8 @@ import { UserService } from 'src/app/user/user.service';
 
 @Component({
   templateUrl: './task-instance-active-for-user.component.html',
-  styleUrls: ['../../user/user.component.css']
+  styleUrls: ['../../user/user.component.css'
+             , '../../panel-admin/panel-admin.component.css']
 })
 export class TaskInstanceActiveForUserComponent implements OnInit {
 

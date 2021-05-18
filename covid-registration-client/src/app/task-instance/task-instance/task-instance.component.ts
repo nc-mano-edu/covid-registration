@@ -4,7 +4,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   templateUrl: './task-instance.component.html',
-  styleUrls: ['../../user/user.component.css']
+  styleUrls: ['../../user/user.component.css'
+               , '../../panel-admin/panel-admin.component.css']
 })
 export class TaskInstanceComponent implements OnInit {
 

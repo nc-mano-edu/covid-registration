@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TaskInstanceComponent } from './task-instance.component';
 
 describe('TaskInstanceComponent', () => {

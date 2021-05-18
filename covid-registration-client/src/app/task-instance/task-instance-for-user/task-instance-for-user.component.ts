@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   templateUrl: './task-instance-for-user.component.html',
-  styleUrls: ['../../user/user.component.css']
+  styleUrls: ['../../user/user.component.css'
+             , '../../panel-admin/panel-admin.component.css']
 })
 export class TaskInstanceForUserComponent implements OnInit {
 
