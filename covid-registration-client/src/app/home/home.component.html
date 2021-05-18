@@ -1,4 +1,5 @@
-<button mat-raised-button color="Link" [routerLink]="['/panel_admin']">to Admin panel</button>
+<button *ngIf="isPatient==false" mat-flat-button color="loginButton" (click)="getAllTaskInstances()">All Task Instances </button>
+<button *ngIf="isPatient==false" mat-flat-button color="loginButton" (click)="getActiveTaskInstances()">Active Task Instances </button>
 <section class="home">
   <div class="text-side">
     <img class="background-img" src="../../assets/img/background-img.png">
@@ -6,6 +7,7 @@
     <h1>COVID registration - best clinic for your health</h1>
     <p>Health tests and diagnostics - all in one place!</p>
   </div>
+  
   <div class="picture-side">
     <img src="../../assets/img/handsome_lad_for_main_page.png" >
   </div>

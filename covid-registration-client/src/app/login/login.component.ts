@@ -21,8 +21,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.myLoginForm = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email, Validators.minLength(6)]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(3)])
+      email: new FormControl(null, [Validators.required, Validators.email, Validators.minLength(1)]),
+      password: new FormControl(null, [Validators.required, Validators.minLength(1)])
     })
   }
 
@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
       error =>  {
         this.errorMsg = "Invalid username and passwor. Please try again"
         console.log("exception occured");
+        alert('Вы ввели неверный логин или пароль, попробуйте еще раз')
         this._router.navigate(['/login'])
       }
     )

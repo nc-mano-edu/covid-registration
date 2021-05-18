@@ -20,7 +20,7 @@ mat-card {
 }
 
 .container > * {
-  width: 40%;
+  width: 420px;
 }
 
 .mat-loginButton {

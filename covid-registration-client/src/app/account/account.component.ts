@@ -6,6 +6,9 @@ import { take } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../user/user.model';
 import { UserRequest } from '../userRequest/models/userRequest.model';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'user-account',
@@ -16,10 +19,19 @@ export class AccountComponent implements OnInit {
   user: User;
   userRequest: UserRequest;
 
+  isPatient: boolean;
+  isDoctor: boolean;
+  isAdmin: boolean;
+
+
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private _router : Router
   ) { }
+
+  private querySubscription: Subscription;
+  userIdFromStorage =sessionStorage.getItem('user-id');  
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem("User"));
@@ -31,6 +43,29 @@ export class AccountComponent implements OnInit {
     tempVarForDateFormat = moment(this.userRequest.endDate).format("DD.MM.YYYY");
     this.userRequest.endDate = tempVarForDateFormat;
 
+    this.isPatient = (sessionStorage.getItem("isPatient")=="true");
+    this.isDoctor = (sessionStorage.getItem("isDoctor")=="true");
+    this.isAdmin = (sessionStorage.getItem("isAdmin")=="true");
+
   }
+
+  createRequest(){  
+    this._router.navigate(['/request/create/'], {
+      queryParams: { userId: this.userIdFromStorage }
+    })
+
+  }
+
+  getAllTasks() {    
+    this._router.navigate(['user/'+this.userIdFromStorage+ '/tasks'], {      
+    })
+  }
+
+  getActiveTasks(){
+    this._router.navigate(['user/'+ this.userIdFromStorage+'/tasks/active'], {      
+    })
+  }
+
+
 
 }

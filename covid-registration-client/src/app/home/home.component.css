@@ -44,3 +44,10 @@ p{
   height: 50%;
 }
 
+.mat-loginButton {
+  background-color: #17a096;
+  color: white;
+  width: 190px;
+} 
+
+

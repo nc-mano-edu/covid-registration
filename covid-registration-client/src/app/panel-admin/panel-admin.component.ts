@@ -17,7 +17,7 @@ export class PanelAdminComponent implements OnInit {
   ngOnInit(): void {
     this.isPatient = (sessionStorage.getItem("isPatient")=="true");
     this.isDoctor = (sessionStorage.getItem("isDoctor")=="true");
-    this.isAdmin = (sessionStorage.getItem("isAdmin")=="true");
+    this.isAdmin = (sessionStorage.getItem("isAdmin")=="true");    
   }
 
 }
