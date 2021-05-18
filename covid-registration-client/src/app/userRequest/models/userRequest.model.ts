@@ -3,7 +3,7 @@ import {Symptom} from "./symptom.model";
 
 export class UserRequest {
 
-  id: string;
+  requestId: string;
   startDate: string;
   endDate: string;
   treatmentState: string;

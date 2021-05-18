@@ -10,6 +10,14 @@
       <h3 *ngIf="taskInstance.finishedTime"><b>Finished</b>: {{taskInstance.finishedTime}}</h3>
     </div>
 
+    <div *ngIf="isDoctor">
+      <h3 style="margin-bottom: 0"><b>Patient</b>: {{getPatientName()}} </h3>
+      <button mat-raised-button class="patient-profile-button" [routerLink]="['/account']"
+              [queryParams]="{ userId: user.id }">
+        Patient profile
+      </button>
+    </div>
+
     <form [formGroup]="taskForm" fxLayout="column" id="task-update-form" (ngSubmit)="onSubmit()">
       <mat-form-field *ngFor="let field of taskInstanceData">
 

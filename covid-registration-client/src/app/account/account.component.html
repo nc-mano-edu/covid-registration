@@ -1,5 +1,5 @@
 <div class="account-container">
-    <div class="user-info">
+    <div class="user-info" *ngIf="user">
       <!-- <div>
         <img>
       </div> -->
@@ -25,11 +25,14 @@
       <p>{{userRequest.treatmentState}}</p>
       <h1>Doctor's recommendations</h1>
       <p>{{userRequest.doctorRecommendations}}</p>
-      <span *ngIf = "userRequest.symptoms.length != 0">
+      <span *ngIf="userRequest.symptoms.length != 0">
         <h1>Symptoms</h1>
-        <p *ngFor = 'let symptom of userRequest.symptoms'>
+        <p *ngFor='let symptom of userRequest.symptoms'>
           {{symptom}}
         </p>
         </span>
+      <button mat-raised-button *ngIf="isDoctor" class="profile-button" (click)="openDialog()">
+        Give recommendations
+      </button>
     </div>
   </div>

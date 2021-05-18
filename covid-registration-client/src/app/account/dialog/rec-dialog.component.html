@@ -1,0 +1,13 @@
+<mat-dialog-content>
+  <h3>
+    {{message}}
+  </h3>
+</mat-dialog-content>
+<mat-form-field style="margin-top: 20px">
+  <mat-label>{{inputLabel}}</mat-label>
+  <input matInput [(ngModel)]="inputText">
+</mat-form-field>
+<mat-dialog-actions align="center">
+  <button mat-raised-button class="profile-button" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
+  <button mat-raised-button mat-dialog-close (click)="onCloseClick()" tabindex="-1">{{cancelButtonText}}</button>
+</mat-dialog-actions>

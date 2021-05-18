@@ -15,7 +15,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
-import { MatButtonModule } from '@angular/material/button';
+import {MatButtonModule} from '@angular/material/button';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {UserComponent} from './user/user.component';
@@ -25,7 +25,7 @@ import {HeaderComponent} from "./header/header.component";
 import {UserService} from "./user/user.service";
 import {AddUserRequestComponent} from "./userRequest/add-userRequest.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { RegistrationComponent } from './loginRegistration/components/registration/registration.component';
+import {RegistrationComponent} from './loginRegistration/components/registration/registration.component';
 import {FooterComponent} from './footer/footer.component';
 import {TaskComponent} from './task/task.component';
 import {DatePipe} from "@angular/common";
@@ -34,8 +34,10 @@ import {TaskInstanceComponent} from './task-instance/task-instance/task-instance
 import {TaskInstanceActiveComponent} from './task-instance/task-instance-active/task-instance-active.component';
 import {TaskInstanceActiveForUserComponent} from './task-instance/task-instance-active-for-user/task-instance-active-for-user.component';
 import {TaskInstanceForUserComponent} from './task-instance/task-instance-for-user/task-instance-for-user.component';
-import { PanelAdminComponent } from './panel-admin/panel-admin.component';
-import { AccountComponent } from './account/account.component';
+import {PanelAdminComponent} from './panel-admin/panel-admin.component';
+import {AccountComponent} from './account/account.component';
+import {RecommendationDialog} from "./account/dialog/rec-dialog.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { AccountComponent } from './account/account.component';
     TaskInstanceActiveForUserComponent,
     TaskInstanceForUserComponent,
     PanelAdminComponent,
-    AccountComponent
+    AccountComponent,
+    RecommendationDialog
   ],
   imports: [
     AppRoutingModule,
@@ -72,7 +75,8 @@ import { AccountComponent } from './account/account.component';
     MatNativeDateModule,
     MatRippleModule,
     MatButtonModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatDialogModule
   ],
   providers: [AuthService, AuthGuard, UserService, DatePipe, TaskInstanceService],
   bootstrap: [AppComponent]
