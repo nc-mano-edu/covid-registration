@@ -13,7 +13,7 @@ services:
     restart: always
   backend:
     image: 'covid-registration-backend'
-    build: ../../../
+    build: .
     container_name: backend
     depends_on:
       - db
@@ -24,7 +24,7 @@ services:
     restart: always
   frontend:
     image: 'covid-registration-frontend'
-    build: ../../../covid-registration-client/
+    build: ./covid-registration-client
     container_name: frontend
     depends_on:
       - backend
