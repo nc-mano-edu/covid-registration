@@ -58,12 +58,13 @@ export class AuthService {
     
       });  
     }   
-
+  
+  public nextFunctionForLoggedInObserver(isLoggedIn: boolean){
+    this.loggedIn.next(isLoggedIn);
+  }
 
   login(user: User) : Observable<any> {
     if (user.username !== '' && user.password !== '' ) {
-      this.loggedIn.next(true);
-      sessionStorage.setItem('isLogged', 'true');      
 
       sessionStorage.setItem(AUTH_TOKEN_KEY, user.email+"random_string");
       sessionStorage.setItem(AUTH_USER_DATA, JSON.stringify(user));      

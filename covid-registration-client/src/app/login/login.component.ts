@@ -37,6 +37,8 @@ export class LoginComponent implements OnInit {
     this._authService.login(this.myLoginForm.value).subscribe(
       data => {
         console.log("response recieved");
+        this._authService.nextFunctionForLoggedInObserver(true);
+        sessionStorage.setItem('isLogged', 'true');        
         this._authService.getAccountInfo();
         this._router.navigate(['/home'])
 

@@ -17,14 +17,15 @@ app-root{
   justify-content: space-between;
   height: 100%
 }
-
+span{
+  padding: 10px 10px 0 10px;
+}
 app-root > :nth-child(2){
   flex-grow: 1;
 }
 app-login{
   margin-bottom: auto;
 }
-
 .content-wrapper {
   padding: 10px;
 }
