@@ -23,7 +23,9 @@ p{
   line-height: 25px;
   letter-spacing: 1px;
 }
-
+img{
+  height: 100%;
+}
 
 .home{
   display: flex;

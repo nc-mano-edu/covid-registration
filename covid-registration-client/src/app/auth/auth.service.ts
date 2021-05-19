@@ -16,16 +16,11 @@ export const AUTH_USER_DATA="user-data";
 export class AuthService {
 
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(AuthService.tokenAvailable());
-  private onLogginPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   get isLoggedIn() {
     return this.loggedIn.asObservable();
   }
-  get isOnLogginPage(){
-    return this.onLogginPage.asObservable();
-  }
   private static tokenAvailable(): boolean {
-    // localStorage.setItem('token', 'false');
     return sessionStorage.getItem('isLogged') == "true" ? true : false;
   }
 
@@ -66,14 +61,13 @@ export class AuthService {
 
       });
     }
-
+  
+  changeLoggedIn(isLogged:boolean){
+    this.loggedIn.next(isLogged);
+  }
 
   login(user: User) : Observable<any> {
     if (user.username !== '' && user.password !== '' ) {
-      this.loggedIn.next(true);
-      this.onLogginPage.next(false);
-      sessionStorage.setItem('isLogged', 'true');
-
       sessionStorage.setItem(AUTH_TOKEN_KEY, user.email+"random_string");
       sessionStorage.setItem(AUTH_USER_DATA, JSON.stringify(user));
       console.log(sessionStorage);
@@ -86,7 +80,6 @@ export class AuthService {
 
   logout() {
     this.loggedIn.next(false);
-    this.onLogginPage.next(true);
     sessionStorage.removeItem('isLogged');
     this.router.navigate(['/login']);
 

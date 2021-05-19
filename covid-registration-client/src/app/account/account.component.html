@@ -28,7 +28,7 @@
       <span *ngIf = "userRequest.symptoms.length != 0">
         <h3>Symptoms</h3>
         <p *ngFor = 'let symptom of userRequest.symptoms'>
-          {{symptom}}
+          {{symptom.name}}
         </p>
         </span>
       <button mat-raised-button *ngIf="isDoctor" class="profile-button" (click)="openDialog()">

@@ -9,13 +9,7 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent {
 
-  isOnLogginPage$: Observable<boolean>;
-  isOnLogginPage:boolean;
-  constructor(private authService: AuthService) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.isOnLogginPage$ = this.authService.isOnLogginPage;
-    this.isOnLogginPage$.subscribe((item)=>{this.isOnLogginPage = item})
-  }
 
 }
