@@ -25,25 +25,41 @@
       <p>{{userRequest.treatmentState}}</p>
       <h1>Doctor's recommendations</h1>
       <p>{{userRequest.doctorRecommendations}}</p>
+    
       <section>
-        <div class="example-button-row">
-          <button *ngIf="isPatient" mat-flat-button color="loginButton" (click)="createRequest()">Create User request </button> 
-          <br>         
-          <button *ngIf="isPatient" mat-flat-button color="loginButton" routerLink="/task/1">Completion of registration </button>
+        <div class="example-button-row" > 
+          <h4>Не появляется кнопка Create user request</h4>
+          <button  mat-flat-button color="loginButton" (click)="createRequest()">Create User request </button> 
+          <br>
+          <h1>Tasks</h1>
+          <button  mat-flat-button color="loginButton" routerLink="/task/1">Completion of registration </button>
           <br>  
-          <button *ngIf="isPatient" mat-flat-button color="loginButton" routerLink="/task/2">Request for treatment </button>  
+          <button  mat-flat-button color="loginButton" routerLink="/task/2">Request for treatment </button>  
           <br>
-          <button *ngIf="isPatient" mat-flat-button color="loginButton" routerLink="/task/3">Payment for treatment </button> 
-          <br>
-          <button *ngIf="isPatient" mat-flat-button color="loginButton" (click)="getAllTasks()">All user tasks </button>
-          <br>
-          <button *ngIf="isPatient" mat-flat-button color="loginButton" (click)="getActiveTasks()">Active user tasks </button>
-          
-          
-
+          <button  mat-flat-button color="loginButton" routerLink="/task/3">Payment for treatment </button>       
         </div>
-      </section>   
-      
+      </section> 
+
+      <!--
+      <section>
+        <div class="example-button-row" > 
+          <button *ngIf = "this.isPatient" mat-flat-button color="loginButton" (click)="getActiveTasks()">Active user tasks </button>   
+          <br>  
+          <button *ngIf = "this.isPatient" mat-flat-button color="loginButton" (click)="getAllTasks()">All user tasks </button>
+          <br>              
+          <button  mat-flat-button color="loginButton" (click)="createRequest()">Create User request </button> 
+          <br>  
+          <br>
+          <br>
+          <h1>Tasks</h1>
+          <button  mat-flat-button color="loginButton" routerLink="/task/1">Completion of registration </button>
+          <br>  
+          <button  mat-flat-button color="loginButton" routerLink="/task/2">Request for treatment </button>  
+          <br>
+          <button  mat-flat-button color="loginButton" routerLink="/task/3">Payment for treatment </button>         
+        </div>
+      </section> 
+      -->
  
       <span *ngIf = "userRequest.symptoms.length != 0">
         <h1>Symptoms</h1>

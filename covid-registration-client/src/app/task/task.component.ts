@@ -158,6 +158,10 @@ export class TaskComponent implements OnInit {
     });
   }
 
+  downloadImage(){
+    
+  }
+
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {

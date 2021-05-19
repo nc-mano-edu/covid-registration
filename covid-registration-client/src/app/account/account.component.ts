@@ -18,22 +18,27 @@ import { Router } from '@angular/router';
 export class AccountComponent implements OnInit {
   user: User;
   userRequest: UserRequest;
-
+  
   isPatient: boolean;
   isDoctor: boolean;
   isAdmin: boolean;
+  private querySubscription: Subscription;
+  userIdFromStorage =sessionStorage.getItem('user-id');  
 
-
+ 
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
     private _router : Router
   ) { }
 
-  private querySubscription: Subscription;
-  userIdFromStorage =sessionStorage.getItem('user-id');  
 
   ngOnInit(): void {
+    this.isPatient = (sessionStorage.getItem("isPatient")=="true");
+    this.isDoctor = (sessionStorage.getItem("isDoctor")=="true");
+    this.isAdmin = (sessionStorage.getItem("isAdmin")=="true");
+    
+
     this.user = JSON.parse(sessionStorage.getItem("User"));
     this.userRequest = JSON.parse(sessionStorage.getItem("Request"))[0];
 
@@ -42,11 +47,7 @@ export class AccountComponent implements OnInit {
     this.userRequest.startDate = tempVarForDateFormat.toString();
     tempVarForDateFormat = moment(this.userRequest.endDate).format("DD.MM.YYYY");
     this.userRequest.endDate = tempVarForDateFormat;
-
-    this.isPatient = (sessionStorage.getItem("isPatient")=="true");
-    this.isDoctor = (sessionStorage.getItem("isDoctor")=="true");
-    this.isAdmin = (sessionStorage.getItem("isAdmin")=="true");
-
+      
   }
 
   createRequest(){  

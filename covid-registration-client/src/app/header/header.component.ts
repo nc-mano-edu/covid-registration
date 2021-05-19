@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,8 @@ export class HeaderComponent implements OnInit {
   isPatient: boolean;
   isDoctor: boolean;
   isAdmin: boolean;
+  private querySubscription: Subscription;
+  userIdFromStorage =sessionStorage.getItem('user-id');  
   
 
   constructor(private authService: AuthService,
@@ -45,5 +48,15 @@ export class HeaderComponent implements OnInit {
     this._router.navigate(['/task_instances/active'], {      
     })
   }  
+
+  getAllTasks() {    
+    this._router.navigate(['user/'+this.userIdFromStorage+ '/tasks'], {      
+    })
+  }
+
+  getActiveTasks(){
+    this._router.navigate(['user/'+ this.userIdFromStorage+'/tasks/active'], {      
+    })
+  }
 
 }
