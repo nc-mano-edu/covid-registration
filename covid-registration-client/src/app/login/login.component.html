@@ -1,8 +1,9 @@
-<h1 style="text-align: center;">
-  Login Page
-</h1>
+
 <form [formGroup]="myLoginForm" (ngSubmit)="onSubmit()" >
   <div class="container">
+    <h1 style="text-align: center;">
+      Login Page
+    </h1>
       <mat-form-field>
           <input matInput placeholder="Email" formControlName="email" >
           <mat-error *ngIf="isFieldInvalid('email')">Please inform your email</mat-error>

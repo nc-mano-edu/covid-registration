@@ -12,6 +12,17 @@ mat-toolbar button{
   font-size: 14px;
   color: azure;
 }
+
+mat-toolbar-row button{
+  font-size: 14px;
+  color: azure;
+}
+
+mat-toolbar-row{
+  background-color: #00a89d;
+  display: flex;
+  justify-content: space-evenly;
+}
 /* .angular-logo {
   margin: 0 4px 3px 0;
   height: 35px;
