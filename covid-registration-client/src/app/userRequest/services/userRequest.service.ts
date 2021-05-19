@@ -18,4 +18,8 @@ export class UserRequestService {
     return this.http.post<UserRequest>(this.userRequestUrl, request);
   }
 
+  public fillDoctorRecommendations(id, recommendations) {
+    return this.http.post<UserRequest>(`${this.userRequestUrl}/${id}/recommendations`, recommendations);
+  }
+
 }

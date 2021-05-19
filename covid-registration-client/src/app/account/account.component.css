@@ -12,6 +12,7 @@
   /* background-color: antiquewhite; */
   box-shadow: -3px 3px 5px 1px #00a89d
 }
+
 /* .user-info{
   display: flex;
   flex-flow: column wrap;
@@ -21,4 +22,8 @@
   display: flex;
   flex-flow: column wrap;
   margin: 10px;
-} */ 
+} */
+.profile-button {
+  background: #17a096;
+  color: white;
+}

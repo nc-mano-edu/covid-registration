@@ -7,6 +7,7 @@ import {TaskInstanceData} from "./models/taskInstanceData.model";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DatePipe} from "@angular/common";
+import {User} from "../user/user.model";
 
 const DATE_FORMAT_INPUT = 'YYYY-MM-DD';
 const DATE_FORMAT_OUTPUT = 'YYYY-MM-dd';
@@ -48,8 +49,10 @@ export class TaskComponent implements OnInit {
   ]);
 
   taskId: string;
+  isDoctor: boolean;
   taskInstance: TaskInstance;
   taskInstanceData: TaskInstanceData[];
+  user: User;
 
   taskForm: FormGroup;
   imageBlobs: Map<number, string[]>;
@@ -158,16 +161,23 @@ export class TaskComponent implements OnInit {
     });
   }
 
+  // Get patient's full name
+  getPatientName() {
+    const initials = `${this.user.firstName.toUpperCase().charAt(0)}.${this.user.middleName.toUpperCase().charAt(0)}.`;
+    return this.user.lastName + ' ' + initials;
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.taskId = params['task_id'];
+      this.isDoctor = (sessionStorage.getItem("isDoctor") == "true");
       this.taskInstanceService.find(this.taskId).subscribe(data => {
 
         this.taskForm = this.formBuilder.group({});
         this.imageBlobs = new Map();
         this.taskInstance = data;
         this.taskInstanceData = this.taskInstance.data;
+        this.user = data.request.user;
 
         this.taskInstanceData.forEach(field => {
           this.taskForm.addControl(field.id, new FormControl(''));
