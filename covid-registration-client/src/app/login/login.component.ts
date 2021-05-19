@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 
 import { AuthService } from '../auth/auth.service';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-login',
@@ -39,7 +40,6 @@ export class LoginComponent implements OnInit {
         console.log("response recieved");
         this._authService.getAccountInfo();
         this._router.navigate(['/home'])
-
       } ,
       error =>  {
         this.errorMsg = "Invalid username and passwor. Please try again"
@@ -51,5 +51,5 @@ export class LoginComponent implements OnInit {
     this.formSubmitAttempt = true;
 
   }
- 
+
 }

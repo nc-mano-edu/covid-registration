@@ -1,15 +1,16 @@
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
-import { Component, OnInit } from '@angular/core';
-import {Subscription} from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { EventService } from '../eventService/event.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   isLoggedIn$: Observable<boolean>;
 
@@ -19,15 +20,42 @@ export class HeaderComponent implements OnInit {
   private querySubscription: Subscription;
   userIdFromStorage:string;
 
-  constructor(private authService: AuthService,
-    private _router : Router
-    ) { }
+  messageReceived: any;
+  private subscriptionName: Subscription; //important to create a subscription
+
+
+  constructor(
+    private authService: AuthService,
+    private _router : Router,
+    private _eventService: EventService
+  )
+    {
+        // subscribe to sender component messages
+        this.subscriptionName= this._eventService.getUpdate().subscribe(
+            message => { //message contains the data sent from service
+              this.messageReceived = message;
+              this.ngOnInit();
+            }
+         );
+
+    }
+
+  ngOnDestroy() { // It's a good practice to unsubscribe to ensure no memory leaks
+    this.subscriptionName.unsubscribe();
+  }
 
   ngOnInit() {
+    console.log("HeaderComponent ngOnInit");
+
     this.isLoggedIn$ = this.authService.isLoggedIn;
     this.isPatient = (sessionStorage.getItem("isPatient")=="true");
     this.isDoctor = (sessionStorage.getItem("isDoctor")=="true");
     this.isAdmin = (sessionStorage.getItem("isAdmin")=="true");
+    /* setInterval(() => {
+                     this.ngOnInit(); // api call
+                     console.log("HeaderComponent ngOnInit");
+                  }, 1000); */
+
   }
 
   onLogout() {
@@ -39,26 +67,26 @@ export class HeaderComponent implements OnInit {
   }
 
   getAllTaskInstances(){
-    this._router.navigate(['/task_instances'], {      
+    this._router.navigate(['/task_instances'], {
     })
   }
 
   getActiveTaskInstances(){
-    this._router.navigate(['/task_instances/active'], {      
+    this._router.navigate(['/task_instances/active'], {
     })
-  }  
+  }
 
-  getAllTasks() {    
-    this._router.navigate(['user/'+sessionStorage.getItem('user-id')+ '/tasks'], {      
+  getAllTasks() {
+    this._router.navigate(['user/'+sessionStorage.getItem('user-id')+ '/tasks'], {
     })
   }
 
   getActiveTasks(){
-    this._router.navigate(['user/'+ sessionStorage.getItem('user-id')+'/tasks/active'], {      
+    this._router.navigate(['user/'+ sessionStorage.getItem('user-id')+'/tasks/active'], {
     })
   }
 
-  createRequest(){  
+  createRequest(){
     this._router.navigate(['/request/create/'], {
       queryParams: { userId:sessionStorage.getItem('user-id') }
     })

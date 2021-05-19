@@ -18,17 +18,17 @@
     </div>
     <div class="request-details">
       <h3>Start</h3>
-     <p>{{userRequest.startDate}}</p>
+      <p *ngIf="hasProp(userRequest,'startDate')">{{userRequest.startDate}}</p>
       <h3>End</h3>
-      <p>{{userRequest.endDate}}</p>
+      <p *ngIf="hasProp(userRequest,'endDate')">{{userRequest.endDate}}</p>
       <h3>Current treatment state</h3>
-      <p>{{userRequest.treatmentState}}</p>
+      <p *ngIf="hasProp(userRequest,'treatmentState')">{{userRequest.treatmentState}}</p>
       <h3>Doctor's recommendations</h3>
-      <p>{{userRequest.doctorRecommendations}}</p>
-      <span *ngIf = "userRequest.symptoms.length != 0">
+      <p *ngIf="hasProp(userRequest,'doctorRecommendations')">{{userRequest.doctorRecommendations}}</p>
+      <span *ngIf = "hasProp(userRequest,'symptoms')">
         <h3>Symptoms</h3>
         <p *ngFor = 'let symptom of userRequest.symptoms'>
-          {{symptom}}
+          {{symptom.name}}
         </p>
         </span>
       <button mat-raised-button *ngIf="isDoctor" class="profile-button" (click)="openDialog()">

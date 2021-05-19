@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { UserRequest } from '../userRequest/models/userRequest.model';
+import { EventService } from '../eventService/event.service';
 
 
 export const AUTH_TOKEN_KEY="auth-token";
@@ -32,7 +33,8 @@ export class AuthService {
 
   constructor(
     private router: Router,
-    private _http : HttpClient
+    private _http : HttpClient,
+    private _eventService: EventService
   ) {}
 
   getAccountInfo() {
@@ -51,6 +53,8 @@ export class AuthService {
         sessionStorage.setItem("isPatient", JSON.stringify(item.roles).includes("Patient").toString());
         sessionStorage.setItem("isDoctor", JSON.stringify(item.roles).includes("Doctor").toString());
         sessionStorage.setItem("isAdmin", JSON.stringify(item.roles).includes("Admin").toString());
+
+        this._eventService.sendUpdate('update header');
 
         desirableUser.id = item.id;
         this._http
@@ -97,12 +101,10 @@ export class AuthService {
   logout() {
     this.loggedIn.next(false);
     this.onLogginPage.next(true);
-    sessionStorage.removeItem('isLogged');
+    sessionStorage.clear();
     this.router.navigate(['/login']);
 
-    sessionStorage.removeItem(AUTH_TOKEN_KEY);
-    sessionStorage.removeItem(AUTH_USER_DATA);
-    sessionStorage.removeItem(USER_ID);
+
     console.log("after logout")
     console.log( sessionStorage);
   }
