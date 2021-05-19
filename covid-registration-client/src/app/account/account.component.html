@@ -1,5 +1,5 @@
 <div class="account-container">
-    <div class="user-info">
+    <div class="user-info" *ngIf="user">
       <!-- <div>
         <img>
       </div> -->
@@ -31,5 +31,8 @@
           {{symptom}}
         </p>
         </span>
+      <button mat-raised-button *ngIf="isDoctor" class="profile-button" (click)="openDialog()">
+        Give recommendations
+      </button>
     </div>
   </div>

@@ -29,3 +29,7 @@
   flex-flow: column wrap;
   margin: 10px;
 } */
+.profile-button {
+  background: #17a096;
+  color: white;
+}
