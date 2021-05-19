@@ -12,15 +12,17 @@ mat-card {
 
 
 .container {
+  margin-top: 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-direction: center;
+  margin-bottom: 100px;
 }
 
 .container > * {
-  width: 40%;
+  width: 420px;
 }
 
 .mat-loginButton {

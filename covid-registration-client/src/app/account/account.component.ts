@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import * as moment from 'moment';
 import {AuthService} from '../auth/auth.service';
@@ -9,6 +9,8 @@ import {UserService} from "../user/user.service";
 import {MatDialog} from "@angular/material/dialog";
 import {RecommendationDialog} from "./dialog/rec-dialog.component";
 import {UserRequestService} from "../userRequest/services/userRequest.service";
+import { Subscription } from 'rxjs';
+import { EventService } from '../eventService/event.service';
 
 @Component({
   selector: 'user-account',
@@ -16,10 +18,12 @@ import {UserRequestService} from "../userRequest/services/userRequest.service";
   styleUrls: ['./account.component.css'],
   providers: [UserService, UserRequestService]
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
   user: User;
   userRequest: UserRequest;
   isDoctor: boolean;
+  messageReceived: any;
+  private subscriptionName: Subscription; //important to create a subscription
 
   constructor(
     private httpClient: HttpClient,
@@ -27,8 +31,15 @@ export class AccountComponent implements OnInit {
     private userService: UserService,
     private userRequestService: UserRequestService,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _eventService: EventService
   ) {
+    // subscribe to sender component messages
+    this.subscriptionName= this._eventService.getUpdate().subscribe(
+        message => { //message contains the data sent from service
+          this.ngOnInit();
+        }
+     );
   }
 
   dataFormat(): void {
@@ -38,6 +49,10 @@ export class AccountComponent implements OnInit {
     if (this.userRequest.endDate) {
       this.userRequest.endDate = moment(this.userRequest.endDate).format("DD.MM.YYYY");
     }
+  }
+
+  hasProp(o, name) {
+    return o !== null && o !== undefined && o.hasOwnProperty(name);
   }
 
   openDialog(): void {
@@ -56,7 +71,12 @@ export class AccountComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() { // It's a good practice to unsubscribe to ensure no memory leaks
+    this.subscriptionName.unsubscribe();
+  }
+
   ngOnInit(): void {
+    console.log("Account ngOnInit");
     this.activatedRoute.queryParams.subscribe(params => {
       const userId = params['userId'];
       this.isDoctor = (sessionStorage.getItem("isDoctor") == "true");
