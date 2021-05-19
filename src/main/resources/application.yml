@@ -10,9 +10,9 @@ spring:
     restart:
       enabled: true
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB_NAME:covid-registration}
-    username: ${POSTGRES_USERNAME:postgres}
-    password: ${POSTGRES_PASSWORD:mysecretpassword}
+    url: jdbc:postgresql://localhost/userDB
+    username: postgres
+    password: postgres
     initialization-mode: always
     sql-script-encoding: UTF-8
     data: classpath:data.sql,classpath:data_demo.sql

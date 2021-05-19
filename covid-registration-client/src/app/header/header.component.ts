@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   isDoctor: boolean;
   isAdmin: boolean;
   private querySubscription: Subscription;
-  userIdFromStorage =sessionStorage.getItem('user-id');  
+  userIdFromStorage:string;
   
 
   constructor(private authService: AuthService,
@@ -50,13 +50,18 @@ export class HeaderComponent implements OnInit {
   }  
 
   getAllTasks() {    
-    this._router.navigate(['user/'+this.userIdFromStorage+ '/tasks'], {      
+    this._router.navigate(['user/'+sessionStorage.getItem('user-id')+ '/tasks'], {      
     })
   }
 
   getActiveTasks(){
-    this._router.navigate(['user/'+ this.userIdFromStorage+'/tasks/active'], {      
+    this._router.navigate(['user/'+ sessionStorage.getItem('user-id')+'/tasks/active'], {      
     })
   }
 
+  createRequest(){  
+    this._router.navigate(['/request/create/'], {
+      queryParams: { userId:sessionStorage.getItem('user-id') }
+    })
+  }
 }

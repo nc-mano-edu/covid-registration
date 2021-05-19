@@ -19,8 +19,10 @@
     <button mat-button (click)="onLogout()" >Logout</button>
     </mat-toolbar-row>
     <mat-toolbar-row *ngIf="this.isPatient">
+      <button  mat-button (click)="createRequest()">Create User request </button> 
       <button mat-button (click)="getActiveTasks()">Active tasks </button>        
-      <button mat-button (click)="getAllTasks()">All tasks </button>      
+      <button mat-button (click)="getAllTasks()">All tasks </button> 
+
     </mat-toolbar-row>
     <mat-toolbar-row *ngIf="this.isDoctor">
       <button mat-button  (click)="getAllTaskInstances()">All Task Instances </button>
