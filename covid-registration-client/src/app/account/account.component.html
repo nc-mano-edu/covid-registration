@@ -3,31 +3,31 @@
       <!-- <div>
         <img>
       </div> -->
-      <h1>First name</h1>
+      <h3>First name</h3>
       <p>{{ user.firstName }}</p>
-      <h1>Middle name</h1>
+      <h3>Middle name</h3>
       <p>{{ user.middleName }}</p>
-      <h1>Last name</h1>
+      <h3>Last name</h3>
       <p>{{ user.lastName }}</p>
-      <h1>Date of birth</h1>
+      <h3>Date of birth</h3>
       <p>{{ user.dateOfBirth | date: "dd.MM.yyyy" }}</p>
-      <h1>Insurance number</h1>
+      <h3>Insurance number</h3>
       <p>{{ user.insuranceNumber }}</p>
-      <h1>Phone number</h1>
+      <h3>Phone number</h3>
       <p>{{ user.phoneNumber }}</p>
     </div>
     <div class="request-details">
-      <h1>Start</h1>
+      <h3>Start</h3>
      <p>{{userRequest.startDate}}</p>
-      <h1>End</h1>
+      <h3>End</h3>
       <p>{{userRequest.endDate}}</p>
-      <h1>Current treatment state</h1>
+      <h3>Current treatment state</h3>
       <p>{{userRequest.treatmentState}}</p>
-      <h1>Doctor's recommendations</h1>
+      <h3>Doctor's recommendations</h3>
       <p>{{userRequest.doctorRecommendations}}</p>
-      <span *ngIf="userRequest.symptoms.length != 0">
-        <h1>Symptoms</h1>
-        <p *ngFor='let symptom of userRequest.symptoms'>
+      <span *ngIf = "userRequest.symptoms.length != 0">
+        <h3>Symptoms</h3>
+        <p *ngFor = 'let symptom of userRequest.symptoms'>
           {{symptom}}
         </p>
         </span>
