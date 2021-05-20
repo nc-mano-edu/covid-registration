@@ -22,4 +22,8 @@ export class UserRequestService {
     return this.http.post<UserRequest>(`${this.userRequestUrl}/${id}/recommendations`, recommendations);
   }
 
+  public closeUserRequest(id, recommendations) {
+    return this.http.post<UserRequest>(`${this.userRequestUrl}/${id}/close`, recommendations);
+  }
+
 }

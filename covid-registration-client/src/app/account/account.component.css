@@ -32,4 +32,6 @@
 .profile-button {
   background: #17a096;
   color: white;
+  width: 200px;
+  margin: 5px auto;
 }

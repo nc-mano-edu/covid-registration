@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import * as moment from 'moment';
 import {AuthService} from '../auth/auth.service';
@@ -9,8 +9,8 @@ import {UserService} from "../user/user.service";
 import {MatDialog} from "@angular/material/dialog";
 import {RecommendationDialog} from "./dialog/rec-dialog.component";
 import {UserRequestService} from "../userRequest/services/userRequest.service";
-import { Subscription } from 'rxjs';
-import { EventService } from '../eventService/event.service';
+import {Subscription} from 'rxjs';
+import {EventService} from '../eventService/event.service';
 
 @Component({
   selector: 'user-account',
@@ -55,7 +55,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     return o !== null && o !== undefined && o.hasOwnProperty(name);
   }
 
-  openDialog(): void {
+  giveRecommendations(): void {
     const dialogRef = this.dialog.open(RecommendationDialog, {
       data: {
         message: 'Enter your recommendations',
@@ -66,10 +66,34 @@ export class AccountComponent implements OnInit, OnDestroy {
       if (result) {
         this.userRequestService.fillDoctorRecommendations(this.userRequest.requestId, result).subscribe(request => {
           this.userRequest = request;
+        }, error => {
+          if (error.error.status === 500) {
+            alert('The recommendation text must contain at least 3 characters!');
+          }
         });
       }
     });
   }
+
+  endTreatment(): void {
+    const dialogRef = this.dialog.open(RecommendationDialog, {
+      data: {
+        message: 'Enter your recommendations if necessary',
+        label: 'Recommendation',
+        buttonText: {
+          ok: 'Finish'
+        }
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.userRequestService.closeUserRequest(this.userRequest.requestId, result).subscribe(request => {
+          this.userRequest = request;
+        });
+      }
+    });
+  }
+
 
   ngOnDestroy() { // It's a good practice to unsubscribe to ensure no memory leaks
     this.subscriptionName.unsubscribe();
