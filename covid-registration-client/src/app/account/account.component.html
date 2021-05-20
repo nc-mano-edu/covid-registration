@@ -25,14 +25,19 @@
       <p *ngIf="hasProp(userRequest,'treatmentState')">{{userRequest.treatmentState}}</p>
       <h3>Doctor's recommendations</h3>
       <p *ngIf="hasProp(userRequest,'doctorRecommendations')">{{userRequest.doctorRecommendations}}</p>
-      <span *ngIf = "hasProp(userRequest,'symptoms')">
+      <span *ngIf="hasProp(userRequest,'symptoms')">
         <h3>Symptoms</h3>
-        <p *ngFor = 'let symptom of userRequest.symptoms'>
+        <p *ngFor='let symptom of userRequest.symptoms'>
           {{symptom.name}}
         </p>
         </span>
-      <button mat-raised-button *ngIf="isDoctor" class="profile-button" (click)="openDialog()">
+      <button mat-raised-button *ngIf="isDoctor && !userRequest.endDate" class="profile-button"
+              (click)="giveRecommendations()">
         Give recommendations
+      </button>
+      <button mat-raised-button *ngIf="isDoctor && !userRequest.endDate" class="profile-button"
+              (click)="endTreatment()">
+        End treatment
       </button>
     </div>
   </div>
