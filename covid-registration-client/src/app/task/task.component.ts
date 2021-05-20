@@ -53,9 +53,11 @@ export class TaskComponent implements OnInit {
   taskInstance: TaskInstance;
   taskInstanceData: TaskInstanceData[];
   user: User;
+  img:string;
 
   taskForm: FormGroup;
   imageBlobs: Map<number, string[]>;
+  large: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -165,6 +167,10 @@ export class TaskComponent implements OnInit {
   getPatientName() {
     const initials = `${this.user.firstName.toUpperCase().charAt(0)}.${this.user.middleName.toUpperCase().charAt(0)}.`;
     return this.user.lastName + ' ' + initials;
+  }
+
+  changeImage(){
+    this.large = !this.large;
   }
 
   ngOnInit(): void {
