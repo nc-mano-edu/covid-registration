@@ -82,7 +82,7 @@ public class UserRequestController {
     }
 
     @PostMapping("/{id}/close")
-    public ResponseEntity<UserRequest> closeUserRequest(@PathVariable Long id, @RequestBody String rec) {
+    public ResponseEntity<UserRequest> closeUserRequest(@PathVariable Long id, @RequestBody(required = false) String rec) {
         return new ResponseEntity<>(userRequestService.closeUserRequest(id, rec), HttpStatus.OK);
     }
 

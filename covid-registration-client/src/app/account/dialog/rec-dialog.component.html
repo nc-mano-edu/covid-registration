@@ -8,6 +8,7 @@
   <input matInput [(ngModel)]="inputText">
 </mat-form-field>
 <mat-dialog-actions align="center">
-  <button mat-raised-button class="profile-button" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
+  <button mat-raised-button class="profile-button" style="margin: 0; width: auto" (click)="onConfirmClick()"
+          tabindex="1">{{confirmButtonText}}</button>
   <button mat-raised-button mat-dialog-close (click)="onCloseClick()" tabindex="-1">{{cancelButtonText}}</button>
 </mat-dialog-actions>

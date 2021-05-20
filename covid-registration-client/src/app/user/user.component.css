@@ -7,3 +7,9 @@
 .content-wrapper{
   padding: 10px;
 }
+
+.btn {
+  background-color: #17a096;;
+  color: white;
+  padding: 0 10px;
+}

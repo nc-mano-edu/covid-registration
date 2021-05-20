@@ -1,8 +1,9 @@
-<h1 style="text-align: center;">
-    Register Page
-</h1>
+
 <form [formGroup]="newRegistryForm" (ngSubmit)="onSubmit()">
     <div class="container">
+        <h1 style="text-align: center;">
+            Register Page
+        </h1>
         <mat-form-field>
             <input matInput placeholder="Username" formControlName="username">
             <mat-hint *ngIf="newRegistryForm.get('username').errors">Username is required</mat-hint>

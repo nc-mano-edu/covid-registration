@@ -23,7 +23,7 @@ mat-icon {
 }
 
 .mat-chip-selected {
-  background-color: #2fafa6;
+  background-color: #2fafa6 !important;
   color: #fafafa !important;
 }
 
