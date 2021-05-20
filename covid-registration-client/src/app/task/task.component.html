@@ -37,7 +37,6 @@
                 <img *ngFor="let image of imageBlobs.get(Number(field.id))" [src]="image" alt=''
                 [class.large]="large" [class.small]="!large"
                 (click) = "changeImage()">
-                >
               </div>
               <ngx-mat-file-input [formControlName]="field.id" accept="image/*" [multiple]="false"
                                   [placeholder]="'Choose a ' + field.attribute.name.toLowerCase()"

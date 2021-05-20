@@ -12,11 +12,11 @@
 
 /*------- image resize and container --------*/
 .large {
-  width: 1000px;
+  width: 200%;
 }
 
 .small {
-  width: 100px;
+  width: 200px;
 }
 
 .container {
