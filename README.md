@@ -14,6 +14,17 @@ Technology:
 Technology:
  - Angular 11
  
+#### How to run COVID Registration Clinic application with Docker
+
+Run `./build.sh` from the root
+This script build an application
+
+After success application build run it using docker compose:
+`docker compose up --build -d`
+
+**!IMPORTANT** If `./build.sh` doesn't work, follow the next steps:
+1. build backend part with: `mvn clean package -DskipTests`
+2. navigate to `covid-registration-client` folder and start build frontend part with: `ng build --prod`
 
 #### How to run only Backend
 **Prerequisites:**
