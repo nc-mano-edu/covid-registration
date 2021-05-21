@@ -15,7 +15,7 @@ spring:
     password: ${POSTGRES_PASSWORD:mysecretpassword}
     initialization-mode: always
     sql-script-encoding: UTF-8
-    data: classpath:data.sql,classpath:data_demo.sql
+    data: classpath:data_demo.sql
   jackson:
     time-zone: GMT+4
   jpa:
