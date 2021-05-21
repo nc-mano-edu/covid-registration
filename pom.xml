@@ -91,44 +91,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.6.0</version><executions>
-				<execution>
-					<phase>validate</phase>
-					<goals>
-						<goal>exec</goal>
-					</goals>
-				</execution>
-				</executions><configuration>
-					<executable>ng</executable>
-					<workingDirectory>covid-registration-client</workingDirectory>
-					<arguments>
-						<argument>build</argument>
-					</arguments>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/classes/static/</outputDirectory>
-							<resources>
-								<resource>
-									<directory>covid-registration-client/static</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
